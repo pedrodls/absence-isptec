@@ -1,4 +1,4 @@
-package src.utils.Enums;
+package utils.enums;
 
 public enum Presence {
     PRESENTE,

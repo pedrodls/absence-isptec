@@ -1,4 +1,5 @@
-package src.utils.objects;
+package utils.objects;
+
 
 public class Common {
 

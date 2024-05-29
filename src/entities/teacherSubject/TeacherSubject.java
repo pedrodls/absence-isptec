@@ -1,10 +1,10 @@
-package src.entities.teacherSubject;
+package entities.teacherSubject;
 
 import java.util.List;
 
-import src.entities.student.Student;
-import src.entities.subject.Subject;
-import src.entities.teacher.Teacher;
+import entities.student.Student;
+import entities.subject.Subject;
+import entities.teacher.Teacher;
 
 public class TeacherSubject {
 
@@ -14,7 +14,7 @@ public class TeacherSubject {
 
     private List<Student> students;
 
-    public TeacherSubject(){
+    public TeacherSubject() {
     }
 
     public TeacherSubject(Teacher teacher, Subject subject) {

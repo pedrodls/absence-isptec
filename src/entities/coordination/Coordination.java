@@ -1,9 +1,8 @@
-package src.entities.coordination;
+package entities.coordination;
 
 import java.util.List;
 
-import src.entities.course.Course;
-
+import entities.course.Course;
 
 public class Coordination {
 
@@ -22,7 +21,6 @@ public class Coordination {
         this.id = id;
     }
 
-    
     public List<Course> getCourses() {
         return courses;
     }

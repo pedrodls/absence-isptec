@@ -1,9 +1,10 @@
-package src.entities.teacher;
+package entities.teacher;
+
 
 import java.util.List;
 
-import src.entities.coordination.Coordination;
-import src.utils.objects.Person;
+import entities.coordination.Coordination;
+import utils.objects.Person;
 
 public class Teacher extends Person {
 

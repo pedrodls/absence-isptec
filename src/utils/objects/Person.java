@@ -1,7 +1,8 @@
-package src.utils.objects;
+package utils.objects;
+
 import java.util.Date;
 
-import src.utils.Enums.Gender;
+import utils.enums.Gender;
 
 public class Person {
 

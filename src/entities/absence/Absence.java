@@ -1,9 +1,9 @@
-package src.entities.absence;
+package entities.absence;
 
 import java.util.Date;
 
-import src.entities.teacherSubject.TeacherSubject;
-import src.utils.Enums.Presence;
+import entities.teacherSubject.TeacherSubject;
+import utils.enums.Presence;
 
 public class Absence {
 
@@ -22,7 +22,7 @@ public class Absence {
     public void setId(Integer id) {
         this.id = id;
     }
-    
+
     public Presence getPresence() {
         return presence;
     }

@@ -1,11 +1,11 @@
-package src.entities.student;
+package entities.student;
 
 import java.util.List;
 
-import src.entities.absence.Absence;
-import src.entities.course.Course;
-import src.entities.subject.Subject;
-import src.utils.objects.Person;
+import entities.absence.Absence;
+import entities.course.Course;
+import entities.subject.Subject;
+import utils.objects.Person;
 
 public class Student extends Person {
 

@@ -1,24 +1,24 @@
-package src.entities.course;
+package entities.course;
 
 import java.util.List;
 
-import src.entities.student.Student;
-import src.entities.subject.Subject;
-import src.entities.teacher.Teacher;
-import src.entities.teacherSubject.TeacherSubject;
-import src.utils.objects.Common;
+import entities.student.Student;
+import entities.subject.Subject;
+import entities.teacher.Teacher;
+import entities.teacherSubject.TeacherSubject;
+import utils.objects.Common;
 
-public class Course extends Common{
-    
+public class Course extends Common {
+
     private Teacher coordinator;
     private List<Subject> subjects;
     private List<Student> students;
     private List<TeacherSubject> teacherSubjects;
-    
-    public Course(){
+
+    public Course() {
 
     }
-    
+
     public Teacher getCoordinator() {
         return coordinator;
     }
@@ -50,7 +50,5 @@ public class Course extends Common{
     public void setTeacherSubjects(List<TeacherSubject> teacherSubjects) {
         this.teacherSubjects = teacherSubjects;
     }
-
-   
 
 }

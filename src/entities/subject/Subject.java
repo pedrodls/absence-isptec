@@ -1,14 +1,14 @@
-package src.entities.subject;
+package entities.subject;
 
-import src.utils.objects.Common;
+import utils.objects.Common;
 
 public class Subject extends Common {
 
     private Integer id;
-    
-    public Subject(){
+
+    public Subject() {
     }
-    
+
     public Integer getId() {
         return id;
     }
@@ -17,6 +17,4 @@ public class Subject extends Common {
         this.id = id;
     }
 
-   
-    
 }
