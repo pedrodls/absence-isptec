@@ -1,10 +1,7 @@
 package entities.student;
 
-import java.util.List;
-
-import entities.absence.Absence;
+import entities.classroom.Classroom;
 import entities.course.Course;
-import entities.subject.Subject;
 import utils.objects.Person;
 
 public class Student extends Person {
@@ -15,9 +12,7 @@ public class Student extends Person {
 
     private Course course;
 
-    private List<Subject> subjects;
-
-    private List<Absence> absences;
+    private Classroom classroom;
 
     public Student() {
     }
@@ -46,19 +41,12 @@ public class Student extends Person {
         this.telephone = telephone;
     }
 
-    public List<Absence> getAbsences() {
-        return absences;
+    public Classroom getClassroom() {
+        return classroom;
     }
 
-    public void setAbsences(List<Absence> absences) {
-        this.absences = absences;
+    public void setClassroom(Classroom classroom) {
+        this.classroom = classroom;
     }
 
-    public List<Subject> getSubjects() {
-        return subjects;
-    }
-
-    public void setSubjects(List<Subject> subjects) {
-        this.subjects = subjects;
-    }
 }

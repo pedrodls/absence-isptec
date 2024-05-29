@@ -2,14 +2,12 @@ package entities.absence;
 
 import java.util.Date;
 
-import entities.teacherSubject.TeacherSubject;
 import utils.enums.Presence;
 
 public class Absence {
 
     private Integer id;
     private Presence presence;
-    private TeacherSubject teacherSubject;
     private Date date;
 
     public Absence() {
@@ -29,14 +27,6 @@ public class Absence {
 
     public void setPresence(Presence presence) {
         this.presence = presence;
-    }
-
-    public TeacherSubject getTeacherSubject() {
-        return teacherSubject;
-    }
-
-    public void setTeacherSubject(TeacherSubject teacherSubject) {
-        this.teacherSubject = teacherSubject;
     }
 
     public Date getDate() {

@@ -1,18 +1,24 @@
 package entities.teacher;
 
-
-import java.util.List;
-
-import entities.coordination.Coordination;
+import entities.subject.Subject;
 import utils.objects.Person;
 
 public class Teacher extends Person {
 
     private Integer id;
     private String telephone;
-    private List<Coordination> coordinations;
+    private Subject subject;
 
     public Teacher() {
+
+    }
+
+    public Subject getSubject() {
+        return subject;
+    }
+
+    public void setSubject(Subject subject) {
+        this.subject = subject;
     }
 
     public Integer getId() {
@@ -21,14 +27,6 @@ public class Teacher extends Person {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public List<Coordination> getCoordinations() {
-        return coordinations;
-    }
-
-    public void setCoordinations(List<Coordination> coordinations) {
-        this.coordinations = coordinations;
     }
 
     public String getTelephone() {

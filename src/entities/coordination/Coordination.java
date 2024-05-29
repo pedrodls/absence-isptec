@@ -2,23 +2,27 @@ package entities.coordination;
 
 import java.util.List;
 
+import entities.classroom.Classroom;
 import entities.course.Course;
+import entities.student.Student;
+import entities.subject.Subject;
+import entities.teacher.Teacher;
 
 public class Coordination {
 
-    private Integer id;
-
+    private Teacher coordinator;
     private List<Course> courses;
+    private List<Classroom> classrooms;
 
     public Coordination() {
     }
 
-    public Integer getId() {
-        return id;
+    public List<Classroom> getClassrooms() {
+        return classrooms;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setClassrooms(List<Classroom> classrooms) {
+        this.classrooms = classrooms;
     }
 
     public List<Course> getCourses() {
@@ -27,6 +31,14 @@ public class Coordination {
 
     public void setCourse(List<Course> courses) {
         this.courses = courses;
+    }
+
+    public Teacher getCoordinator() {
+        return coordinator;
+    }
+
+    public void setCoordinator(Teacher coordinator) {
+        this.coordinator = coordinator;
     }
 
 }
