@@ -1,4 +1,4 @@
-package lib.isptec.Utils;
+package lib.isptec.utils;
 
 
 import java.text.DecimalFormat;

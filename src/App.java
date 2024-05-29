@@ -1,6 +1,6 @@
 
 import lib.clearBuffer.ClearBuffer;
-import lib.isptec.Utils.Utils;
+import lib.isptec.utils.Utils;
 import utils.functions.MainMenu;
 
 public class App {
