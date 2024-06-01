@@ -13,57 +13,48 @@
  * 2.   Análise
  * 2.1. Interface de utilizador (IU)/ Menu Principal
  * 
- *      Admin
- *      Login
- *      Criar, Adicionar, Eliminar, Atualizar, Editar: -> Estudante, Professor, Curso,
- *                                                        Disciplina, Coordenação, 
- *                                                        Turma, Lista de Presença
  * 
- *      Coordenador
- *          Login
- *          Analisar/Validar os pedidos de justificação
- *          Eliminar falta
+ * 
+ *      StudentUI
+ *          Read                            : Student
+ * 
+ *      JustificationUI
+ *          Create, Edit, Verify, Drop      : Justification
+ *  
+ *      CoordenationUI
+ *          Create, Read, Update, Delete    : Coordenation
+ *          Create, Read, Update, Delete    : Student
+ *          Create, Read, Update, Delete    : Course
+ *          Create, Read, Update, Delete    : Teacher
+ *          Create, Read, Update, Delete    : Classroom
+ *          Create, Read, Update, Delete    : Subject
+ *          List, Verify, Deferiment        : Justication
  *
- *      Professor
- *          Login
- *          Marcar Falta
- *          Listar Alunos com suas falta
- *
- *      Estudante
- *          Login
- *          Verificar faltas
- *          Pedidio de jusficação de falta: -> Preencher o formulário: Nº de telefone, 
- *                                             Periodo de ausência, Provas Perdidas: -> 
- *                                             tipo
- *          Verificar o status do pedido de justificação
- *          Listar todas as solicitações passadas
- * 
- * 
  * 2.2. Entidades ligadas a IU
- * 
- * *      Entidade JustificativoIU
+ *      
+ *      Entidade Justification
  * 
  *          atributo Integer id;
- *          atributo String telephone;
- *          atributo Course course;
- *          atributo List<Subject> subjects;
- *          atributo List<Absence> absences;
+ *          atributo Date createdAt;
+ *          atributo Date verifiedAt;
+ *          atributo Student student;
+ *          atributo Period period;
+ *          atributo List<LostedTest> lostedTests;
+ *          atributo Verified verified;
  * 
- *          operacao criar()
- *          operacao eliminar()
- *          operacao actualizar()
- *          operacao visualizar()
+ *          operacao create()
+ *          operacao read()
+ *          operacao update()
+ *          operacao delete()
  * 
  *      FimEntidade
- * 
- *      Entidade EstudanteIU
+ *      
+ *      Entidade Coordination
  * 
  *          atributo Integer id;
- *          atributo String telephone;
  *          atributo Course course;
- *          atributo List<Subject> subjects;
- *          atributo List<Absence> absences;
- * 
+ *          atributo Teacher coordinator;
+ *
  *          operacao criar()
  *          operacao eliminar()
  *          operacao actualizar()
@@ -71,48 +62,105 @@
  * 
  *      FimEntidade
  *      
- *      Entidade Professor
- *          
+ *      Entidade Student
+ *  
+ *          atributo Integer id;
+ *          atributo Person person;
+ *          atributo String telephone;
+ *          atributo Course course;
+ *          atributo List<Year> years;
+ * 
+ *          operacao create()
+ *          operacao read()
+ *          operacao update()
+ *          operacao delete()
+ * 
  *      FimEntidade
-
- *      Entidade Coordenador
- *         
+ * 
+ *      Entidade Course
+ *  
+ *          atributo Integer id;
+ *          atributo string name;
+ *          atributo List<Year> years;
+ *          atributo List<Subject> subjects;
+ * 
+ *          operacao create()
+ *          operacao read()
+ *          operacao update()
+ *          operacao delete()
+ * 
  *      FimEntidade
-
-
+ * 
+ *      Entidade Classroom
+ *  
+ *          atributo Integer id;
+ *          atributo string name;
+ *          atributo List<Student> students;
+ * 
+ *          operacao create()
+ *          operacao read()
+ *          operacao update()
+ *          operacao delete()
+ * 
+ *      FimEntidade
+ * 
+ *      Entidade Teacher
+ *  
+ *          atributo Integer id;
+ *          atributo Person person;
+ *          atributo String telephone;
+ *          atributo List<Course> courses;
+ *          atributo List<Year> years;
+ *          atributo List<Subject> subjects;
+ *          atributo List<Classroom> classrooms;
+ * 
+ *          operacao create()
+ *          operacao read()
+ *          operacao update()
+ *          operacao delete()
+ * 
+ *      FimEntidade
+ * 
+ *      Entidade Year
+ *  
+ *          atributo Integer id;
+ *          atributo List<subject> subjects;
+ *          atributo List<Classroom> classrooms;
+ *          atributo List<TeacherSubject> teachersSubjects;
+ * 
+ *          operacao create()
+ *          operacao read()
+ *          operacao update()
+ *          operacao delete()
+ * 
+ *      FimEntidade
+ * 
  * 
  * 2.3. Entidades Persistentes
  *        
  *       Ficheiros
- *           justificativo.dat  ---->       JustificativoPersistente
- *           estudante.dat      ---->       ClienteNumeroPersistente
+ *           justificativo.dat  ---->  JustificativoPersistente
  *       
  *       Tabelas
+ *          
+ *       Entidade Verified
+ *           atributo Enum(DEFERIDO, INDEFERIDO);
+ *       FimEntidade
  * 
+ *       Entidade TeacherSubject
+ *           atributo Teacher;
+ *           atributo Subject;
+ *       FimEntidade
  * 
- *      Entidade JustificativoPersistente
- *
- *          atributo deferimento           : String -> DEFERIDO, INDEFERIDO, FALTA DE   
- *                                                     COMPROVATIVO
- *          atributo estudante             : Estudante
- *          atributo estudante             : Estudante
- *          atributo provasPerdidas        : List<ProvasPerdida>
- *          atributo tipoDeProva           : String -> EXAME, PP_1, PP_2   
- *          atributo dataEntrada           : Date   
- *          atributo dataEntrega           : Date   
+ *       Entidade LostedTest
+ *           atributo Date date;
+ *           atributo Teacher teacher;
+ *           atributo Subject subject;
+ *       FimEntidade
  * 
- *      FimEntidade
- * 
- *      Entidade EstudantePersistente
- *
- *          atributo estudante             : Estudante
- *          atributo password              : String 
- * 
- *      FimEntidade
- *      
- *      
  *         
  */
+
 public class Analise {
 
 }

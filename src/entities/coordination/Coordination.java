@@ -1,36 +1,25 @@
 package entities.coordination;
 
-import java.util.List;
-
-import entities.classroom.Classroom;
 import entities.course.Course;
-import entities.student.Student;
-import entities.subject.Subject;
 import entities.teacher.Teacher;
+import utils.objects.Common;
 
-public class Coordination {
 
+public class Coordination extends Common {
+
+    private Course course;
     private Teacher coordinator;
-    private List<Course> courses;
-    private List<Classroom> classrooms;
 
     public Coordination() {
+        
     }
 
-    public List<Classroom> getClassrooms() {
-        return classrooms;
+    public Course getCourse() {
+        return course;
     }
 
-    public void setClassrooms(List<Classroom> classrooms) {
-        this.classrooms = classrooms;
-    }
-
-    public List<Course> getCourses() {
-        return courses;
-    }
-
-    public void setCourse(List<Course> courses) {
-        this.courses = courses;
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
     public Teacher getCoordinator() {
@@ -40,5 +29,5 @@ public class Coordination {
     public void setCoordinator(Teacher coordinator) {
         this.coordinator = coordinator;
     }
-
+    
 }

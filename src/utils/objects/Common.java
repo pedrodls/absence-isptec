@@ -5,11 +5,6 @@ public class Common {
     private String name;
     private Integer id;
 
-    public Common(String name, Integer id) {
-        this.id = id;
-        this.name = name;
-    }
-
     public Integer getId() {
         return id;
     }
