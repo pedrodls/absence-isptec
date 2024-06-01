@@ -6,10 +6,10 @@ import utils.enums.Gender;
 
 public class Person {
 
-    private String name;
-    private Date birthDate;
-    private Gender gender;
     private String BI;
+    private String name;
+    private Gender gender;
+    private Date birthDate;
 
     public Person(){}
 

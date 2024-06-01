@@ -1,25 +1,21 @@
-package entities.teacher;
+package entities.student;
 
 import java.util.List;
 
-import entities.classroom.Classroom;
 import entities.course.Course;
-import entities.subject.Subject;
 import entities.year.Year;
 import utils.objects.Person;
 
-public class Teacher {
+public class Student {
 
     private Integer id;
     private Person person;
     private String telephone;
+    private Course course;
 
-    private List<Course> courses;
     private List<Year> years;
-    private List<Subject> subjects;
-    private List<Classroom> classrooms;
 
-    public Teacher() {
+    public Student() {
 
     }
 
@@ -47,12 +43,12 @@ public class Teacher {
         this.telephone = telephone;
     }
 
-    public List<Course> getCourses() {
-        return courses;
+    public Course getCourse() {
+        return course;
     }
 
-    public void setCourses(List<Course> courses) {
-        this.courses = courses;
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
     public List<Year> getYears() {
@@ -61,22 +57,6 @@ public class Teacher {
 
     public void setYears(List<Year> years) {
         this.years = years;
-    }
-
-    public List<Subject> getSubjects() {
-        return subjects;
-    }
-
-    public void setSubjects(List<Subject> subjects) {
-        this.subjects = subjects;
-    }
-
-    public List<Classroom> getClassrooms() {
-        return classrooms;
-    }
-
-    public void setClassrooms(List<Classroom> classrooms) {
-        this.classrooms = classrooms;
     }
 
 }

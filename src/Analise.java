@@ -21,8 +21,8 @@
  *      JustificationUI
  *          Create, Edit, Verify, Drop      : Justification
  *  
- *      CoordenationUI
- *          Create, Read, Update, Delete    : Coordenation
+ *      CoordinationUI
+ *          Create, Read, Update, Delete    : Coordination
  *          Create, Read, Update, Delete    : Student
  *          Create, Read, Update, Delete    : Course
  *          Create, Read, Update, Delete    : Teacher
@@ -69,6 +69,18 @@
  *          atributo String telephone;
  *          atributo Course course;
  *          atributo List<Year> years;
+ * 
+ *          operacao create()
+ *          operacao read()
+ *          operacao update()
+ *          operacao delete()
+ * 
+ *      FimEntidade
+ * 
+ *      Entidade Subject
+ *  
+ *          atributo Integer id;
+ *          atributo String name;
  * 
  *          operacao create()
  *          operacao read()
@@ -147,16 +159,6 @@
  *           atributo Enum(DEFERIDO, INDEFERIDO);
  *       FimEntidade
  * 
- *       Entidade TeacherSubject
- *           atributo Teacher;
- *           atributo Subject;
- *       FimEntidade
- * 
- *       Entidade LostedTest
- *           atributo Date date;
- *           atributo Teacher teacher;
- *           atributo Subject subject;
- *       FimEntidade
  * 
  *         
  */

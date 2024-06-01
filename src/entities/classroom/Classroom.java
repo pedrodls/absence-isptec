@@ -1,20 +1,18 @@
-package data.students;
+package entities.classroom;
 
 import java.util.List;
 
 import entities.student.Student;
+import utils.objects.Common;
 
-public class StudentData {
+public class Classroom extends Common {
 
     private List<Student> students;
 
-    public StudentData() {
-        
-        Student student = new Student();
-
+    public Classroom(){
 
     }
-
+    
     public List<Student> getStudents() {
         return students;
     }
@@ -22,4 +20,6 @@ public class StudentData {
     public void setStudents(List<Student> students) {
         this.students = students;
     }
+
+   
 }
