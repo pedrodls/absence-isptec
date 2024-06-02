@@ -1,15 +1,12 @@
 package utils.objects;
 
-import java.util.Date;
-
-import utils.enums.Gender;
+import utils.enums.GenderTypeEnum;
 
 public class Person {
 
     private String BI;
     private String name;
-    private Gender gender;
-    private Date birthDate;
+    private GenderTypeEnum gender;
 
     public Person(){}
 
@@ -20,16 +17,6 @@ public class Person {
     public void setName(String name) {
         this.name = name;
     }
-    
-    public Date getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
-    }
-
-    
 
     public String getBI() {
         return BI;
@@ -39,11 +26,11 @@ public class Person {
         BI = bI;
     }   
     
-    public Gender getGender() {
+    public GenderTypeEnum getGender() {
         return gender;
     }
 
-    public void setGender(Gender gender) {
+    public void setGender(GenderTypeEnum gender) {
         this.gender = gender;
     }
 }

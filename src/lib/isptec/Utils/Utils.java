@@ -27,7 +27,7 @@ public class Utils
     public static boolean continua()
     {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Continua ? [s]/[S]: ");
+        System.out.println("Continua ? [s]/[S]: ");
         String resposta = scanner.next();
         return resposta.equalsIgnoreCase("s") || 
                         resposta.equalsIgnoreCase("S");
