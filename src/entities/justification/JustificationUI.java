@@ -1,15 +1,14 @@
 package entities.justification;
 
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Scanner;
 
 import entities.lostedTest.LostedTest;
 import entities.student.Student;
+import lib.isptec.listas.Listas;
 import lib.isptec.utils.DataUtils;
 import utils.enums.LostedTypeEnum;
 
@@ -26,6 +25,13 @@ public class JustificationUI {
 
     public JustificationUI() {
 
+        this.student = null;
+        this.createdAt = null;
+        this.absenceEnd = null;
+        this.description = "";
+        this.lostedTests = null;
+        this.absenceStart = null;
+        this.lostedTestType = null;
     }
 
     public JustificationUI(JustificationUI jt) {
@@ -40,14 +46,15 @@ public class JustificationUI {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
 
-        return "Ausencia: " + " { \n\t\t\tPeriodo: de " + this.getAbsenceStart() + " à " + this.getAbsenceEnd() + "\n\t\t\tTotal de dias: " + DataUtils.getDifferenceDays(this.absenceStart, this.absenceEnd) + "\n\t\t\tMotivo: " + this.description + "\n}";
+        return "Ausencia: " + " { \n\t\t\tPeriodo: de " + this.getAbsenceStart() + " à " + this.getAbsenceEnd()
+                + "\n\t\t\tTotal de dias: " + DataUtils.getDifferenceDays(this.absenceStart, this.absenceEnd)
+                + "\n\t\t\tMotivo: " + this.description + "\n}";
     }
 
-    public static JustificationUI create(){
+    public static JustificationUI create() {
 
-        
         Boolean init = true;
         String auxString;
         Boolean getOutAddingLostTest = false;
@@ -61,14 +68,14 @@ public class JustificationUI {
         JustificationUI jt = new JustificationUI();
 
         System.out.println("\n*****************Dados do estudante*****************\n");
-        
+
         Student st = Student.create();
 
         jt.setStudent(st);
 
         System.out.println("\n*****************Dados da(s) Falta*****************\n");
 
-        do{
+        do {
             if (counterValidationDate > 0) {
                 System.out.println("\nData inválida!\n");
             }
@@ -76,14 +83,14 @@ public class JustificationUI {
             System.out.println("Data de inicio da(s) falta(s) (dd-mm-aaaa): ");
             auxString = sc.nextLine();
             jt.setAbsenceStart(DataUtils.stringToDate(auxString));
-    
+
             counterValidationDate++;
 
-        }while(jt.getAbsenceStart() == null);
-        
+        } while (jt.getAbsenceStart() == null);
+
         counterValidationDate = 0;
 
-        do{
+        do {
             if (counterValidationDate > 0) {
                 System.out.println("\nData inválida!\n");
             }
@@ -93,95 +100,330 @@ public class JustificationUI {
             jt.setAbsenceEnd(DataUtils.stringToDate(auxString));
 
             counterValidationDate++;
-            
-        }while(jt.getAbsenceEnd() == null || jt.getAbsenceEnd().compareTo(jt.getAbsenceStart()) < 0);
-        
 
-       do {
+        } while (jt.getAbsenceEnd() == null || jt.getAbsenceEnd().compareTo(jt.getAbsenceStart()) < 0);
+
+        do {
             System.out.println("Motivo das faltas: ");
             auxString = sc.nextLine();
             jt.setDescription(auxString);
-       } while (!(jt.getDescription().length() > 0));
+        } while (!(jt.getDescription().length() > 0));
 
         System.out.println("\n**********Dados da(s) Prova(s) Perdida(s)**********\n");
-       
 
-        do
-        {
-            
-            try
-            {
+        do {
+
+            try {
 
                 System.out.println("Adicionar Prova Perdida [1 - Sim | 2 - Nao]: ");
-                Integer opcaoEscolhida = sc.nextInt();
+                String opcaoEscolhida = sc.next();
 
                 switch (opcaoEscolhida) {
-                    case 1:
-                        
+                    case "1":
+
                         while (init) {
 
-                            try {
+                            System.out.println("Tipo de Prova [1 - Exame | 2 - 1PP | 3 - 2PP]: ");
+                            Integer op = sc.nextInt();
 
-                                System.out.println("Tipo de Prova [1 - Exame | 2 - 1PP | 3 - 2PP]: ");
-                                Integer op = sc.nextInt();
+                            switch (op) {
+                                case 1:
+                                    jt.setLostedTestType(LostedTypeEnum.EXAME);
+                                    init = false;
 
-                                switch (op) {
-                                    case 1:
-                                        jt.setLostedTestType(LostedTypeEnum.EXAME);
-                                        init = false;
+                                    break;
 
-                                        break;
+                                case 2:
+                                    jt.setLostedTestType(LostedTypeEnum.PP_1);
+                                    init = false;
 
-                                    case 2:
-                                        jt.setLostedTestType(LostedTypeEnum.PP_1);
-                                        init = false;
-                                        
-                                        break;
-                                    
-                                    case 3:
-                                        jt.setLostedTestType(LostedTypeEnum.PP_2);
-                                        init = false;
-                                        
-                                        break;
-                                    default: 
+                                    break;
+
+                                case 3:
+                                    jt.setLostedTestType(LostedTypeEnum.PP_2);
+                                    init = false;
+
+                                    break;
+                                default:
                                     System.out.println("opcao invalida.");
 
-                                }
-                            } catch (Exception e) {
-                                System.out.println("opcao invalida.");
                             }
-                                
+
                         }
 
                         lostedTest = LostedTest.create(jt.getAbsenceStart(), jt.getAbsenceEnd());
-                        
+
                         lostedTests.add(lostedTest);
 
                         break;
 
-                    case 2: 
+                    case "2":
 
                         jt.setLostedTests(lostedTests);
 
                         getOutAddingLostTest = true;
 
-                    break;
+                        break;
                     default:
-                    System.out.println("opcao invalida.");
+                        System.out.println("opcao invalida.");
                 }
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 System.out.println("opcao invalida.");
             }
 
-
-        }while(!getOutAddingLostTest);
+        } while (!getOutAddingLostTest);
 
         return jt;
 
-    } 
+    }
 
+    public static JustificationUI edit(JustificationUI jt) {
+
+        Boolean init = true;
+        String auxString;
+        Boolean getOutAddingLostTest = false;
+        Boolean getOutAddingEditing = false;
+        Integer counterValidationDate = 0;
+
+        LostedTest lostedTest;
+        List<LostedTest> lostedTests = jt.getLostedTests();
+
+        Scanner sc = new Scanner(System.in);
+
+        do {
+
+            System.out.println("\nEscolha a secção a editar\n");
+
+            String opcoes[] = {
+                    "Justificativo", "Estudante", "Provas Perdidas", "Sair"
+            };
+
+            int opcao = Listas.enviarLerOpcaoEscolhida(opcoes);
+
+            switch (opcao) {
+
+                case 1:
+                    System.out.println("\n*****************Dados da(s) Falta*****************\n");
+
+                    do {
+                        if (counterValidationDate > 0) {
+                            System.out.println("\nData inválida!\n");
+                        }
+
+                        System.out.println("Antiga Data de inicio da(s) falta(s): " + jt.getAbsenceStart());
+
+                        System.out.print("Nova Data de inicio da(s) falta(s) (dd-mm-aaaa): ");
+
+                        auxString = sc.nextLine();
+                        jt.setAbsenceStart(DataUtils.stringToDate(auxString));
+
+                        counterValidationDate++;
+
+                    } while (jt.getAbsenceStart() == null);
+
+                    counterValidationDate = 0;
+
+                    do {
+                        if (counterValidationDate > 0) {
+                            System.out.println("\nData inválida!\n");
+                        }
+
+                        System.out.println("Antiga Data de fim da(s) falta(s): " + jt.getAbsenceEnd());
+
+                        System.out.print("Data de fim da(s) falta(s) (dd-mm-aaaa): ");
+                        auxString = sc.nextLine();
+                        jt.setAbsenceEnd(DataUtils.stringToDate(auxString));
+
+                        counterValidationDate++;
+
+                    } while (jt.getAbsenceEnd() == null || jt.getAbsenceEnd().compareTo(jt.getAbsenceStart()) < 0);
+
+                    do {
+                        System.out.println("Antigo Motivo das faltas: " + jt.getDescription());
+                        System.out.print("Novo Motivo das faltas: ");
+                        auxString = sc.nextLine();
+                        jt.setDescription(auxString);
+                    } while (!(jt.getDescription().length() > 0));
+
+                    getOutAddingEditing = true;
+
+                    System.out.println("Secção actualizada com sucesso!\n");
+
+                    break;
+
+                case 2:
+                    System.out.println("\n*****************Dados do estudante*****************\n");
+
+                    Student st = Student.edit(jt.getStudent());
+
+                    jt.setStudent(st);
+
+                    System.out.println("Secção atualizada com sucesso!\n");
+
+                    getOutAddingEditing = true;
+
+                    break;
+                case 3:
+                    System.out.println("\n**********Dados da(s) Prova(s) Perdida(s)**********\n");
+
+                    while (init) {
+
+                        if (jt.getLostedTestType() != null)
+                            System.out.println("Antigo Tipo de Prova: "
+                                    + jt.getLostedTestType().toString());
+
+                        System.out.println("Novo Tipo de Prova [1 - Exame | 2 - PP_1 | 3 - PP_2 | 4 - Nenhuma]: ");
+                        Integer op = sc.nextInt();
+
+                        switch (op) {
+                            case 1:
+                                jt.setLostedTestType(LostedTypeEnum.EXAME);
+                                init = false;
+                                System.out.println("Secção atualizada com sucesso!\n");
+
+                                break;
+
+                            case 2:
+                                jt.setLostedTestType(LostedTypeEnum.PP_1);
+                                init = false;
+                                System.out.println("Secção atualizada com sucesso!\n");
+
+                                break;
+
+                            case 3:
+                                jt.setLostedTestType(LostedTypeEnum.PP_2);
+                                init = false;
+                                System.out.println("Secção atualizada com sucesso!\n");
+
+                                break;
+                            case 4:
+                                init = false;
+                                getOutAddingEditing = true;
+                                break;
+                            default:
+                                System.out.println("opção inválida!");
+
+                        }
+
+                    }
+
+                    if (getOutAddingEditing) {
+                        break;
+                    }
+
+                    do {
+
+                        System.out.println("Adicionar Prova Perdida [1] :");
+                        System.out.println("Editar    Prova Perdida [2] :");
+                        System.out.println("Eliminar  Prova Perdida [3] :");
+                        System.out.println("Terminar  Edição        [4] :");
+
+                        String opcaoEscolhida = sc.next();
+
+                        switch (opcaoEscolhida) {
+                            case "1":
+
+                                lostedTest = LostedTest.create(jt.getAbsenceStart(), jt.getAbsenceEnd());
+
+                                lostedTests.add(lostedTest);
+
+                                System.out.println("Prova perdida adicionada com sucesso!\n");
+
+                                break;
+
+                            case "2":
+
+                                if (jt.getLostedTests().size() > 0) {
+
+                                    Integer index = 0;
+
+                                    System.out.println("\nProvas perdidas\n");
+
+                                    for (LostedTest lt : jt.getLostedTests()) {
+                                        System.out.println("\nId:" + index + " -> " + lt.toString() + "\n");
+                                        System.out.println("\n- - -- - - - - - - - - - - - -\n");
+                                        index++;
+                                    }
+
+                                    System.out.print("\nIndica o id da prova a editar: ");
+                                    Integer id = sc.nextInt();
+
+                                    if (id >= 0 && id < lostedTests.size()) {
+
+                                        lostedTest = LostedTest.edit(jt.getAbsenceStart(), jt.getAbsenceEnd(),
+                                                lostedTests.get(id));
+
+                                        lostedTests.set(id, lostedTest);
+
+                                        System.out.println("Prova perdida editada com sucesso!\n");
+
+                                    } else {
+                                        System.out.println("\nId errado");
+                                    }
+                                } else
+                                    System.out.println("Sem Prova(s) perdida(s) para editar!\n");
+
+                                break;
+
+                            case "3":
+
+                                if (jt.getLostedTests().size() > 0) {
+
+                                    Integer index = 0;
+
+                                    System.out.println("\nProvas perdidas\n");
+
+                                    for (LostedTest lt : jt.getLostedTests()) {
+                                        System.out.println("\nId:" + index + " -> " + lt.toString() + "\n");
+                                        System.out.println("\n- - -- - - - - - - - - - - - -\n");
+                                        index++;
+                                    }
+
+                                    System.out.print("\nIndica o Id da prova a eliminar: ");
+                                    Integer id = sc.nextInt();
+
+                                    if (id >= 0 && id < lostedTests.size()) {
+
+                                        lostedTests.remove(id);
+
+                                        System.out.println("Prova perdida eliminda com sucesso!\n");
+
+                                    } else {
+                                        System.out.println("\nId errado");
+                                    }
+                                } else
+                                    System.out.println("Sem Prova perdida para eliminar!\n");
+
+                                break;
+
+                            case "4":
+
+                                jt.setLostedTests(lostedTests);
+
+                                getOutAddingLostTest = true;
+
+                                break;
+                            default:
+                                System.out.println("opcao invalida.");
+                        }
+
+                    } while (!getOutAddingLostTest);
+
+                    getOutAddingEditing = true;
+
+                    break;
+
+                case 4:
+                    getOutAddingEditing = true;
+                    break;
+                default:
+                    System.out.println("Opção inválida! Tente novamente!");
+            }
+
+        } while (!getOutAddingEditing);
+
+        return jt;
+    }
 
     public LostedTypeEnum getLostedTestType() {
         return lostedTestType;

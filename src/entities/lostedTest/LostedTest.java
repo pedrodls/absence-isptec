@@ -18,8 +18,8 @@ public class LostedTest {
         this.subject = "";
     }
 
-    public LostedTest(LostedTest lt){
-        
+    public LostedTest(LostedTest lt) {
+
         this.date = lt.getDate();
         this.teacher = lt.getTeacher();
         this.subject = lt.getSubject();
@@ -41,32 +41,75 @@ public class LostedTest {
         lt.setTeacher(auxString);
 
         System.out.print("Nome da disciplina: ");
-        auxString= sc.nextLine();
+        auxString = sc.nextLine();
         lt.setSubject(auxString);
 
-        do{
-            
+        do {
+
             if (counterValidationDate > 0) {
                 System.out.println("\nData inválida ou fora do intervalo!\n");
-               
+
             }
 
             System.out.println("Data da falta (dd-mm-aaaa): ");
             auxString = sc.nextLine();
             lt.setDate(DataUtils.stringToDate(auxString));
 
-            counterValidationDate++;         
-    
-        }while(lt.getDate() == null || !(lt.getDate().compareTo(starDate) >= 0 && lt.getDate().compareTo(enDate) <= 0));
+            counterValidationDate++;
+
+        } while (lt.getDate() == null
+                || !(lt.getDate().compareTo(starDate) >= 0 && lt.getDate().compareTo(enDate) <= 0));
 
         return lt;
     }
 
-    @Override
-    public String toString(){
+    public static LostedTest edit(LocalDate starDate, LocalDate enDate, LostedTest oldTest) {
 
-        return "Prova: " + " { \nDisciplina: " + this.getSubject() + "\nData: " + this.getDate() + "\nProfessor: " + this.getTeacher()
-        + "\n}";
+        Scanner sc = new Scanner(System.in);
+
+        String auxString;
+
+        Integer counterValidationDate = 0;
+
+        System.out.println("Antigo Nome do Professor: "+oldTest.getTeacher());
+        System.out.print("Novo Nome do Professor: ");
+        auxString = sc.nextLine();
+        oldTest.setTeacher(auxString);
+
+        System.out.println("Antigo Nome da disciplina: "+oldTest.getSubject());
+        System.out.print("Novo Nome da disciplina: ");
+        auxString = sc.nextLine();
+        oldTest.setSubject(auxString);
+
+        do {
+
+            if (counterValidationDate > 0) {
+                System.out.println("\nData inválida ou fora do intervalo!\n");
+
+            }
+
+            System.out.println("Antiga Data da falta (dd-mm-aaaa): "+oldTest.getDate());
+            System.out.println("Nova Data da falta (dd-mm-aaaa): ");
+            auxString = sc.nextLine();
+            oldTest.setDate(DataUtils.stringToDate(auxString));
+
+            counterValidationDate++;
+
+        } while (
+            oldTest.getDate() == null
+            || !(oldTest.getDate().compareTo(starDate) >= 0 
+            && oldTest.getDate().compareTo(enDate) <= 0)
+        );
+
+        return oldTest;
+    }
+
+    @Override
+    public String toString() {
+
+        return "Prova: " + " { \n\t\t\tDisciplina: " + this.getSubject() + "\n\t\t\tData: " + this.getDate()
+                + "\n\t\t\tProfessor: " + this.getTeacher()
+                + "\n}";
     }
 
     public String getTeacher() {
