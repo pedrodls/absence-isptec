@@ -1,5 +1,6 @@
 package utils.functions;
 
+import lib.clearBuffer.ClearBuffer;
 import lib.isptec.listas.Listas;
 
 /**
@@ -12,6 +13,10 @@ public class MainMenu {
     public static void mainMenu() {
         for (;;) {
             
+            ClearBuffer.clear();
+
+            System.out.println("\n*****************Menu Principal*****************\n");
+
             String opcoes[] = {
                     "Justificativo", "Sair"
             };
@@ -20,7 +25,8 @@ public class MainMenu {
 
             switch (opcao) {
                 case 1:
-                    System.out.println("Em desenvolvimento 1");
+                
+                    JustificatioMenu.presentMenu();
 
                     break;
 

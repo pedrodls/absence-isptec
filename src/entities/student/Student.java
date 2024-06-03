@@ -1,17 +1,126 @@
 package entities.student;
 
 
-import utils.objects.Person;
+import java.util.Scanner;
 
-public class Student extends Person {
+public class Student  {
 
     private Integer id;
     private String telephone;
     private String email;
     private String course;
-
+    private String name;
+    
     public Student() {
+        this.id = 0;
+        this.name = "";
+        this.email = "";
+        this.course = "";
+        this.telephone = "";
+    }
 
+    public Student(Student student) {
+        
+        this.id = student.getId();
+        this.name = student.getName();
+        this.email = student.getEmail();
+        this.course = student.getCourse();
+        this.telephone = student.getTelephone();
+
+    }
+
+    public static Student create()
+    {
+        Student st = new Student();
+
+        Scanner sc = new Scanner(System.in);
+
+        String  numbers = "0123456789";
+
+        Boolean validate = false;
+
+        do
+        {
+            System.out.print("Nome: ");
+            String name = sc.nextLine();
+            st.setName(name);
+            
+        }while(!(st.getName().length() > 0));
+       
+        do
+        {
+            System.out.print("Curso: ");
+            String course = sc.nextLine();
+            st.setCourse(course);
+            
+        }while(!(st.getCourse().length() > 0));
+
+        do {
+            System.out.print("Email: ");
+            String email = sc.nextLine();
+            st.setEmail(email);
+        } while (!(st.getEmail().length() > 0));
+
+       do {
+
+            System.out.print("Telefone: ");
+            String telephone = sc.nextLine();
+
+            for(Integer i=0; i < telephone.toCharArray().length ; i++){
+                if (!Character.isDigit(telephone.toCharArray()[i])) {
+
+                    System.out.print("\nNúmero de telefone inválido! Insira novamente!\n");
+
+                    validate = false;
+
+                    break;
+                }
+
+                if (i == telephone.toCharArray().length - 1) {
+                    st.setTelephone(telephone);
+                    validate = true;
+                }
+            }
+       
+        } while (!validate); 
+
+        validate = false;
+
+        do {
+
+            System.out.print("Número | Matricula: ");
+            String id = sc.nextLine();
+
+            for(Integer i=0; i < id.toCharArray().length; i++){
+                if (!Character.isDigit(id.toCharArray()[i])) {
+                    
+                    System.out.print("\nNúmero | Matricula inválido! Insira novamente!\n");
+                    
+                    validate = false;
+
+                    break;
+                }
+
+                if (i == id.toCharArray().length - 1) {
+                    
+                    st.setId(Integer.parseInt(id));
+                    
+                    validate = true;
+
+                    break;
+                }
+            }
+       
+        } while (!validate); 
+       
+        return st;
+    }
+
+    @Override
+    public String toString(){
+
+        return "Estudante: " + " \n{ \n\t\t\tNumero: " + this.getId() + "\n\t\t\tNome: " + this.getName() + "\n\t\t\tCurso: " + this.getCourse()
+        + "\n\t\t\tEmail: " + this.getEmail() +  "\n\t\t\tTelephone: " + this.getTelephone() + "\n}";
     }
 
     public String getCourse() {
@@ -44,6 +153,14 @@ public class Student extends Person {
 
     public void setTelephone(String telephone) {
         this.telephone = telephone;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
 }
