@@ -81,25 +81,8 @@ public class JustificatioMenu {
 
                     if (justification.getCreatedAt() != null) {
 
-                        System.out.println(justification.toString());
+                       System.out.println(justification.toString());
 
-                        System.out.println(justification.getStudent().toString());
-
-                        if (justification.getLostedTestType() != null)
-                            System.out.println(
-                                    "\nTipo de Prova Perdida: " + justification.getLostedTestType().toString() + "\n");
-
-                        if (justification.getLostedTests().size() > 0) {
-                            Integer index = 0;
-
-                            System.out.println("\nProvas perdidas\n");
-
-                            for (LostedTest lt : justification.getLostedTests()) {
-                                System.out.println("\nId:" + index + " -> " + lt.toString() + "\n");
-                                System.out.println("\n- - -- - - - - - - - - - - - -\n");
-                                index++;
-                            }
-                        }
                     }else
                         System.out.println("\nNão existe formulário disponível!\n");
 

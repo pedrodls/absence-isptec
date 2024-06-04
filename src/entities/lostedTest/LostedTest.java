@@ -107,8 +107,8 @@ public class LostedTest {
     @Override
     public String toString() {
 
-        return "Prova: " + " { \n\t\t\tDisciplina: " + this.getSubject() + "\n\t\t\tData: " + this.getDate()
-                + "\n\t\t\tProfessor: " + this.getTeacher()
+        return  "\n{ \n\tDisciplina: " + this.getSubject() + ",\n\tData: " + this.getDate()
+                + ",\n\tProfessor: " + this.getTeacher()
                 + "\n}";
     }
 

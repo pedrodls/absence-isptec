@@ -48,9 +48,38 @@ public class JustificationUI {
     @Override
     public String toString() {
 
-        return "Ausencia: " + " { \n\t\t\tPeriodo: de " + this.getAbsenceStart() + " à " + this.getAbsenceEnd()
-                + "\n\t\t\tTotal de dias: " + DataUtils.getDifferenceDays(this.absenceStart, this.absenceEnd)
-                + "\n\t\t\tMotivo: " + this.description + "\n}";
+        String justification = "Dados de Ausência\n{\n\tPeriodo: " + this.getAbsenceStart() + " à "
+                + this.getAbsenceEnd()
+                + ",\n\tTotal de dias: " + DataUtils.getDifferenceDays(this.absenceStart, this.absenceEnd)
+                + ",\n\tMotivo: " + this.description + "\n}\n?";
+
+        String student = this.getStudent().toString();
+
+        String lostedTestType = "\nTipo de Prova Perdida\n";
+        String lostedTest = "\nDescrição das Provas Perdidas\n";
+
+        if (this.getLostedTestType() != null)
+            lostedTestType += this.getLostedTestType().toString() + "\n";
+
+        if (this.getLostedTests().size() > 0) {
+
+            Integer index = 0;
+
+            for (LostedTest lt : this.getLostedTests()) {
+                lostedTest += "\nId:" + index + " -> " + lt.toString() + "\n";
+                lostedTest += "\n- - -- - - - - - - - - - - - -\n";
+                lostedTest += "\n?\n";
+            }
+        }
+
+        return justification + student +"\n?"+ lostedTestType +"\n?\n"+lostedTest;
+    }
+
+    public static JustificationUI fromString(String jtString) {
+
+        JustificationUI justificationUI = new JustificationUI();
+
+        return justificationUI; 
     }
 
     public static JustificationUI create() {

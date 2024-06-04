@@ -205,8 +205,7 @@ public class Student  {
     @Override
     public String toString(){
 
-        return "Estudante: " + " \n{ \n\t\t\tNumero: " + this.getId() + "\n\t\t\tNome: " + this.getName() + "\n\t\t\tCurso: " + this.getCourse()
-        + "\n\t\t\tEmail: " + this.getEmail() +  "\n\t\t\tTelephone: " + this.getTelephone() + "\n}";
+        return "Dados do Estudante " + " \n{ \n\tNumero: " + this.getId() + ",\n\tNome: " + this.getName() + ",\n\tCurso: " + this.getCourse() + ",\n\tEmail: " + this.getEmail() +  ",\n\tTelephone: " + this.getTelephone() + "\n}";
     }
 
     public String getCourse() {
