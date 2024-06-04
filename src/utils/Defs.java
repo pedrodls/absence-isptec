@@ -8,7 +8,7 @@ package utils;
 
 public class Defs
 {
-    public static final String CLIENTES_FILE = "justification.txt";
+    public static final String JUSTIFICATIONS_FILE = "justification.txt";
     public static final String TMP_FILE = "___tmpfile";
-    
+
 }

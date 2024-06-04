@@ -18,6 +18,12 @@ public class LostedTest {
         this.subject = "";
     }
 
+    public LostedTest(LocalDate date, String teacher, String subject) {
+        this.date = date;
+        this.teacher = teacher;
+        this.subject = subject;
+    }
+
     public LostedTest(LostedTest lt) {
 
         this.date = lt.getDate();

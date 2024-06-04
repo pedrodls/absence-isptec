@@ -19,6 +19,14 @@ public class Student  {
         this.telephone = "";
     }
 
+    public Student(Integer id, String name, String email, String course, String telephone) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.course = course;
+        this.telephone = telephone;
+    }
+
     public Student(Student student) {
         
         this.id = student.getId();

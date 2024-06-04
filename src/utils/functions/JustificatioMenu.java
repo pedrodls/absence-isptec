@@ -2,12 +2,14 @@ package utils.functions;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import entities.justification.JustificationUI;
 import entities.lostedTest.LostedTest;
 import lib.clearBuffer.ClearBuffer;
 import lib.isptec.listas.Listas;
 import lib.isptec.utils.DataUtils;
+import persistence.model.JustificationModel;
 
 public class JustificatioMenu {
 
@@ -29,6 +31,8 @@ public class JustificatioMenu {
 
                 System.out.println("Justificativo criado com sucesso!\n");
 
+                JustificationModel.create(justification);
+
                 created = false;
             }
 
@@ -47,7 +51,7 @@ public class JustificatioMenu {
             }
 
             String opcoes[] = {
-                    "Novo", "Ver", "Editar", "Eliminar", "Sair"
+                    "Novo", "Ver todos", "Ver um usuário", "Editar", "Eliminar", "Sair"
             };
 
             int opcao = Listas.enviarLerOpcaoEscolhida(opcoes);
@@ -79,12 +83,21 @@ public class JustificatioMenu {
 
                     ClearBuffer.clear();
 
-                    if (justification.getCreatedAt() != null) {
+                    List<JustificationUI> justifications = JustificationModel.read();
 
-                       System.out.println(justification.toString());
+                    if (justifications.size() > 0) {
+                        for (JustificationUI jt : justifications) {
 
-                    }else
+                            if (jt.getCreatedAt() != null) {
+
+                                System.out.println(justification.toString());
+
+                            }
+                        }
+                    } else {
                         System.out.println("\nNão existe formulário disponível!\n");
+
+                    }
 
                     break;
 

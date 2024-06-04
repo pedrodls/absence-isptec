@@ -4,7 +4,7 @@ import lib.isptec.listas.Listas;
 
 public enum LostedTypeEnum {
 
-    EXAME("Casa"), PP_1("Emprego"), PP_2("Telemovel");
+    EXAME("Exame"), PP_1("PP_1"), PP_2("PP_2");
 
     private final String designacao; 
 

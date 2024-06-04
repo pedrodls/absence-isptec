@@ -45,6 +45,18 @@ public class JustificationUI {
         this.lostedTestType = jt.getLostedTestType();
     }
 
+    public JustificationUI(Student st, LocalDate createdAt, LocalDate absenceStart, LocalDate absenceEnd,
+            String description, List<LostedTest> lostedTests, LostedTypeEnum lostedTypeEnum) {
+
+        this.student = st;
+        this.createdAt = createdAt;
+        this.absenceEnd = absenceEnd;
+        this.description = description;
+        this.lostedTests = lostedTests;
+        this.absenceStart = absenceStart;
+        this.lostedTestType = lostedTypeEnum;
+    }
+
     @Override
     public String toString() {
 
@@ -72,14 +84,55 @@ public class JustificationUI {
             }
         }
 
-        return justification + student +"\n?"+ lostedTestType +"\n?\n"+lostedTest;
+        return justification + student + "\n?" + lostedTestType + "\n?\n" + lostedTest;
     }
 
     public static JustificationUI fromString(String jtString) {
 
         JustificationUI justificationUI = new JustificationUI();
+        Student st = new Student();
+        LostedTest lostedTest = new LostedTest();
+        List<LostedTest> lostedTests = new ArrayList<LostedTest>();
 
-        return justificationUI; 
+        String studentStr = jtString.split(";")[0];
+
+        st = new Student(Integer.parseInt(studentStr.split(",")[0]), studentStr.split(",")[1],
+                studentStr.split(",")[2], studentStr.split(",")[3], studentStr.split(",")[4]);
+
+        if ((jtString.split(";")).length == 4) {
+            String lostedTestsStr = jtString.split(";")[3];
+
+            String[] lostedTestArray = lostedTestsStr.split("_");
+
+            for (Integer i = 0; i < lostedTestArray.length; i++) {
+
+                System.out.println(lostedTestArray[i]);
+
+                String getStr = (lostedTestArray[i]).replace('_', ' ').trim();
+
+                lostedTest = new LostedTest(DataUtils.stringToDate(getStr.split(",")[0]),
+                        getStr.split(",")[1],
+                        getStr.split(",")[2]);
+
+
+                lostedTests.add(lostedTest);
+
+            }
+        }
+
+        String jt = jtString.split(";")[1];
+
+        String designationEnumStr = "";
+
+        if (jtString.split(";").length > 2) {
+            designationEnumStr = jtString.split(";")[2];
+        }
+
+        justificationUI = new JustificationUI(st, DataUtils.stringToDate(jt.split(",")[0]),
+                DataUtils.stringToDate(jt.split(",")[1]), DataUtils.stringToDate(jt.split(",")[2]), jt.split(",")[3],
+                lostedTests, LostedTypeEnum.fromDesignacao(designationEnumStr));
+
+        return justificationUI;
     }
 
     public static JustificationUI create() {
