@@ -16,7 +16,7 @@ public class MainMenu {
             System.out.println("\n*****************Menu Principal*****************\n");
 
             String opcoes[] = {
-                    "Motivos de Falta", "Sair"
+                    "Justificativo", "Sair"
             };
 
             int opcao = Listas.enviarLerOpcaoEscolhida(opcoes);

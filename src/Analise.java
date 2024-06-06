@@ -49,6 +49,12 @@
  *          actualizar
  *          visualizar
  * 
+ *      AnoLectivoUI
+ *          criar
+ *          eliminar
+ *          actualizar
+ *          visualizar
+ * 
  *      AnoAcademicoUI
  *          criar
  *          eliminar
@@ -243,16 +249,6 @@
  *          operacao visualizar()
  *      FimEntidade
  * 
- *      Entidade Funcionario
- *          atributo id                 :   Integer
- *          atributo descricao          :   String
- * 
- *          operacao criar()
- *          operacao eliminar()
- *          operacao actualizar()
- *          operacao visualizar()
- *      FimEntidade
- * 
  * 
  * 2.3. Entidades Persistentes
  * 
@@ -266,6 +262,7 @@
  *          estudantes.dat              ---->   EstudantePersistente
  *          professores.dat             ---->   ProfessorPersistente
  *          cursos.dat                  ---->   CursoPersistente
+ *          anos_letivos.dat            ---->   AnoLetivoPersistente
  *          anos_academicos.dat         ---->   AnoAcademicoPersistente
  *          disciplinas.dat             ---->   disciplinaPersistente
  *          cursoAnoDisciplina.dat      ---->   CursoAnoDisciplinaPersistente
@@ -342,6 +339,11 @@
  *      FimEntidade
  * 
  *      Entidade   AnoAcademicoPersistente
+ *          atributo id                 :   Integer
+ *          atributo descricao          :   String(20)
+ *      FimEntidade
+ * 
+ *      Entidade   AnoLetivoPersistente
  *          atributo id                 :   Integer
  *          atributo descricao          :   String(20)
  *      FimEntidade

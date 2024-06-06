@@ -6,7 +6,9 @@ public class JustificacaoUI {
     }
 
     public static void create(){
+        
         Justificacao justificacao = new Justificacao();
+
 
         
     }
