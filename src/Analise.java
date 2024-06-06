@@ -11,7 +11,7 @@
  * 
  * 
  * 2.   Análise
- * 2.1. Interface de utilizador (IU) / Menu Principal
+ * 2.1. Interface de utilizador (IU) / Menu Principal & Sub-menus
  * 
  *      JustificativoUI
  *          criar
