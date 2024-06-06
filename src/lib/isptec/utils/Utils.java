@@ -1,13 +1,14 @@
-package lib.isptec.utils;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package isptec.utils;
 
-
+import isptec.listas.Listas;
 import java.text.DecimalFormat;
 import java.util.Objects;
 import java.util.Scanner;
-
-import lib.isptec.listas.Listas;
-
-
 
 /**
  *
@@ -15,6 +16,7 @@ import lib.isptec.listas.Listas;
  */
 public class Utils
 {
+
     public static boolean concorda()
     {
         String opcoes[] =
@@ -23,31 +25,104 @@ public class Utils
         };
         return Listas.enviarLerOpcaoEscolhida(opcoes) == 1;
     }
-    
+
     public static boolean continua()
     {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Continua ? [S]/[N]: ");
-        String resposta = scanner.next();
-        return resposta.equalsIgnoreCase("s") || 
-                        resposta.equalsIgnoreCase("S");
+        System.out.print("Continua ? [s]/[S]: ");
+        String resposta = next();
+        if (resposta.equalsIgnoreCase(""))
+            resposta = "s";
+        return resposta.equalsIgnoreCase("s")
+            || resposta.equalsIgnoreCase("S");
     }
-    
+
     public static boolean continua(String msg)
     {
         System.out.println(msg);
         return continua();
     }
-    
+
     public static boolean pergunta(String msg)
     {
-        Scanner scanner = new Scanner(System.in);
+//        Scanner scanner = new Scanner(System.in);
         System.out.print(msg + " ? [s]/[S]: ");
-        String resposta = scanner.next();
-        return resposta.equalsIgnoreCase("s") || 
-                        resposta.equalsIgnoreCase("S");
+        String resposta = next();
+        if (resposta.equalsIgnoreCase(""))
+            resposta = "s";
+        return resposta.equalsIgnoreCase("s")
+            || resposta.equalsIgnoreCase("S");
     }
-    
+
+    public static String sameLine(String word)
+    {
+        word = (word.isBlank() || word.isEmpty())
+            ? "" : word.trim();
+        System.out.print(word + " ? ");
+        Scanner scanner = new Scanner(System.in);
+        String resposta = null;
+        try
+        {
+            resposta = scanner.nextLine();
+        }
+        catch (Exception ex)
+        {
+            resposta = "";
+        }
+        resposta = (resposta == null) ? "" : resposta.trim();
+        return (resposta.isBlank() || resposta.isEmpty())
+            ? word.trim() : resposta;
+    }
+
+    public static String same(String word)
+    {
+//        System.out.println("\n0: Utils.same(String)\tword: " + word);
+        if (word == null)
+        {
+            return "";
+        }
+//        System.out.println("\n1: Utils.same(String)\tword: " + word);
+        word = (word.isBlank() || word.isEmpty())
+            ? "" : word.trim();
+//        System.out.println("\n2: Utils.same(String)\tword: " + word);
+        System.out.print(word + " ? ");
+//        Scanner scanner = new Scanner(System.in);
+        String resposta = null;
+        try
+        {
+            resposta = next();
+//            System.out.println("\n3: Utils.same(String)\tword: " + word);
+        }
+        catch (Exception ex)
+        {
+            resposta = "";
+//            System.out.println("\n4.3: Utils.same(String)\tword: " + word);
+        }
+//        System.out.println("\n5: Utils.same(String)");
+        resposta = (resposta == null) ? "" : resposta;
+//        System.out.println("\n6: Utils.same(String)");
+        return (resposta.isBlank() || resposta.isEmpty())
+            ? word : resposta;
+    }
+
+    public static String next()
+    {
+        Scanner scanner = new Scanner(System.in);
+        String resposta = null;
+        try
+        {
+            resposta = scanner.nextLine();
+        }
+        catch (Exception ex)
+        {
+            return "";
+        }
+        if (resposta == null)
+            return "";
+        resposta = resposta.trim();
+        return (resposta.isBlank() || resposta.isEmpty())
+            ? "" : resposta.split(" ")[0];
+    }
+
     public static void exit(String msg)
     {
         System.err.println(msg);

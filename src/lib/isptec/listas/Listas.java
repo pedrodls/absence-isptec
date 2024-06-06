@@ -1,10 +1,8 @@
-package lib.isptec.listas;
-
-
-
-
-
-
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
+ */
+package isptec.listas;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,6 +20,7 @@ public class Listas
      *
      * @author Aires Veloso
      * @param lista
+     * @return 
      */
 //    public static Scanner scanner = new Scanner(System.in);
     public static int enviarLerOpcaoEscolhida(String lista[])
@@ -84,7 +83,7 @@ public class Listas
             msg = msg.trim();
         }
 
-        String label = "Escolha uma das seguintes opcoes [1 a " + sz + "] ";
+        String label = "Escolha uma das seguintes opcoes [1 a " + sz + "]";
         if ((msg != null) && !msg.isEmpty())
         {
             label += (" [" + msg + "]: ");
@@ -95,16 +94,17 @@ public class Listas
         }
         while (true)
         {
-            System.out.println(label);
+            System.out.print(label);
             try
             {
                 opcaoEscolhida = scanner.next();
-
+//System.out.println("0: Listas.lerOpcaoEscolhida(int, String)\topcaoEscolhida: " + opcaoEscolhida);
                 if (!numeroValido(opcaoEscolhida))
                 {
                     System.out.println("opcao \"" + opcaoEscolhida + "\" invalida.");
                     continue;
                 }
+//System.out.println("1: Listas.lerOpcaoEscolhida(int, String)\topcaoEscolhida: " + opcaoEscolhida);                
                 opcao = Integer.parseInt(opcaoEscolhida);
                 if (opcao < 1 || opcao > sz)
                 {
@@ -115,7 +115,7 @@ public class Listas
                     break;
                 }
             }
-            catch (Exception ex)
+            catch (NumberFormatException ex)
             {
                 System.out.println("opcao invalida.");
             }
