@@ -1,7 +1,10 @@
 package utils;
-import ano_academico.AnoAcademicoUI;
+
+import java.util.Scanner;
+
 import clearBuffer.ClearBuffer;
 import isptec.listas.Listas;
+import professor.ProfessorUI;
 
 /**
  *
@@ -34,6 +37,16 @@ public class MainMenu {
         }
     }
 
+    public static void pauseToSee() {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Prima Enter para continuar...");
+        String op = sc.nextLine();
+
+
+    }
+
     public static void adminMenu() {
         for (;;) {
 
@@ -45,7 +58,7 @@ public class MainMenu {
 
             switch (opcao) {
                 case 1:
-                    AnoAcademicoUI.menu();
+                    ProfessorUI.menu();
 
                     break;
 
