@@ -54,8 +54,10 @@ public class Defs {
 
     public static final String[] CRUD_LINKS = {
             "Criar",
+            "Listar",
             "Editar",
             "Procurar",
+            "Eliminar",
             "Sair",
     };
 

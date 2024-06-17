@@ -23,7 +23,21 @@ public class FileUtils
         if (f.exists())
         {
             f.delete();
+            
         }
+        
+    }
+
+    public static long length(String filename)
+    {
+        File f = new File(filename);
+
+        if (!f.exists())
+            return 0;
+            
+
+        return f.length();
+        
     }
 
     public static void rename(String filename, String newFilename)

@@ -14,134 +14,135 @@ import java.util.Scanner;
  *
  * @author aires
  */
-public class Utils
-{
+public class Utils {
 
-    public static boolean concorda()
-    {
-        String opcoes[] =
-        {
-            "Concorda", "Nao Concorda"
+    public static boolean concorda() {
+        String opcoes[] = {
+                "Concorda", "Nao Concorda"
         };
         return Listas.enviarLerOpcaoEscolhida(opcoes) == 1;
     }
 
-    public static boolean continua()
-    {
+    public static boolean concorda(String label1, String label2) {
+        String opcoes[] = {
+                label1, label2
+        };
+        return Listas.enviarLerOpcaoEscolhida(opcoes) == 1;
+    }
+
+    public static boolean continua() {
         System.out.print("Continua ? [s]/[S]: ");
         String resposta = next();
         if (resposta.equalsIgnoreCase(""))
             resposta = "s";
         return resposta.equalsIgnoreCase("s")
-            || resposta.equalsIgnoreCase("S");
+                || resposta.equalsIgnoreCase("S");
     }
 
-    public static boolean continua(String msg)
-    {
+    public static boolean continua(String msg) {
         System.out.println(msg);
         return continua();
     }
 
-    public static boolean pergunta(String msg)
-    {
-//        Scanner scanner = new Scanner(System.in);
+    public static boolean continua(String msg, String label1, String label2) {
+        System.out.println(msg);
+
+        return concorda(label1, label2);
+    }
+
+    public static boolean editarCampo(String field, String old) {
+        System.out.println("Editar "+field + "(" + old + ")?");
+
+        return concorda("Sim", "Não");
+    }
+
+    public static boolean pergunta(String msg) {
+        // Scanner scanner = new Scanner(System.in);
         System.out.print(msg + " ? [s]/[S]: ");
         String resposta = next();
         if (resposta.equalsIgnoreCase(""))
             resposta = "s";
         return resposta.equalsIgnoreCase("s")
-            || resposta.equalsIgnoreCase("S");
+                || resposta.equalsIgnoreCase("S");
     }
 
-    public static String sameLine(String word)
-    {
+    public static String sameLine(String word) {
         word = (word.isBlank() || word.isEmpty())
-            ? "" : word.trim();
+                ? ""
+                : word.trim();
         System.out.print(word + " ? ");
         Scanner scanner = new Scanner(System.in);
         String resposta = null;
-        try
-        {
+        try {
             resposta = scanner.nextLine();
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             resposta = "";
         }
         resposta = (resposta == null) ? "" : resposta.trim();
         return (resposta.isBlank() || resposta.isEmpty())
-            ? word.trim() : resposta;
+                ? word.trim()
+                : resposta;
     }
 
-    public static String same(String word)
-    {
-//        System.out.println("\n0: Utils.same(String)\tword: " + word);
-        if (word == null)
-        {
+    public static String same(String word) {
+        // System.out.println("\n0: Utils.same(String)\tword: " + word);
+        if (word == null) {
             return "";
         }
-//        System.out.println("\n1: Utils.same(String)\tword: " + word);
+        // System.out.println("\n1: Utils.same(String)\tword: " + word);
         word = (word.isBlank() || word.isEmpty())
-            ? "" : word.trim();
-//        System.out.println("\n2: Utils.same(String)\tword: " + word);
+                ? ""
+                : word.trim();
+        // System.out.println("\n2: Utils.same(String)\tword: " + word);
         System.out.print(word + " ? ");
-//        Scanner scanner = new Scanner(System.in);
+        // Scanner scanner = new Scanner(System.in);
         String resposta = null;
-        try
-        {
+        try {
             resposta = next();
-//            System.out.println("\n3: Utils.same(String)\tword: " + word);
-        }
-        catch (Exception ex)
-        {
+            // System.out.println("\n3: Utils.same(String)\tword: " + word);
+        } catch (Exception ex) {
             resposta = "";
-//            System.out.println("\n4.3: Utils.same(String)\tword: " + word);
+            // System.out.println("\n4.3: Utils.same(String)\tword: " + word);
         }
-//        System.out.println("\n5: Utils.same(String)");
+        // System.out.println("\n5: Utils.same(String)");
         resposta = (resposta == null) ? "" : resposta;
-//        System.out.println("\n6: Utils.same(String)");
+        // System.out.println("\n6: Utils.same(String)");
         return (resposta.isBlank() || resposta.isEmpty())
-            ? word : resposta;
+                ? word
+                : resposta;
     }
 
-    public static String next()
-    {
+    public static String next() {
         Scanner scanner = new Scanner(System.in);
         String resposta = null;
-        try
-        {
+        try {
             resposta = scanner.nextLine();
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             return "";
         }
         if (resposta == null)
             return "";
         resposta = resposta.trim();
         return (resposta.isBlank() || resposta.isEmpty())
-            ? "" : resposta.split(" ")[0];
+                ? ""
+                : resposta.split(" ")[0];
     }
 
-    public static void exit(String msg)
-    {
+    public static void exit(String msg) {
         System.err.println(msg);
         System.exit(0);
     }
 
-    public static void exit(String msg, int codigo)
-    {
+    public static void exit(String msg, int codigo) {
         System.err.println(msg);
         System.exit(codigo);
     }
 
-    public static int compare(Integer n1, Integer n2)
-    {
+    public static int compare(Integer n1, Integer n2) {
         return n1 > n2 ? 1 : (Objects.equals(n1, n2) ? 0 : -1);
     }
 
-    public static double converterDoubleDoisDecimais(double precoDouble)
-    {
+    public static double converterDoubleDoisDecimais(double precoDouble) {
         DecimalFormat fmt = new DecimalFormat("0.00");
         String string = fmt.format(precoDouble);
         return Double.parseDouble(string);

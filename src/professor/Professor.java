@@ -2,36 +2,32 @@ package professor;
 
 public class Professor {
 
-    private Integer id;
-    private String nome;
+    private long id;
+    private StringBuilder sb_nome = new StringBuilder(ProfessorConstants.NAME_SIZE);
 
     public Professor() {
 
     }
 
-    public Professor(int id, String nome) {
-        this.id = id;
-        this.nome = nome;
+    public Professor(long id, String nome) {
+        setId(id);
+        setNome(nome);
     }
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(long id) {
         this.id = id;
     }
 
     public String getNome() {
-        return nome;
+        return sb_nome.toString();
     }
 
     public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public void save() {
-        System.out.println("\nProfessor criado com sucesso!\n");
+        this.sb_nome = new StringBuilder(nome);
     }
 
     @Override
