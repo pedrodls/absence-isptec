@@ -1,4 +1,4 @@
-package professor;
+package disciplina;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -9,9 +9,9 @@ import java.util.List;
 import isptec.utils.FileUtils;
 import utils.Defs;
 
-public class ProfessorPersistente {
+public class DisciplinaPersistente {
 
-    private static HashMap<Long, Professor> myList = new HashMap<>();
+    private static HashMap<Long, Disciplina> myList = new HashMap<>();
 
     public static long numberOfRecords(RandomAccessFile file) {
         try {
@@ -22,23 +22,23 @@ public class ProfessorPersistente {
         }
     }
 
-    public ProfessorPersistente() {
+    public DisciplinaPersistente() {
 
     }
 
     public static void fillMyList() {
-        List<Professor> professors = findAll();
+        List<Disciplina> Disciplinas = findAll();
 
-        for (Professor pr : professors)
+        for (Disciplina pr : Disciplinas)
             myList.put(pr.getId(), pr);
 
     }
 
-    public static void create(Professor professor) {
+    public static void create(Disciplina Disciplina) {
 
         try {
 
-            RandomAccessFile file = new RandomAccessFile(Defs.PROFESSOR_FILE, "rw");
+            RandomAccessFile file = new RandomAccessFile(Defs.DISCIPLINA_FILE, "rw");
 
             long newId = numberOfRecords(file);
 
@@ -46,22 +46,22 @@ public class ProfessorPersistente {
 
             file.writeLong(newId);
 
-            writeString(file, professor.getNome(), Defs.NAME_SIZE);
+            writeString(file, Disciplina.getNome(), Defs.NAME_SIZE);
 
             file.close();
 
             System.out.println("\nCriado com sucesso!\n");
 
         } catch (Exception e) {
-            System.out.println("\nErro ao criar Professor!\n");
+            System.out.println("\nErro ao criar Disciplina!\n");
         }
     }
 
-    public static void realocate(Professor professor) {
+    public static void realocate(Disciplina Disciplina) {
 
         try {
 
-            RandomAccessFile file = new RandomAccessFile(Defs.PROFESSOR_FILE, "rw");
+            RandomAccessFile file = new RandomAccessFile(Defs.DISCIPLINA_FILE, "rw");
 
             long id = numberOfRecords(file);
 
@@ -69,7 +69,7 @@ public class ProfessorPersistente {
 
             file.writeLong(id);
 
-            writeString(file, professor.getNome(), Defs.NAME_SIZE);
+            writeString(file, Disciplina.getNome(), Defs.NAME_SIZE);
 
             file.close();
 
@@ -126,14 +126,14 @@ public class ProfessorPersistente {
         }
     }
 
-    public static void update(Professor professor) {
+    public static void update(Disciplina Disciplina) {
         try {
 
             fillMyList();
 
-            myList.replace(professor.getId(), professor);
+            myList.replace(Disciplina.getId(), Disciplina);
 
-            FileUtils.delete(Defs.PROFESSOR_FILE);
+            FileUtils.delete(Defs.DISCIPLINA_FILE);
 
             myList.forEach((t, u) -> {
                 realocate(u);
@@ -144,14 +144,14 @@ public class ProfessorPersistente {
         }
     }
 
-    public static void dropOne(Professor professor) {
+    public static void dropOne(Disciplina Disciplina) {
         try {
 
             fillMyList();
 
-            myList.remove(professor.getId());
+            myList.remove(Disciplina.getId());
 
-            FileUtils.delete(Defs.PROFESSOR_FILE);
+            FileUtils.delete(Defs.DISCIPLINA_FILE);
 
             myList.forEach((t, u) -> {
                 realocate(u);
@@ -162,20 +162,20 @@ public class ProfessorPersistente {
         }
     }
 
-    public static Professor findOne(long id) {
+    public static Disciplina findOne(long id) {
 
         fillMyList();
 
         return myList.get(id);
     }
 
-    public static List<Professor> findAll() {
+    public static List<Disciplina> findAll() {
 
-        List<Professor> professors = new ArrayList<Professor>();
+        List<Disciplina> Disciplinas = new ArrayList<Disciplina>();
 
         try {
 
-            RandomAccessFile file = new RandomAccessFile(Defs.PROFESSOR_FILE, "r");
+            RandomAccessFile file = new RandomAccessFile(Defs.DISCIPLINA_FILE, "r");
 
             for (long id = 0; id <= numberOfRecords(file); id++) {
 
@@ -187,7 +187,7 @@ public class ProfessorPersistente {
 
                 String nome = readString(file, Defs.NAME_SIZE);
 
-                professors.add(new Professor(id, nome));
+                Disciplinas.add(new Disciplina(id, nome));
 
             }
 
@@ -196,7 +196,7 @@ public class ProfessorPersistente {
 
         }
 
-        return professors;
+        return Disciplinas;
 
     }
 

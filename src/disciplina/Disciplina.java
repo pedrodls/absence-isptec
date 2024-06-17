@@ -1,17 +1,17 @@
-package professor;
+package disciplina;
 
 import utils.Defs;
 
-public class Professor {
+public class Disciplina {
 
     private long id;
     private StringBuilder sb_nome = new StringBuilder(Defs.NAME_SIZE);
 
-    public Professor() {
+    public Disciplina() {
 
     }
 
-    public Professor(long id, String nome) {
+    public Disciplina(long id, String nome) {
         setId(id);
         setNome(nome);
     }
