@@ -3,6 +3,7 @@ package utils;
 import java.util.Scanner;
 
 import clearBuffer.ClearBuffer;
+import disciplina.DisciplinaUI;
 import isptec.listas.Listas;
 import professor.ProfessorUI;
 
@@ -44,7 +45,6 @@ public class MainMenu {
         System.out.println("Prima Enter para continuar...");
         String op = sc.nextLine();
 
-
     }
 
     public static void adminMenu() {
@@ -61,8 +61,11 @@ public class MainMenu {
                     ProfessorUI.menu();
 
                     break;
+                case 3:
+                    DisciplinaUI.menu();
 
-                case 2:
+                    break;
+                case 4:
                     System.out.println("Programa terminado");
                     System.exit(0);
                     break;
