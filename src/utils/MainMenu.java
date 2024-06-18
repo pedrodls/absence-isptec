@@ -2,9 +2,14 @@ package utils;
 
 import java.util.Scanner;
 
+import ano_academico.AnoAcademicoUI;
+import ano_letivo.AnoLetivoUI;
 import clearBuffer.ClearBuffer;
+import coordenacao.CoordenacaoUI;
+import curso.CursoUI;
 import disciplina.DisciplinaUI;
 import isptec.listas.Listas;
+import motivo_falta.MotivoFaltaUI;
 import professor.ProfessorUI;
 
 /**
@@ -57,15 +62,44 @@ public class MainMenu {
             int opcao = Listas.enviarLerOpcaoEscolhida(Defs.ADMIN_LINKS);
 
             switch (opcao) {
+
                 case 1:
-                    ProfessorUI.menu();
-
+                    AnoLetivoUI.menu();
                     break;
+
+                case 2:
+                    AnoAcademicoUI.menu();
+                    break;
+
                 case 3:
-                    DisciplinaUI.menu();
-
+                    CursoUI.menu();
                     break;
+
                 case 4:
+                    CoordenacaoUI.menu();
+                    break;
+
+                case 5:
+                    // Coordenador
+                    break;
+
+                case 6:
+                    ProfessorUI.menu();
+                    break;
+
+                case 7:
+                    // Estudante
+                    break;
+
+                case 8:
+                    DisciplinaUI.menu();
+                    break;
+
+                case 9:
+                    MotivoFaltaUI.menu();
+                    break;
+
+                case 10:
                     System.out.println("Programa terminado");
                     System.exit(0);
                     break;

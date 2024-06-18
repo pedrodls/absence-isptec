@@ -62,10 +62,7 @@ public class AnoAcademicoUI {
 
         do {
 
-            System.out.print("Regra_validação: no mínimo 4 caracter! ");
-            MainMenu.pauseToSee();
-
-            System.out.print("Designação(x-Ano): ");
+            System.out.print("Designação(x/ANO): ");
             nome = sc.nextLine();
 
         } while (!Pattern.compile(regex).matcher(nome).matches());

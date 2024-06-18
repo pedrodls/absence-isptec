@@ -2,6 +2,7 @@ package ano_letivo;
 
 import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 import clearBuffer.ClearBuffer;
 import isptec.listas.Listas;
@@ -55,18 +56,16 @@ public class AnoLetivoUI {
 
         Scanner sc = new Scanner(System.in);
         String nome;
+        String regex = "^\\d{4}/\\d{4}$";
 
         System.out.println("\n*****************Criando Ano Lectivo****************\n");
 
         do {
 
-            System.out.print("Regra_validação: no mínimo 3 caracters!");
-            MainMenu.pauseToSee();
-
-            System.out.print("Nome: ");
+            System.out.print("Designção(xxxx/yyyy): ");
             nome = sc.nextLine();
 
-        } while (nome.length() < 3);
+        } while (!Pattern.compile(regex).matcher(nome).matches());
 
         AnoLetivo newAnoLetivo = new AnoLetivo(-1, nome);
 

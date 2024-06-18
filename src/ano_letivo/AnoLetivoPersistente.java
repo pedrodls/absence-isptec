@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import isptec.utils.FileUtils;
@@ -17,7 +18,7 @@ public class AnoLetivoPersistente {
         try {
             return Math.round((file.length() / 2) / Defs.RECORD_SIZE);
         } catch (IOException e) {
-            
+
             return 0;
         }
     }
@@ -34,11 +35,24 @@ public class AnoLetivoPersistente {
 
     }
 
-    public static void create(AnoLetivo AnoLetivo) {
+    public static void create(AnoLetivo anoLetivo) {
 
         try {
 
             RandomAccessFile file = new RandomAccessFile(Defs.ANO_ACADEMICO_FILE, "rw");
+
+            fillMyList();
+
+            Iterator<AnoLetivo> iterator = myList.values().iterator();
+
+            while (iterator.hasNext()) {
+
+                if (iterator.next().getNome().toLowerCase().equals(anoLetivo.getNome().toLowerCase())) {
+                    file.close();
+                    System.out.println("\nEste dado já existe!\n");
+                    return;
+                }
+            }
 
             long newId = numberOfRecords(file);
 
@@ -46,7 +60,7 @@ public class AnoLetivoPersistente {
 
             file.writeLong(newId);
 
-            writeString(file, AnoLetivo.getNome(), Defs.NAME_SIZE);
+            writeString(file, anoLetivo.getNome(), Defs.NAME_SIZE);
 
             file.close();
 

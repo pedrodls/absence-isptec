@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import isptec.utils.FileUtils;
@@ -34,11 +35,24 @@ public class DisciplinaPersistente {
 
     }
 
-    public static void create(Disciplina Disciplina) {
+    public static void create(Disciplina disciplina) {
 
         try {
 
             RandomAccessFile file = new RandomAccessFile(Defs.DISCIPLINA_FILE, "rw");
+
+            fillMyList();
+
+            Iterator<Disciplina> iterator = myList.values().iterator();
+
+            while (iterator.hasNext()) {
+
+                if (iterator.next().getNome().toLowerCase().equals(disciplina.getNome().toLowerCase())) {
+                    file.close();
+                    System.out.println("\nEste dado já existe!\n");
+                    return;
+                }
+            }
 
             long newId = numberOfRecords(file);
 
@@ -46,7 +60,7 @@ public class DisciplinaPersistente {
 
             file.writeLong(newId);
 
-            writeString(file, Disciplina.getNome(), Defs.NAME_SIZE);
+            writeString(file, disciplina.getNome(), Defs.NAME_SIZE);
 
             file.close();
 

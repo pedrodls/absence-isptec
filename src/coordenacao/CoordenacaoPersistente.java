@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import isptec.utils.FileUtils;
@@ -34,11 +35,24 @@ public class CoordenacaoPersistente {
 
     }
 
-    public static void create(Coordenacao Coordenacao) {
+    public static void create(Coordenacao coordenacao) {
 
         try {
 
             RandomAccessFile file = new RandomAccessFile(Defs.COORDENACAO_FILE, "rw");
+
+            fillMyList();
+
+            Iterator<Coordenacao> iterator = myList.values().iterator();
+
+            while (iterator.hasNext()) {
+
+                if (iterator.next().getNome().toLowerCase().equals(coordenacao.getNome().toLowerCase())) {
+                    file.close();
+                    System.out.println("\nEste dado já existe!\n");
+                    return;
+                }
+            }
 
             long newId = numberOfRecords(file);
 
@@ -46,7 +60,7 @@ public class CoordenacaoPersistente {
 
             file.writeLong(newId);
 
-            writeString(file, Coordenacao.getNome(), Defs.NAME_SIZE);
+            writeString(file, coordenacao.getNome(), Defs.NAME_SIZE);
 
             file.close();
 

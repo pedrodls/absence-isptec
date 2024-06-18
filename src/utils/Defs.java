@@ -10,7 +10,7 @@ public class Defs {
         public static final int NAME_SIZE = 100;
         public static final int ID_SIZE = 8;
         public static final long RECORD_SIZE = NAME_SIZE + ID_SIZE;
-        
+
         public static final String[] MAIN_MENU_LINKS = {
                         "Admin(EM TESTE)",
                         "Coordenação(Não funcional)",
@@ -26,9 +26,15 @@ public class Defs {
         };
 
         public static final String[] ADMIN_LINKS = {
-                        "Professores",
-                        "Cursos",
+                        "Ano Letivo",
+                        "Ano Académico",
+                        "Curso",
+                        "Coordenação",
+                        "Coordenador",
+                        "Professor",
+                        "Estudante",
                         "Disciplinas",
+                        "Motivo de falta",
                         /*
                          * "Anos academicos",
                          * "Anos letivos",
