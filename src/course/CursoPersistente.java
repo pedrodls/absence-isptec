@@ -1,10 +1,9 @@
-package curso;
+package course;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 import isptec.utils.FileUtils;
@@ -16,9 +15,9 @@ public class CursoPersistente {
 
     public static long numberOfRecords(RandomAccessFile file) {
         try {
-            return Math.round((file.length() / 2) / Defs.RECORD_SIZE);
+            return Math.round((file.length()) / Defs.RECORD_SIZE);
         } catch (IOException e) {
-            
+
             return 0;
         }
     }
@@ -35,6 +34,15 @@ public class CursoPersistente {
 
     }
 
+    public static void closeFile(RandomAccessFile file) {
+        try {
+            file.close();
+        } catch (Exception e) {
+
+        }
+
+    }
+
     public static void create(Curso curso) {
 
         try {
@@ -43,26 +51,30 @@ public class CursoPersistente {
 
             fillMyList();
 
-            Iterator<Curso> iterator = myList.values().iterator();
+            myList.forEach((k, c) -> {
 
-            while (iterator.hasNext()) {
-
-                if (iterator.next().getNome().toLowerCase().equals(curso.getNome().toLowerCase())) {
-                    file.close();
+                if (c.getNome().toLowerCase().equals(curso.getNome().toLowerCase())) {
+                    closeFile(file);
                     System.out.println("\nEste dado já existe!\n");
                     return;
                 }
-            }
+            });
 
-            long newId = numberOfRecords(file);
+            // long newId = numberOfRecords(file);
 
-            file.seek(file.length());
+            curso.setId(numberOfRecords(file) + 1);
 
-            file.writeLong(newId);
+            realocate(curso);
 
-            writeString(file, curso.getNome(), Defs.NAME_SIZE);
-
-            file.close();
+            /*
+             * file.seek(file.length());
+             * 
+             * file.writeLong(newId);
+             * 
+             * writeString(file, curso.getNome(), Defs.NAME_SIZE);
+             * 
+             * file.close();
+             */
 
             System.out.println("\nCriado com sucesso!\n");
 
@@ -71,19 +83,17 @@ public class CursoPersistente {
         }
     }
 
-    public static void realocate(Curso Curso) {
+    public static void realocate(Curso curso) {
 
         try {
 
             RandomAccessFile file = new RandomAccessFile(Defs.CURSO_FILE, "rw");
 
-            long id = numberOfRecords(file);
-
             file.seek(file.length());
 
-            file.writeLong(id);
+            writeString(file, curso.getId() + "", Defs.ID_SIZE);
 
-            writeString(file, Curso.getNome(), Defs.NAME_SIZE);
+            writeString(file, curso.getNome(), Defs.NAME_SIZE);
 
             file.close();
 
@@ -129,7 +139,7 @@ public class CursoPersistente {
 
             fillMyList();
 
-            if (id >= 0 && id < myList.size()) {
+            if (id > 0 && id <= myList.size()) {
                 System.out.println("Encontrado -> " + myList.get(id).toString());
             } else {
                 System.out.println("Não encontrado!");
@@ -191,21 +201,24 @@ public class CursoPersistente {
 
             RandomAccessFile file = new RandomAccessFile(Defs.CURSO_FILE, "r");
 
-            for (long id = 0; id <= numberOfRecords(file); id++) {
+            for (long id = 0; id < numberOfRecords(file); id++) {
 
                 long position = id * Defs.RECORD_SIZE;
 
                 file.seek(position);
+                
+                System.out.println(position);
 
-                long recordId = file.readLong();
+                Long recordId = Long.parseLong(readString(file, Defs.ID_SIZE));
 
                 String nome = readString(file, Defs.NAME_SIZE);
 
-                Cursos.add(new Curso(id, nome));
+                Cursos.add(new Curso(recordId, nome));
 
             }
 
             file.close();
+
         } catch (Exception ex) {
 
         }

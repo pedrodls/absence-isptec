@@ -1,19 +1,21 @@
-package curso;
+package turma;
 
 import java.util.List;
 import java.util.Scanner;
 
+import ano_academico.AnoAcademico;
+import ano_academico.AnoAcademicoUI;
 import clearBuffer.ClearBuffer;
-import coordenacao.CoordenacaoPersistente;
-import coordenador.CoordenadorPersistente;
-import estudante.EstudantePersistente;
+import curso.Curso;
+import curso.CursoPersistente;
+import curso.CursoUI;
 import isptec.listas.Listas;
 import isptec.utils.Utils;
 import utils.*;
 
-public class CursoUI {
+public class TurmaUI {
 
-    public CursoUI() {
+    public TurmaUI() {
 
     }
 
@@ -22,7 +24,7 @@ public class CursoUI {
 
             ClearBuffer.clear();
 
-            System.out.println("\n*****************Menu Curso*****************\n");
+            System.out.println("\n*****************Menu Turma****************\n");
 
             int opcao = Listas.enviarLerOpcaoEscolhida(Defs.CRUD_LINKS);
 
@@ -57,9 +59,11 @@ public class CursoUI {
     public static void create() {
 
         Scanner sc = new Scanner(System.in);
+        Curso curso = null;
+        AnoAcademico ano = null;
         String nome;
 
-        System.out.println("\n*****************Criando Curso*****************\n");
+        System.out.println("\n*****************Criando Turma*****************\n");
 
         do {
 
@@ -71,9 +75,23 @@ public class CursoUI {
 
         } while (nome.length() < 3);
 
-        Curso newCurso = new Curso(-1, nome);
+        do {
 
-        CursoPersistente.create(newCurso);
+            System.out.print("Regra_validação: Insira curso existente ");
+            curso = CursoUI.searchToEdit();
+
+        } while (curso == null);
+
+        do {
+
+            System.out.print("Regra_validação: Insira ano academico existente ");
+            ano = AnoAcademicoUI.searchToEdit();
+
+        } while (ano == null);
+
+        Turma newTurma = new Turma(-1, curso.getId(), ano.getId(), nome.toUpperCase());
+
+        TurmaPersistente.create(newTurma);
 
         MainMenu.pauseToSee();
 
@@ -83,20 +101,24 @@ public class CursoUI {
 
         Scanner sc = new Scanner(System.in);
 
-        Curso old = searchToEdit();
+        String nome;
+
+        Turma old = searchToEdit();
+
+        Curso newCurso = null;
+
+        AnoAcademico ano = null;
 
         if (old == null) {
 
-            System.out.println("\nCurso não encontrado!\n");
+            System.out.println("\nTurma não encontrado!\n");
 
             MainMenu.pauseToSee();
 
             return;
         }
 
-        String nome = old.getNome();
-
-        System.out.println("\n*****************Editando Curso*****************\n");
+        System.out.println("\n*****************Editando Turma****************\n");
 
         if (Utils.editarCampo("Nome", old.getNome())) {
 
@@ -110,11 +132,35 @@ public class CursoUI {
 
             } while (nome.length() < 3);
 
-            old.setNome(nome);
+            old.setNome(nome.toUpperCase());
 
         }
 
-        CursoPersistente.update(old);
+        if (Utils.editarCampo("ID Curso", old.getCursoId() + "")) {
+
+            do {
+
+                System.out.print("Regra_validação: Insira curso existente ");
+                newCurso = CursoUI.searchToEdit();
+
+            } while (newCurso == null);
+
+            old.setCursoId(newCurso.getId());
+        }
+
+        if (Utils.editarCampo("ID Ano Academico", old.getAnoAcademicoId() + "")) {
+
+            do {
+
+                System.out.print("Regra_validação: Insira Ano Academico existente ");
+                ano = AnoAcademicoUI.searchToEdit();
+
+            } while (ano == null);
+
+            old.setAnoAcademicoId(ano.getId());
+        }
+
+        TurmaPersistente.update(old);
 
         System.out.println("\nEdição finalizada!\n");
 
@@ -124,33 +170,20 @@ public class CursoUI {
 
     public static void drop() {
 
-        System.out.println("\n*****************Eliminando Curso*****************\n");
+        System.out.println("\n*****************Eliminando Turma****************\n");
 
-        Curso old = searchToEdit();
+        Turma old = searchToEdit();
 
         if (old == null) {
 
-            System.out.println("\nCurso não encontrado!\n");
+            System.out.println("\nTurma não encontrado!\n");
 
             MainMenu.pauseToSee();
 
             return;
         }
 
-        if (
-           EstudantePersistente.findAllByCursoId(old.getId()).size() > 0
-        || CoordenadorPersistente.findAllByCursoId(old.getId()).size() > 0
-        || CoordenacaoPersistente.findAllByCursoId(old.getId()).size() > 0
-        ) {
-
-            System.out.println("\nCurso não pode ser apagado pois existem dados ligados ao mesmo!\n");
-
-            MainMenu.pauseToSee();
-
-            return;
-        }
-
-        CursoPersistente.dropOne(old);
+        TurmaPersistente.dropOne(old);
 
         System.out.println("\nEliminação finalizada!\n");
 
@@ -162,35 +195,35 @@ public class CursoUI {
 
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("\n*****************Procurando Curso*****************\n");
+        System.out.println("\n*****************Procurando Turma****************\n");
 
         System.out.print("ID: ");
         long id = sc.nextLong();
 
-        CursoPersistente.read(id);
+        TurmaPersistente.read(id);
 
         MainMenu.pauseToSee();
 
     }
 
-    public static Curso searchToEdit() {
+    public static Turma searchToEdit() {
 
         Scanner sc = new Scanner(System.in);
 
         System.out.print("ID: ");
         long id = sc.nextLong();
 
-        return CursoPersistente.findOne(id);
+        return TurmaPersistente.findOne(id);
 
     }
 
     public static void list() {
 
-        List<Curso> Cursos = CursoPersistente.findAll();
+        List<Turma> Turmas = TurmaPersistente.findAll();
 
-        System.out.println("\n*****************Todas Cursos*****************\n");
+        System.out.println("\n*****************Todas Turmas*****************\n");
 
-        for (Curso pr : Cursos)
+        for (Turma pr : Turmas)
             System.out.println("\n" + pr.toString() + "\n");
 
         MainMenu.pauseToSee();

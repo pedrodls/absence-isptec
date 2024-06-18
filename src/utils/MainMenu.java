@@ -13,6 +13,7 @@ import estudante.EstudanteUI;
 import isptec.listas.Listas;
 import motivo_falta.MotivoFaltaUI;
 import professor.ProfessorUI;
+import turma.TurmaUI;
 
 /**
  *
@@ -31,13 +32,16 @@ public class MainMenu {
             int opcao = Listas.enviarLerOpcaoEscolhida(Defs.MAIN_MENU_LINKS);
 
             switch (opcao) {
+
                 case 1:
-
                     adminMenu();
-
                     break;
 
                 case 2:
+                    coordenacaoMenu();
+                    break;
+
+                case 3:
                     System.out.println("Programa terminado");
                     System.exit(0);
                     break;
@@ -101,6 +105,32 @@ public class MainMenu {
                     MotivoFaltaUI.menu();
                     break;
 
+                case 10:
+                    System.out.println("Programa terminado");
+                    System.exit(0);
+                    break;
+            }
+        }
+    }
+
+    public static void coordenacaoMenu() {
+        for (;;) {
+
+            ClearBuffer.clear();
+
+            System.out.println("\n*****************Menu Coordenação*****************\n");
+
+            int opcao = Listas.enviarLerOpcaoEscolhida(Defs.COORDENATION_LINKS);
+
+            switch (opcao) {
+
+                case 1:
+                    TurmaUI.menu();
+                    break;
+
+                    case 6:
+                    adminMenu();
+                    break;
                 case 10:
                     System.out.println("Programa terminado");
                     System.exit(0);

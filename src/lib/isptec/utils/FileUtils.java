@@ -9,6 +9,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
+import utils.MainMenu;
+
 /**
  *
  * @author Aires Veloso
@@ -21,11 +23,8 @@ public class FileUtils
         File f = new File(filename);
 
         if (f.exists())
-        {
             f.delete();
-            
-        }
-        
+
     }
 
     public static long length(String filename)

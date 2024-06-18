@@ -1,18 +1,20 @@
-package ano_academico;
+package course;
 
 import java.util.List;
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
 import clearBuffer.ClearBuffer;
+import coordenacao.CoordenacaoPersistente;
+import coordenador.CoordenadorPersistente;
+import estudante.EstudantePersistente;
 import isptec.listas.Listas;
 import isptec.utils.Utils;
 import turma.TurmaPersistente;
 import utils.*;
 
-public class AnoAcademicoUI {
+public class CursoUI {
 
-    public AnoAcademicoUI() {
+    public CursoUI() {
 
     }
 
@@ -21,7 +23,7 @@ public class AnoAcademicoUI {
 
             ClearBuffer.clear();
 
-            System.out.println("\n*****************Menu Ano Academico****************\n");
+            System.out.println("\n*****************Menu Curso*****************\n");
 
             int opcao = Listas.enviarLerOpcaoEscolhida(Defs.CRUD_LINKS);
 
@@ -57,20 +59,22 @@ public class AnoAcademicoUI {
 
         Scanner sc = new Scanner(System.in);
         String nome;
-        String regex = "^\\d+-ANO$";
 
-        System.out.println("\n*****************Criando Ano Academico****************\n");
+        System.out.println("\n*****************Criando Curso*****************\n");
 
         do {
 
-            System.out.print("Designação(x-ANO): ");
+            System.out.print("Regra_validação: no mínimo 3 caracters!");
+            MainMenu.pauseToSee();
+
+            System.out.print("Nome: ");
             nome = sc.nextLine();
 
-        } while (!Pattern.compile(regex).matcher(nome).matches());
+        } while (nome.length() < 3);
 
-        AnoAcademico newAnoAcademico = new AnoAcademico(-1, nome);
+        Curso newCurso = new Curso(-1, nome);
 
-        AnoAcademicoPersistente.create(newAnoAcademico);
+        CursoPersistente2.create(newCurso);
 
         MainMenu.pauseToSee();
 
@@ -80,11 +84,11 @@ public class AnoAcademicoUI {
 
         Scanner sc = new Scanner(System.in);
 
-        AnoAcademico old = searchToEdit();
+        Curso old = searchToEdit();
 
         if (old == null) {
 
-            System.out.println("\nAnoAcademico não encontrado!\n");
+            System.out.println("\nCurso não encontrado!\n");
 
             MainMenu.pauseToSee();
 
@@ -93,7 +97,7 @@ public class AnoAcademicoUI {
 
         String nome = old.getNome();
 
-        System.out.println("\n*****************Editando Ano Academico****************\n");
+        System.out.println("\n*****************Editando Curso*****************\n");
 
         if (Utils.editarCampo("Nome", old.getNome())) {
 
@@ -111,7 +115,7 @@ public class AnoAcademicoUI {
 
         }
 
-        AnoAcademicoPersistente.update(old);
+        CursoPersistente.update(old);
 
         System.out.println("\nEdição finalizada!\n");
 
@@ -121,30 +125,32 @@ public class AnoAcademicoUI {
 
     public static void drop() {
 
-        System.out.println("\n*****************Eliminando Ano Academico****************\n");
+        System.out.println("\n*****************Eliminando Curso*****************\n");
 
-        AnoAcademico old = searchToEdit();
+        Curso old = searchToEdit();
 
         if (old == null) {
 
-            System.out.println("\nAnoAcademico não encontrado!\n");
+            System.out.println("\nCurso não encontrado!\n");
 
             MainMenu.pauseToSee();
 
             return;
         }
 
-        if (TurmaPersistente.findAllByAnoAcademico(old.getId()).size() > 0
-        ) {
+        if (EstudantePersistente.findAllByCursoId(old.getId()).size() > 0
+                || CoordenadorPersistente.findAllByCursoId(old.getId()).size() > 0
+                || CoordenacaoPersistente.findAllByCursoId(old.getId()).size() > 0
+                || TurmaPersistente.findAllByCursoId(old.getId()).size() > 0) {
 
-            System.out.println("\nAno académico não pode ser apagado pois existem dados ligados ao mesmo!\n");
+            System.out.println("\nCurso não pode ser apagado pois existem dados ligados ao mesmo!\n");
 
             MainMenu.pauseToSee();
 
             return;
         }
 
-        AnoAcademicoPersistente.dropOne(old);
+        CursoPersistente.dropOne(old);
 
         System.out.println("\nEliminação finalizada!\n");
 
@@ -156,35 +162,35 @@ public class AnoAcademicoUI {
 
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("\n*****************Procurando Ano Academico****************\n");
+        System.out.println("\n*****************Procurando Curso*****************\n");
 
         System.out.print("ID: ");
         long id = sc.nextLong();
 
-        AnoAcademicoPersistente.read(id);
+        CursoPersistente.read(id);
 
         MainMenu.pauseToSee();
 
     }
 
-    public static AnoAcademico searchToEdit() {
+    public static Curso searchToEdit() {
 
         Scanner sc = new Scanner(System.in);
 
         System.out.print("ID: ");
         long id = sc.nextLong();
 
-        return AnoAcademicoPersistente.findOne(id);
+        return CursoPersistente.findOne(id);
 
     }
 
     public static void list() {
 
-        List<AnoAcademico> AnoAcademicos = AnoAcademicoPersistente.findAll();
+        List<Curso> Cursos = CursoPersistente.findAll();
 
-        System.out.println("\n*****************Todas AnoAcademicos*****************\n");
+        System.out.println("\n*****************Todas Cursos*****************\n");
 
-        for (AnoAcademico pr : AnoAcademicos)
+        for (Curso pr : Cursos)
             System.out.println("\n" + pr.toString() + "\n");
 
         MainMenu.pauseToSee();

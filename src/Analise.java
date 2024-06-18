@@ -254,21 +254,21 @@
  * 
  *      Ficheiros
  *          justificativos.dat          ---->   JustificativoPersistente
- *          motivos_faltas.dat          ---->   MotivoFaltaPersistente
+ *          *motivos_faltas.dat          ---->   MotivoFaltaPersistente
  *          faltas.dat                  ---->   FaltaPersistente
  *          provas_perdidas.dat         ---->   ProvaPerdidaPersistente
- *          coordenacoes.dat            ---->   CoordenacaoPersistente
- *          coordenadores.dat           ---->   CoordenadorPersistente
- *          estudantes.dat              ---->   EstudantePersistente
- *          professores.dat             ---->   ProfessorPersistente
- *          cursos.dat                  ---->   CursoPersistente
- *          anos_letivos.dat            ---->   AnoLetivoPersistente
- *          anos_academicos.dat         ---->   AnoAcademicoPersistente
- *          disciplinas.dat             ---->   disciplinaPersistente
- *          cursoAnoDisciplina.dat      ---->   CursoAnoDisciplinaPersistente
- *          turmas.dat                  ---->   TurmaPersistente
- *          professores_disciplinas.dat ---->   ProfessorDisciplinaPersistene
- *          turmasEstudantes.dat        ---->   TurmaEstudantePersistente
+ *          *coordenacoes.dat            ---->   CoordenacaoPersistente
+ *          *coordenadores.dat           ---->   CoordenadorPersistente
+ *          *estudantes.dat              ---->   EstudantePersistente
+ *          *professores.dat             ---->   ProfessorPersistente
+ *          *cursos.dat                  ---->   CursoPersistente
+ *          *anos_letivos.dat            ---->   AnoLetivoPersistente
+ *          *anos_academicos.dat         ---->   AnoAcademicoPersistente
+ *          *disciplinas.dat             ---->   disciplinaPersistente
+ *          -cursoAnoDisciplina.dat      ---->   CursoAnoDisciplinaPersistente
+ *          -turmas.dat                  ---->   TurmaPersistente
+ *          -professores_disciplinas.dat ---->   ProfessorDisciplinaPersistene
+ *          -turmasEstudantes.dat        ---->   TurmaEstudantePersistente
  * 
  *      Tabelas
  *      Entidade   JustificativoPersistente
