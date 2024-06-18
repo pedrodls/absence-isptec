@@ -49,10 +49,14 @@ public class EstudantePersistente {
 
             file.writeLong(estudante.getIdAnoIngresso());
 
+            file.writeLong(estudante.getIdCurso());
+
             writeString(file, estudante.getNome(), EstudanteDefs.NAME_SIZE);
 
-            writeString(file, AnoLetivoPersistente.findOne(estudante.getIdAnoIngresso()).getNome().replace("/", "-") + newId
-                    + estudante.getEmail(), EstudanteDefs.EMAIL_SIZE);
+            writeString(file,
+                    AnoLetivoPersistente.findOne(estudante.getIdAnoIngresso()).getNome().replace("/", "-") + newId
+                            + estudante.getEmail(),
+                    EstudanteDefs.EMAIL_SIZE);
 
             writeString(file, estudante.getTelefone(), EstudanteDefs.TELEFONE_SIZE);
 
@@ -79,13 +83,14 @@ public class EstudantePersistente {
 
             file.writeLong(estudante.getIdAnoIngresso());
 
+            file.writeLong(estudante.getIdCurso());
+
             writeString(file, estudante.getNome(), EstudanteDefs.NAME_SIZE);
 
             writeString(file, AnoLetivoPersistente.findOne(estudante.getIdAnoIngresso()).getNome().split("/")[0] + id
                     + estudante.getEmail(), EstudanteDefs.EMAIL_SIZE);
 
             writeString(file, estudante.getTelefone(), EstudanteDefs.TELEFONE_SIZE);
-
 
             file.close();
 
@@ -201,12 +206,13 @@ public class EstudantePersistente {
 
                 long recordId = file.readLong();
                 long anoIngressoId = file.readLong();
+                long cursoId = file.readLong();
 
                 String nome = readString(file, EstudanteDefs.NAME_SIZE);
                 String email = readString(file, EstudanteDefs.EMAIL_SIZE);
                 String telefone = readString(file, EstudanteDefs.TELEFONE_SIZE);
 
-                Estudantes.add(new Estudante(id, nome, email, telefone, anoIngressoId));
+                Estudantes.add(new Estudante(id, nome, email, telefone, anoIngressoId, cursoId));
 
             }
 
@@ -219,43 +225,35 @@ public class EstudantePersistente {
 
     }
 
-    public static List<Estudante> findAllByAnoIngressoId(long idAnoIngresso) {
+    public static List<Estudante> findAllByAnoIngressoId(long anoIngressoId) {
 
-        List<Estudante> Estudantes = new ArrayList<Estudante>();
+        fillMyList();
 
-        try {
+        List<Estudante> estudantes = new ArrayList<Estudante>();
 
-            RandomAccessFile file = new RandomAccessFile(Defs.ESTUDANTE_FILE, "r");
-
-            for (long id = 0; id <= numberOfRecords(file); id++) {
-
-                long position = id * EstudanteDefs.RECORD_SIZE;
-
-                file.seek(position);
-
-                long recordId = file.readLong();
-
-                long anoIngressoId = file.readLong();
-
-                if(idAnoIngresso == anoIngressoId){
-
-                    String nome = readString(file, EstudanteDefs.NAME_SIZE);
-                    String email = readString(file, EstudanteDefs.EMAIL_SIZE);
-                    String telefone = readString(file, EstudanteDefs.TELEFONE_SIZE);
-    
-                    Estudantes.add(new Estudante(id, nome, email, telefone, anoIngressoId));
-    
-                }
-                
+        myList.forEach((k, e) -> {
+            if (e.getIdAnoIngresso() == anoIngressoId) {
+                estudantes.add(e);
             }
+        });
 
-            file.close();
-        } catch (Exception ex) {
-
-        }
-
-        return Estudantes;
+        return estudantes;
 
     }
 
+    public static List<Estudante> findAllByCursoId(long cursoId) {
+
+        fillMyList();
+
+        List<Estudante> estudantes = new ArrayList<Estudante>();
+
+        myList.forEach((k, e) -> {
+            if (e.getIdCurso() == cursoId) {
+                estudantes.add(e);
+            }
+        });
+
+        return estudantes;
+
+    }
 }

@@ -16,9 +16,9 @@ public class CoordenacaoPersistente {
 
     public static long numberOfRecords(RandomAccessFile file) {
         try {
-            return Math.round((file.length() / 2) / Defs.RECORD_SIZE);
+            return Math.round((file.length() / 2) / CoordenacaoDefs.RECORD_SIZE);
         } catch (IOException e) {
-            
+
             return 0;
         }
     }
@@ -47,7 +47,7 @@ public class CoordenacaoPersistente {
 
             while (iterator.hasNext()) {
 
-                if (iterator.next().getNome().toLowerCase().equals(coordenacao.getNome().toLowerCase())) {
+                if (iterator.next().getCursoId() == coordenacao.getCursoId()) {
                     file.close();
                     System.out.println("\nEste dado já existe!\n");
                     return;
@@ -60,7 +60,7 @@ public class CoordenacaoPersistente {
 
             file.writeLong(newId);
 
-            writeString(file, coordenacao.getNome(), Defs.NAME_SIZE);
+            file.writeLong(coordenacao.getCursoId());
 
             file.close();
 
@@ -71,56 +71,22 @@ public class CoordenacaoPersistente {
         }
     }
 
-    public static void realocate(Coordenacao Coordenacao) {
+    public static void realocate(Coordenacao coordenacao) {
 
         try {
 
             RandomAccessFile file = new RandomAccessFile(Defs.COORDENACAO_FILE, "rw");
 
-            long id = numberOfRecords(file);
-
             file.seek(file.length());
 
-            file.writeLong(id);
+            file.writeLong(coordenacao.getId());
 
-            writeString(file, Coordenacao.getNome(), Defs.NAME_SIZE);
+            file.writeLong(coordenacao.getCursoId());
 
             file.close();
 
         } catch (Exception e) {
 
-        }
-    }
-
-    private static void writeString(RandomAccessFile file, String str, int length) {
-
-        try {
-
-            StringBuilder sb = new StringBuilder(str);
-
-            while (sb.length() < length)
-                sb.append(' ');
-
-            file.writeChars(sb.toString());
-
-        } catch (Exception e) {
-
-        }
-
-    }
-
-    private static String readString(RandomAccessFile file, int length) {
-        try {
-
-            StringBuilder sb = new StringBuilder();
-
-            for (int i = 0; i < length; i++)
-                sb.append(file.readChar());
-
-            return sb.toString().trim();
-
-        } catch (Exception e) {
-            return "";
         }
     }
 
@@ -183,6 +149,21 @@ public class CoordenacaoPersistente {
         return myList.get(id);
     }
 
+    public static List<Coordenacao> findAllByCursoId(long cursoId) {
+    
+        fillMyList();
+
+        List<Coordenacao> coordenacoes = new ArrayList<Coordenacao>();
+
+        myList.forEach((k, c) -> {
+            if (c.getCursoId() == cursoId) {
+                coordenacoes.add(c);
+            }
+        });
+        
+        return coordenacoes;
+    }
+    
     public static List<Coordenacao> findAll() {
 
         List<Coordenacao> coordenacoes = new ArrayList<Coordenacao>();
@@ -193,15 +174,15 @@ public class CoordenacaoPersistente {
 
             for (long id = 0; id <= numberOfRecords(file); id++) {
 
-                long position = id * Defs.RECORD_SIZE;
+                long position = id * CoordenacaoDefs.RECORD_SIZE;
 
                 file.seek(position);
 
                 long recordId = file.readLong();
 
-                String nome = readString(file, Defs.NAME_SIZE);
+                long cursoId = file.readLong();
 
-                coordenacoes.add(new Coordenacao(id, nome));
+                coordenacoes.add(new Coordenacao(id, cursoId));
 
             }
 

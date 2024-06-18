@@ -8,6 +8,8 @@ import ano_letivo.AnoLetivo;
 import ano_letivo.AnoLetivoPersistente;
 import ano_letivo.AnoLetivoUI;
 import clearBuffer.ClearBuffer;
+import curso.Curso;
+import curso.CursoUI;
 import isptec.listas.Listas;
 import isptec.utils.Utils;
 import utils.Defs;
@@ -67,12 +69,19 @@ public class EstudanteUI {
         String email = Defs.EMAIL_ADDRESS;
         String telefone;
         AnoLetivo anoIngresso = null;
+        Curso curso = null;
 
         System.out.println("\n*****************Criando Estudante*****************\n");
 
         do {
             System.out.print("Regra_validação: Insira ano letivo existente ");
             anoIngresso = AnoLetivoUI.searchToEdit();
+
+        } while (anoIngresso == null);
+
+        do {
+            System.out.print("Regra_validação: Insira curso existente ");
+            curso = CursoUI.searchToEdit();
 
         } while (anoIngresso == null);
 
@@ -92,7 +101,7 @@ public class EstudanteUI {
 
         } while (!Pattern.matches(telefoneRegex, telefone));
 
-        Estudante newEstudante = new Estudante(-1, nome, email, telefone, anoIngresso.getId());
+        Estudante newEstudante = new Estudante(-1, nome, email, telefone, anoIngresso.getId(), curso.getId());
 
         EstudantePersistente.create(newEstudante);
 

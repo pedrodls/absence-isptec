@@ -137,16 +137,9 @@ public class AnoLetivoUI {
             return;
         }
 
-        if (EstudantePersistente.findAllByAnoIngressoId(old.getId()).size() > 0) {
-
-            System.out.println("\nAnoLetivo não pode ser apagado pois existem dados ligados ao mesmo!\n");
-
-            MainMenu.pauseToSee();
-
-            return;
-        }
-
-        if (CoordenadorPersistente.findAllByAnoLetivoId(old.getId()).size() > 0) {
+        if (EstudantePersistente.findAllByAnoIngressoId(old.getId()).size() > 0
+        || CoordenadorPersistente.findAllByAnoLetivoId(old.getId()).size() > 0
+        ) {
 
             System.out.println("\nAnoLetivo não pode ser apagado pois existem dados ligados ao mesmo!\n");
 

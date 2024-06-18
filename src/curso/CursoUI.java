@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Scanner;
 
 import clearBuffer.ClearBuffer;
+import coordenacao.CoordenacaoPersistente;
+import coordenador.CoordenadorPersistente;
+import estudante.EstudantePersistente;
 import isptec.listas.Listas;
 import isptec.utils.Utils;
 import utils.*;
@@ -128,6 +131,19 @@ public class CursoUI {
         if (old == null) {
 
             System.out.println("\nCurso não encontrado!\n");
+
+            MainMenu.pauseToSee();
+
+            return;
+        }
+
+        if (
+           EstudantePersistente.findAllByCursoId(old.getId()).size() > 0
+        || CoordenadorPersistente.findAllByCursoId(old.getId()).size() > 0
+        || CoordenacaoPersistente.findAllByCursoId(old.getId()).size() > 0
+        ) {
+
+            System.out.println("\nCurso não pode ser apagado pois existem dados ligados ao mesmo!\n");
 
             MainMenu.pauseToSee();
 

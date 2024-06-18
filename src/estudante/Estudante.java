@@ -1,11 +1,15 @@
 package estudante;
 
 import ano_letivo.AnoLetivoPersistente;
+import curso.CursoPersistente;
 
 public class Estudante {
 
     private long id;
     private long idAnoIngresso;
+    private long idCurso;
+
+    
 
     private StringBuilder nome;
     private StringBuilder email;
@@ -15,12 +19,21 @@ public class Estudante {
 
     }
 
-    public Estudante(long id, String nome, String email, String telefone, long idAnoIngresso) {
+    public Estudante(long id, String nome, String email, String telefone, long idAnoIngresso, long idCurso) {
         setId(id);
         setEmail(email);
         setNome(nome);
         setTelefone(telefone);
+        setIdCurso(idCurso);
         setIdAnoIngresso(idAnoIngresso);
+    }
+
+    public long getIdCurso() {
+        return idCurso;
+    }
+
+    public void setIdCurso(long idCurso) {
+        this.idCurso = idCurso;
     }
 
     public long getIdAnoIngresso() {
@@ -67,7 +80,8 @@ public class Estudante {
     public String toString() {
         return "ID: " + this.getId() + ", Nome: " + this.getNome() + ", Email: " + this.getEmail() + ", Telefone: "
                 + this.getTelefone() + ", Ano de Ingresso: "
-                + AnoLetivoPersistente.findOne(this.getIdAnoIngresso()).getNome();
+                + AnoLetivoPersistente.findOne(this.getIdAnoIngresso()).getNome()
+                + ", Curso: " + CursoPersistente.findOne(this.getIdCurso()).getNome();
     }
 
 }

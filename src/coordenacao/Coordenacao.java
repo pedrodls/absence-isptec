@@ -1,19 +1,27 @@
 package coordenacao;
 
-import utils.Defs;
+import curso.CursoPersistente;
 
 public class Coordenacao {
 
     private long id;
-    private StringBuilder sb_nome = new StringBuilder(Defs.NAME_SIZE);
-
+    private long cursoId;
+    
     public Coordenacao() {
 
     }
 
-    public Coordenacao(long id, String nome) {
+    public Coordenacao(long id, long cursoId) {
         setId(id);
-        setNome(nome);
+        setCursoId(cursoId);
+    }
+
+    public long getCursoId() {
+        return cursoId;
+    }
+
+    public void setCursoId(long cursoId) {
+        this.cursoId = cursoId;
     }
 
     public long getId() {
@@ -24,17 +32,9 @@ public class Coordenacao {
         this.id = id;
     }
 
-    public String getNome() {
-        return sb_nome.toString();
-    }
-
-    public void setNome(String nome) {
-        this.sb_nome = new StringBuilder(nome);
-    }
-
     @Override
     public String toString() {
-        return "ID: " + this.getId() + ", Nome: " + this.getNome();
+        return "ID: " + this.getId() + ", Coordenacao de : " + CursoPersistente.findOne(this.getCursoId()).getNome();
     }
 
 }

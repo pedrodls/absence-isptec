@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Scanner;
 
 import clearBuffer.ClearBuffer;
+import curso.Curso;
+import curso.CursoPersistente;
+import curso.CursoUI;
 import isptec.listas.Listas;
 import isptec.utils.Utils;
 import utils.*;
@@ -54,19 +57,18 @@ public class CoordenacaoUI {
     public static void create() {
 
         Scanner sc = new Scanner(System.in);
-        String nome;
+        Curso curso = null;
 
         System.out.println("\n*****************Criando Coordenacao*****************\n");
 
         do {
 
-            System.out.println("Regra_validação: no mínimo 3 caracters!");
-            System.out.print("Nome: ");
-            nome = sc.nextLine();
+            System.out.print("Regra_validação: Insira curso existente ");
+            curso = CursoUI.searchToEdit();
 
-        } while (nome.length() < 3);
+        } while (curso == null);
 
-        Coordenacao newCoordenacao = new Coordenacao(-1, nome);
+        Coordenacao newCoordenacao = new Coordenacao(-1, curso.getId());
 
         CoordenacaoPersistente.create(newCoordenacao);
 
@@ -78,7 +80,8 @@ public class CoordenacaoUI {
 
         Scanner sc = new Scanner(System.in);
 
-        Coordenacao old = searchToEdit();
+
+        Coordenacao old = searchToEdit(), newCoord = null;
 
         if (old == null) {
 
@@ -89,23 +92,16 @@ public class CoordenacaoUI {
             return;
         }
 
-        String nome = old.getNome();
-
         System.out.println("\n*****************Editando Coordenacao*****************\n");
 
-        if (Utils.editarCampo("Nome", old.getNome())) {
+        if (Utils.editarCampo("ID Curso", old.getCursoId() + "")) {
 
             do {
 
-                System.out.print("\nRegra_validação: no mínimo 3 caracters! ");
-                MainMenu.pauseToSee();
+                System.out.print("Regra_validação: Insira curso existente ");
+                newCoord = CoordenacaoUI.searchToEdit();
 
-                System.out.print("\nNome: ");
-                nome = sc.nextLine();
-
-            } while (nome.length() < 3);
-
-            old.setNome(nome);
+            } while (newCoord == null);
 
         }
 

@@ -156,39 +156,34 @@ public class CoordenadorPersistente {
         return myList.get(id);
     }
 
+    public static List<Coordenador> findAllByCursoId(long idCurso) {
+
+        fillMyList();
+
+        List<Coordenador> coordenadores = new ArrayList<Coordenador>();
+
+        myList.forEach((k, c) -> {
+            if (c.getIdCurso() == idCurso) {
+                coordenadores.add(c);
+            }
+        });
+        
+        return coordenadores;
+    }
+
     public static List<Coordenador> findAllByAnoLetivoId(long idAnoLetivo) {
 
-        List<Coordenador> Coordenadores = new ArrayList<Coordenador>();
+        fillMyList();
 
-        try {
+        List<Coordenador> coordenadores = new ArrayList<Coordenador>();
 
-            RandomAccessFile file = new RandomAccessFile(Defs.COORDENADOR_FILE, "r");
-
-            for (long id = 0; id <= numberOfRecords(file); id++) {
-
-                long position = id * Defs.RECORD_SIZE;
-
-                file.seek(position);
-                
-                file.readLong();
-                
-                long idProfessor = file.readLong();
-                long idCurso = file.readLong();
-                long idOldAnoLetivo = file.readLong();
-
-                if (idOldAnoLetivo == idAnoLetivo) {
-                    Coordenadores.add(new Coordenador(id, idProfessor, idCurso, idAnoLetivo));
-                }
-
+        myList.forEach((k, c) -> {
+            if (c.getIdAnoLetivo() == idAnoLetivo) {
+                coordenadores.add(c);
             }
-
-            file.close();
-
-        } catch (Exception ex) {
-
-        }
-
-        return Coordenadores;
+        });
+        
+        return coordenadores;
 
     }
 
