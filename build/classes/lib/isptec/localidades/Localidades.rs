@@ -1,0 +1,2 @@
+isptec.localidades.Localidades$CompareLocalidades
+isptec.localidades.Localidades

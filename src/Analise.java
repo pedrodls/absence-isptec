@@ -11,102 +11,383 @@
  * 
  * 
  * 2.   Análise
- * 2.1. Interface de utilizador (IU)/ Menu Principal
+ * 2.1. Interface de utilizador (IU) / Menu Principal & Sub-menus
  * 
+ *      JustificativoUI
+ *          criar
+ *          eliminar
+ *          actualizar
+ *          visualizar
  * 
- *      JustificationUI
- *          Create, Edit, Verify, Drop      : Justification
+ *      FaltaUI
+ *          criar
+ *          eliminar
+ *          actualizar
+ *          visualizar
+ * 
+ *      MotivoFaltaUI
+ *          criar
+ *          eliminar
+ *          actualizar
+ *          visualizar
  *  
+ *      CursoUI
+ *          criar
+ *          eliminar
+ *          actualizar
+ *          visualizar
+ * 
+ *      CoordenacaoUI
+ *          criar
+ *          eliminar
+ *          actualizar
+ *          visualizar
+ * 
+ *      CoordenadorUI
+ *          criar
+ *          eliminar
+ *          actualizar
+ *          visualizar
+ * 
+ *      AnoLectivoUI
+ *          criar
+ *          eliminar
+ *          actualizar
+ *          visualizar
+ * 
+ *      AnoAcademicoUI
+ *          criar
+ *          eliminar
+ *          actualizar
+ *          visualizar
+ * 
+ *      DisciplinaUI
+ *          criar
+ *          eliminar
+ *          actualizar
+ *          visualizar
+ * 
+ *      TurmaUI   
+ *          criar
+ *          eliminar
+ *          actualizar
+ *          visualizar
+ * 
+ *      ProfessorUI
+ *          criar
+ *          eliminar
+ *          actualizar
+ *          visualizar
+ * 
+ *      ProfessorDisciplinaUI
+ *          criar
+ *          eliminar
+ *          actualizar
+ *          visualizar
+ * 
+ *      EstudanteUI
+ *          criar
+ *          eliminar
+ *          actualizar
+ *          visualizar
+ * 
+ *      CursoAnoDisciplinaUI
+ *          criar
+ *          eliminar
+ *          actualizar
+ *          visualizar
+ *      
+ *      TurmaEstudanteUI
+ *          criar
+ *          eliminar
+ *          actualizar
+ *          visualizar
+ * 
  *
  * 2.2. Entidades ligadas a IU
  *      
- *      Entidade JustificationUI
+ *      Entidade Justificativo
+ *          atributo id                 :   Integer
+ *          atributo tipoDespacho       :   TipoDespachoEnum
+ *          atributo idCoordenacao      :   Integer
+ *          atributo dataDespacho       :   Date
+ *          atributo dataCriacao        :   Date
+ *          atributo periodoInicialFalta:   Date
+ *          atributo periodoFinalFalta  :   Date
+ *          atributo assunto            :   String
+ *          atributo idEstudante        :   Integer
+ *          atributo idAnoAcademico     :   Integer
+ *          atributo idMotivoFalta      :   Integer
+ *          atributo provaPerdida       :   Boolean
+ *          atributo tipoProva          :   TipoProvaEnum   
  * 
- *          atributo LocalDate createdAt;
- *          atributo LocalDate absenceStart;
- *          atributo LocalDate absenceEnd;
- * 
- *          atributo Student student;
- *          atributo String description;
- * 
- *          atributo List<LostedTest> lostedTests;
- *          atributo LostedTypeEnum lostedTestType;
- * 
- *          operacao create()
- *          operacao read()
- *          operacao update()
- *          operacao delete()
- * 
+ *          operacao criar()
+ *          operacao eliminar()
+ *          operacao actualizar()
+ *          operacao visualizar()
  *      FimEntidade
  *      
- *      Entidade Student
- *  
- *          atributo Integer id;
- *          atributo String name;
+ *      Entidade Falta
+ *          atributo id                 :   Integer
+ *          atributo tipoFalta          :   TipoFaltaEnum
+ *          atributo idEstudante        :   Integer
+ *          atributo idDisciplina       :   Integer
+ *          atributo idProfessor        :   Integer
+ *          atributo dataCriacao        :   Date
  * 
- *          atributo String email;
- *          atributo String course;
- *          atributo String telephone;
- * 
- *          operacao create()
- *          operacao read()
- *          operacao update()
- *          operacao delete()
- * 
+ *          operacao criar()
+ *          operacao eliminar()
+ *          operacao actualizar()
+ *          operacao visualizar()
  *      FimEntidade
  * 
- *      Entidade LostedTest
- *  
- *          atributo String teacher;
- *          atributo String subject;
- *          atributo LocalDate date;
- * 
- *          operacao create()
- *          operacao read()
- *          operacao update()
- *          operacao delete()
- * 
+ *      Entidade   MotivoFalta
+ *          atributo id                 :   Integer
+ *          atributo descricao          :   String
  *      FimEntidade
  * 
+ *      Entidade ProvaPerdida
+ *          atributo id                 :   Integer
+ *          atributo idFalta            :   Integer
+ * 
+ *          operacao criar()
+ *          operacao eliminar()
+ *          operacao actualizar()
+ *          operacao visualizar()
+ *      FimEntidade
+ * 
+ *      Entidade Coordenacao
+ *          atributo id                 :   Integer
+ *          atributo descricao          :   String
+ *          atributo idCurso            :   Integer
+ * 
+ *          operacao criar()
+ *          operacao eliminar()
+ *          operacao actualizar()
+ *          operacao visualizar()
+ *      FimEntidade
+ * 
+ *      Entidade Coordenador
+ *          atributo id                 :   Integer
+ *          atributo estado             :   Bolean
+ *          atributo idProfessor        :   Integer
+ *          atributo idCoordenacao      :   Integer
+ * 
+ *          operacao criar()
+ *          operacao eliminar()
+ *          operacao actualizar()
+ *          operacao visualizar()
+ *      FimEntidade
+ * 
+ *      Entidade Estudante
+ *          atributo idMatricula        :   Integer
+ *          atributo idCurso            :   Integer
+ *          atributo descricao          :   String
+ *          atributo email              :   String
+ *          atributo telefone           :   String
+ * 
+ *          operacao criar()
+ *          operacao eliminar()
+ *          operacao actualizar()
+ *          operacao visualizar()
+ *      FimEntidade
+ * 
+ *      Entidade Professor
+ *          atributo id                 :   Integer
+ *          atributo descricao          :   String
+ * 
+ *          operacao criar()
+ *          operacao eliminar()
+ *          operacao actualizar()
+ *          operacao visualizar()
+ *      FimEntidade
+ * 
+ *      Entidade ProfessorDisciplina
+ *          atributo id                 :   Integer
+ *          atributo idProfessor        :   Integer
+ *          atributo idDisciplina       :   Integer
+ * 
+ *          operacao criar()
+ *          operacao eliminar()
+ *          operacao actualizar()
+ *          operacao visualizar()
+ *      FimEntidade
+ * 
+ *      Entidade Turma
+ *          atributo id                 :   Integer
+ *          atributo idCurso            :   Integer
+ *          atributo idAnoAcademico     :   Integer
+ *          atributo descricao          :   String
+ * 
+ *          operacao criar()
+ *          operacao eliminar()
+ *          operacao actualizar()
+ *          operacao visualizar()
+ *      FimEntidade
+ * 
+ *      Entidade TurmaEstudante
+ *          atributo id                     :   Integer
+ *          atributo idTurma                :   Integer
+ *          atributo idProfessorDisciplina  :   Integer
+ *          atributo idEstudante            :   Integer
+ * 
+ *          operacao criar()
+ *          operacao eliminar()
+ *          operacao actualizar()
+ *          operacao visualizar()
+ *      FimEntidade
+ * 
+ *      Entidade CursoAnoDisciplina
+ *          atributo id                 :   Integer
+ *          atributo idCurso            :   Integer
+ *          atributo idAnoAcademico     :   Integer
+ *          atributo idDisciplina       :   Integer
+ * 
+ *          operacao criar()
+ *          operacao eliminar()
+ *          operacao actualizar()
+ *          operacao visualizar()
+ *      FimEntidade
  * 
  * 
  * 2.3. Entidades Persistentes
  * 
  *      Ficheiros
- *          justification.dat      ---->     PersistenceJustification
- *
+ *          justificativos.dat          ---->   JustificativoPersistente
+ *          motivos_faltas.dat          ---->   MotivoFaltaPersistente
+ *          faltas.dat                  ---->   FaltaPersistente
+ *          provas_perdidas.dat         ---->   ProvaPerdidaPersistente
+ *          coordenacoes.dat            ---->   CoordenacaoPersistente
+ *          coordenadores.dat           ---->   CoordenadorPersistente
+ *          estudantes.dat              ---->   EstudantePersistente
+ *          professores.dat             ---->   ProfessorPersistente
+ *          cursos.dat                  ---->   CursoPersistente
+ *          anos_letivos.dat            ---->   AnoLetivoPersistente
+ *          anos_academicos.dat         ---->   AnoAcademicoPersistente
+ *          disciplinas.dat             ---->   disciplinaPersistente
+ *          cursoAnoDisciplina.dat      ---->   CursoAnoDisciplinaPersistente
+ *          turmas.dat                  ---->   TurmaPersistente
+ *          professores_disciplinas.dat ---->   ProfessorDisciplinaPersistene
+ *          turmasEstudantes.dat        ---->   TurmaEstudantePersistente
+ * 
  *      Tabelas
- *
- *      Entidade PersistenceJustification
- * 
- *          atributo LocalDate createdAt;
- *          atributo LocalDate absenceStart;
- *          atributo LocalDate absenceEnd;
- *          atributo String description;
- *          atributo Student student;
- *          atributo List<LostedTest> lostedTests;
- * 
+ *      Entidade   JustificativoPersistente
+ *          atributo id                 :   Integer
+ *          atributo tipoDespacho       :   String(20)
+ *          atributo idCoordenacao      :   Integer
+ *          atributo dataDespacho       :   Long
+ *          atributo dataCriacao        :   Long
+ *          atributo periodoInicialFalta:   Long
+ *          atributo periodoFinalFalta  :   Long
+ *          atributo assunto            :   String(20)
+ *          atributo idEstudante        :   Integer
+ *          atributo idAnoAcademico     :   Integer
+ *          atributo idMotivoFalta      :   Integer
+ *          atributo provaPerdida       :   Integer
+ *          atributo tipoProva          :   String(20)  
+ *          atributo idFuncionario      :   Integer
  *      FimEntidade
  * 
- *      Entidade PersistenceStudent
+ *      Entidade   MotivoFaltaPersistente
+ *          atributo id                 :   Integer
+ *          atributo descricao          :   String(20)
+ *      FimEntidade
+ * 
+ *      Entidade   FaltaPersistente
+ *          atributo id                 :   Integer
+ *          atributo tipoFalta          :   String(20)
+ *          atributo idEstudante        :   Integer
+ *          atributo idDisciplina       :   Integer
+ *          atributo idProfessor        :   Integer
+ *          atributo dataCriacao        :   Long
+ *      FimEntidade
+ * 
+ *      Entidade   ProvaPerdidaPersistente
+ *          atributo id                 :   Integer
+ *          atributo idFalta            :   Integer
+ *      FimEntidade
  *  
- *          atributo Integer id;
- *          atributo String name;
- * 
- *          atributo String email;
- *          atributo String course;
- *          atributo String telephone;
- * 
+ *      Entidade   CoordenacaoPersistente
+ *          atributo id                 :   Integer
+ *          atributo descricao          :   String(20)
+ *          atributo idCurso            :   Integer
  *      FimEntidade
  * 
- *      Entidade PersistenceLostedTest
+ *      Entidade   CoordenadorPersistente
+ *          atributo id                 :   Integer
+ *          atributo estado             :   Integer
+ *          atributo idProfessor        :   Integer
+ *          atributo idCoordenacao      :   Integer
+ *      FimEntidade
  *  
- *          atributo String teacher;
- *          atributo String subject;
- *          atributo LocalDate date;
+ *      Entidade   EstudantePersistente
+ *          atributo idMatricula        :   Integer
+ *          atributo idCurso            :   Integer
+ *          atributo descricao          :   String(20)
+ *          atributo email              :   String(20)
+ *          atributo telefone           :   String(20)
+ *      FimEntidade
+ * 
+ *      Entidade   ProfessorPersistente
+ *          atributo id                 :   Integer
+ *          atributo descricao          :   String(20)
+ *      FimEntidade
+ * 
+ *      Entidade   CursoPersistente
+ *          atributo id                 :   Integer
+ *          atributo descricao          :   String(20)
+ *      FimEntidade
+ * 
+ *      Entidade   AnoAcademicoPersistente
+ *          atributo id                 :   Integer
+ *          atributo descricao          :   String(20)
+ *      FimEntidade
+ * 
+ *      Entidade   AnoLetivoPersistente
+ *          atributo id                 :   Integer
+ *          atributo descricao          :   String(20)
+ *      FimEntidade
+ * 
+ *      Entidade   DisciplinaPersistente
+ *          atributo id                 :   Integer
+ *          atributo descricao          :   String(20)
+ *      FimEntidade
+ * 
+ *      Entidade   CursoAnoDisciplinaPersistente
+ *          atributo id                 :   Integer
+ *          atributo idCurso            :   Integer
+ *          atributo idAnoAcademico     :   Integer
+ *          atributo idDisciplina       :   Integer
+ *      FimEntidade
+ * 
+ *      Entidade   TurmaPersistente
+ *          atributo id                 :   Integer
+ *          atributo idCurso            :   Integer
+ *          atributo idAnoAcademico     :   Integer
+ *          atributo descricao          :   String(20)
+ *      FimEntidade
+ *      
+ *      Entidade   ProfessorDisciplinaPersistente
+ *          atributo id                     :   Integer
+ *          atributo idTurma                :   Integer
+ *          atributo idProfessor            :   Integer
+ *          atributo idCursoAnoDisciplina   :   Integer
  * 
  *      FimEntidade
- *       
+ * 
+ *      Entidade    TurmaEstudantePersistente
+ *          atributo id                     :   Integer
+ *          atributo idTurma                :   Integer
+ *          atributo idProfessorDisciplina  :   Integer
+ *          atributo idEstudante            :   Integer
+ *      FimEntidade
+ * 
+ * 
+ * 2.5  Enumeraveis
+ *          TipoDespachoEnum            { DEFERIDO, INDEFERIDO, FALTA_COMPROVATIVO }
+ *          TipoProvaEnum               { EXAME, 1_PP, 2_PP                        }
+ *          TipoFaltaEnum               { NORMAL, PROVA                            }
+ *          TipoEstadoEnum              { JUSTIFICADO, PENDENTE, NAO_JUSTIFICADO   }
  *         
  */
 

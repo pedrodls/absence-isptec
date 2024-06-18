@@ -1,12 +1,11 @@
-package lib.isptec.localidades;
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package isptec.localidades;
 
-
-
-
-
-
-
-
+import isptec.listas.Listas;
+import isptec.utils.ListUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -15,16 +14,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
-import lib.isptec.listas.Listas;
-import lib.isptec.utils.ListUtils;
-
-
-
 /**
  *
  * @author Aires Veloso
  */
-
 public class Localidades
 {
 
@@ -333,7 +326,7 @@ public class Localidades
             retornar municipioSelecionado
          */
         int provinciaCodigo, municipioCodigo;
-        String label = "Selecione uma das provincias [" + msg + "]: ";
+        String label = "Selecione uma das provincias";
         if (msg != null)
         {
             msg = msg.trim();
@@ -341,8 +334,10 @@ public class Localidades
 
         if ((msg != null) && !msg.isEmpty())
         {
-            label += msg;
+            label += " [" + msg + "]: ";
         } 
+        else
+            label += ": ";
         System.out.println(label);
         provinciaCodigo = selecionarUmFilho(ANGOLA_CODIGO, msg);
 
@@ -502,7 +497,11 @@ public class Localidades
             // municipio indefinidos da provincia de Cunene
             new Localidade(63, "Indefinido", 27),
             // municipio indefinidos da provincia de Namibe
-            new Localidade(64, "Indefinido", 28)
+            new Localidade(64, "Indefinido", 28),
+            new Localidade(65, "Indefinida", 29),
+            
+            // municipio da Provincia do Kwanza-Sul
+            new Localidade(66, "Sumbe", 20)
         );
         localidadesMap = new HashMap<>();
         for (Localidade localidade : this.localidadesList)

@@ -1,5 +1,12 @@
-package lib.isptec.utils;
-
+/************************************************************************/
+/* file.: ObjectSerializableGeneric.java                                */                 
+/* Autor.: Osvaldo Manuel Ramos                                         */
+/* Data.: 17-dez-2005                                                   */
+/* Num.: 2817                                                           */
+/* Objectivo.: Criacao de Janela                            		    */
+/* Descricao.:                                				            */
+/************************************************************************/
+package isptec.utils;
 
 
 import java.io.*;

@@ -1,24 +1,18 @@
-package lib.isptec.utils;
-
-
-
-
-
-
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package isptec.utils;
 
 /**
  *
  * @author Aires Veloso
  */
-
 import java.io.File;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -26,8 +20,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.TimeUnit;
-
 import javax.xml.datatype.XMLGregorianCalendar;
 
 /**
@@ -71,24 +63,24 @@ public class DataUtils
     }
 
     public static Date lerData(String dateStr)
-	{
+    {
         String msg;
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", new Locale("pt", "PT"));
-		Date date;
-		try
-		{
-			date = sdf.parse(dateStr);
-		}
-		catch (ParseException ex)
-		{
-			msg = "A data  '" + dateStr + "' tem formato imprÃ³prio. Fale com o administrador do sistema";
-			System.out.print( msg);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", new Locale("pt", "PT"));
+        Date date;
+        try
+        {
+            date = sdf.parse(dateStr);
+        }
+        catch (ParseException ex)
+        {
+            msg = "A data  '" + dateStr + "' tem formato imprÃ³prio. Fale com o administrador do sistema";
+            System.out.print(msg);
 
-			return null;
-		}
-		return date;
-	}
-    
+            return null;
+        }
+        return date;
+    }
+
     public static boolean isMoreRecent(Date data1, Date data2)
     {
 //System.out.println("0: DataUtils.isMoreRecent()\tdata1: " + toStringFull(data1));
@@ -246,12 +238,12 @@ public class DataUtils
     {
         return (diff(data, inicio) >= 0) && (diff(data, fim) <= 0);
     }
-    
+
     public static boolean estaNoIntervaloExclusive(Date data, Date inicio, Date fim)
     {
         return (diff(data, inicio) > 0) && (diff(data, fim) < 0);
     }
-    
+
     public static long diff(Date data1, Date data2)
     {
         Calendar data1Calendar = Calendar.getInstance();
@@ -261,16 +253,16 @@ public class DataUtils
         data2Calendar.setTime(data2);
         return data1Calendar.getTimeInMillis() - data2Calendar.getTimeInMillis();
     }
-    
+
     public static int diffCompare(Date data1, Date data2)
     {
         long cp = diff(data1, data2);
         return cp == 0 ? 0 : (cp > 0 ? 1 : -1);
     }
-    
+
     public static long diffEmSegundos(Date data1, Date data2)
     {
-        return diff(data1, data2)/1000;
+        return diff(data1, data2) / 1000;
     }
 
     public static int compare(Date data1, Date data2)
@@ -441,28 +433,52 @@ public class DataUtils
         return sdf.format(data);
     }
 
+    public static String dateToString(Date data, String pattern)
+    {
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern, new Locale("pt", "PT"));
+        return sdf.format(data);
+    }
+
     public static String dateToDate(Date data)
     {
         SimpleDateFormat sdf = new SimpleDateFormat("dd MMM, yyyy", new Locale("pt", "PT"));
         return sdf.format(data);
     }
-    
-    public static LocalDate stringToDate(String stringDate)
+
+    public static Date stringToDate(String string)
     {
-        try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.UK);
-            LocalDate date = LocalDate.parse(stringDate, formatter);
+        Date data;
+        SimpleDateFormat sdf = new SimpleDateFormat("dd MMM, yyyy HH:mm:ss", new Locale("pt", "PT"));
 
-            return date;
-
-        } catch (Exception e) {
-
-            System.out.println("Erro!");
-
+        try
+        {
+            data = sdf.parse(string);
+        }
+        catch (ParseException exception)
+        {
+            System.out.println("Data invalida");
             return null;
         }
-        
 
+        return data;
+    }
+
+    public static Date stringToDate(String string, String dataFormat)
+    {
+        Date data;
+        SimpleDateFormat sdf = new SimpleDateFormat(dataFormat, new Locale("pt", "PT"));
+
+        try
+        {
+            data = sdf.parse(string);
+        }
+        catch (ParseException exception)
+        {
+            System.out.println("Data invalida");
+            return null;
+        }
+
+        return data;
     }
 
     public static Date converterStringToDate(String string)
@@ -618,7 +634,7 @@ public class DataUtils
 
     public static void sort(List<Date> dataList)
     {
-       if (dataList.size() > 1)
+        if (dataList.size() > 1)
         {
             Collections.sort(dataList, (o1, o2) ->
             {
@@ -629,11 +645,20 @@ public class DataUtils
         }
     }
 
-    public static long getDifferenceDays(LocalDate d1, LocalDate d2) {
-        
-        System.out.println(d1.toString() + " - - - " + d2.toString());
-
-        return ChronoUnit.DAYS.between(d1, d2);
-
+    public static boolean isValidDate(Date dt, String pattern)
+    {
+        String dts = dateToString(dt, pattern);
+        DateFormat df = new SimpleDateFormat(pattern);
+        df.setLenient(false);
+        Date date = null;
+        try
+        {
+            date = df.parse(dts);
+            return true;
+        }
+        catch (ParseException e)
+        {
+            return false;
+        }
     }
 }

@@ -6,7 +6,7 @@
       "name": "App",
       "request": "launch",
       "mainClass": "App",
-      "projectName": "App_c8590aa9"
+      "projectName": "App_39d7268a"
     },
     {
       "name": "C/C++ Runner: Debug Session",
@@ -15,8 +15,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/Lenovo/Desktop/PedroJoao20220519/P4_2022_2/App",
-      "program": "c:/Users/Lenovo/Desktop/PedroJoao20220519/P4_2022_2/App/build/Debug/outDebug",
+      "cwd": "c:/Users/Lenovo/Desktop/PedroJoao20220519/P5_2024_2/App",
+      "program": "c:/Users/Lenovo/Desktop/PedroJoao20220519/P5_2024_2/App/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
