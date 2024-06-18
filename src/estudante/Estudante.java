@@ -1,26 +1,34 @@
 package estudante;
 
+import ano_letivo.AnoLetivoPersistente;
+
 public class Estudante {
 
     private long id;
-    private long idCurso;
-    private StringBuilder name;
+    private long idAnoIngresso;
+
+    private StringBuilder nome;
+    private StringBuilder email;
+    private StringBuilder telefone;
 
     public Estudante() {
 
     }
 
-    public Estudante(long id, long idCurso) {
+    public Estudante(long id, String nome, String email, String telefone, long idAnoIngresso) {
         setId(id);
-        setIdCurso(idCurso);
+        setEmail(email);
+        setNome(nome);
+        setTelefone(telefone);
+        setIdAnoIngresso(idAnoIngresso);
     }
 
-    public long getIdCurso() {
-        return idCurso;
+    public long getIdAnoIngresso() {
+        return idAnoIngresso;
     }
 
-    public void setIdCurso(long idCurso) {
-        this.idCurso = idCurso;
+    public void setIdAnoIngresso(long idAnoIngresso) {
+        this.idAnoIngresso = idAnoIngresso;
     }
 
     public long getId() {
@@ -31,17 +39,35 @@ public class Estudante {
         this.id = id;
     }
 
-    public StringBuilder getName() {
-        return name;
+    public String getNome() {
+        return nome.toString();
     }
 
-    public void setName(StringBuilder name) {
-        this.name = name;
+    public void setNome(String nome) {
+        this.nome = new StringBuilder(nome);
+    }
+
+    public String getEmail() {
+        return email.toString();
+    }
+
+    public void setEmail(String email) {
+        this.email = new StringBuilder(email);
+    }
+
+    public String getTelefone() {
+        return telefone.toString();
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = new StringBuilder(telefone);
     }
 
     @Override
     public String toString() {
-        return "ID: " + this.getId() + ", Nome: ";
+        return "ID: " + this.getId() + ", Nome: " + this.getNome() + ", Email: " + this.getEmail() + ", Telefone: "
+                + this.getTelefone() + ", Ano de Ingresso: "
+                + AnoLetivoPersistente.findOne(this.getIdAnoIngresso()).getNome();
     }
 
 }

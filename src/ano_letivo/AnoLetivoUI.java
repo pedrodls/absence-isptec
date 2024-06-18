@@ -5,6 +5,7 @@ import java.util.Scanner;
 import java.util.regex.Pattern;
 
 import clearBuffer.ClearBuffer;
+import estudante.EstudantePersistente;
 import isptec.listas.Listas;
 import isptec.utils.Utils;
 import utils.*;
@@ -65,7 +66,7 @@ public class AnoLetivoUI {
             System.out.print("Designção(xxxx/yyyy): ");
             nome = sc.nextLine();
 
-        } while (!Pattern.compile(regex).matcher(nome).matches());
+        } while (!(Pattern.compile(regex).matcher(nome).matches() && Utils.validarAnoLetivo(nome)));
 
         AnoLetivo newAnoLetivo = new AnoLetivo(-1, nome);
 
@@ -122,11 +123,21 @@ public class AnoLetivoUI {
 
         System.out.println("\n*****************Eliminando Ano Lectivo****************\n");
 
+        
         AnoLetivo old = searchToEdit();
 
         if (old == null) {
 
             System.out.println("\nAnoLetivo não encontrado!\n");
+
+            MainMenu.pauseToSee();
+
+            return;
+        }
+
+        if (EstudantePersistente.findAllByAnoIngressoId(old.getId()).size() > 0) {
+
+            System.out.println("\nAnoLetivo não pode ser apagado pois existem dados ligados ao mesmo!\n");
 
             MainMenu.pauseToSee();
 

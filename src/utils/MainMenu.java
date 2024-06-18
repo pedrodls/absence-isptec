@@ -8,6 +8,7 @@ import clearBuffer.ClearBuffer;
 import coordenacao.CoordenacaoUI;
 import curso.CursoUI;
 import disciplina.DisciplinaUI;
+import estudante.EstudanteUI;
 import isptec.listas.Listas;
 import motivo_falta.MotivoFaltaUI;
 import professor.ProfessorUI;
@@ -88,7 +89,7 @@ public class MainMenu {
                     break;
 
                 case 7:
-                    // Estudante
+                    EstudanteUI.menu();
                     break;
 
                 case 8:

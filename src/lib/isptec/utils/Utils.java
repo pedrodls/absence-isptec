@@ -6,6 +6,8 @@
 package isptec.utils;
 
 import isptec.listas.Listas;
+import utils.MainMenu;
+
 import java.text.DecimalFormat;
 import java.util.Objects;
 import java.util.Scanner;
@@ -15,6 +17,14 @@ import java.util.Scanner;
  * @author aires
  */
 public class Utils {
+
+    public static boolean validarAnoLetivo(String anoLetivo) {
+
+        Integer ano_1 = Integer.parseInt(anoLetivo.split("/")[0]);
+        Integer ano_2 = Integer.parseInt(anoLetivo.split("/")[1]);
+
+        return ano_1 == ano_2 - 1;
+    }
 
     public static boolean concorda() {
         String opcoes[] = {
@@ -51,7 +61,7 @@ public class Utils {
     }
 
     public static boolean editarCampo(String field, String old) {
-        System.out.println("Editar "+field + "(" + old + ")?");
+        System.out.println("Editar " + field + "(" + old + ")?");
 
         return concorda("Sim", "Não");
     }
