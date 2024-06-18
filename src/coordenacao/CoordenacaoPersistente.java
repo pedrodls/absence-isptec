@@ -28,9 +28,9 @@ public class CoordenacaoPersistente {
     }
 
     public static void fillMyList() {
-        List<Coordenacao> Coordenacaos = findAll();
+        List<Coordenacao> coordenacoes = findAll();
 
-        for (Coordenacao pr : Coordenacaos)
+        for (Coordenacao pr : coordenacoes)
             myList.put(pr.getId(), pr);
 
     }
@@ -185,7 +185,7 @@ public class CoordenacaoPersistente {
 
     public static List<Coordenacao> findAll() {
 
-        List<Coordenacao> Coordenacaos = new ArrayList<Coordenacao>();
+        List<Coordenacao> coordenacoes = new ArrayList<Coordenacao>();
 
         try {
 
@@ -201,7 +201,7 @@ public class CoordenacaoPersistente {
 
                 String nome = readString(file, Defs.NAME_SIZE);
 
-                Coordenacaos.add(new Coordenacao(id, nome));
+                coordenacoes.add(new Coordenacao(id, nome));
 
             }
 
@@ -210,7 +210,7 @@ public class CoordenacaoPersistente {
 
         }
 
-        return Coordenacaos;
+        return coordenacoes;
 
     }
 

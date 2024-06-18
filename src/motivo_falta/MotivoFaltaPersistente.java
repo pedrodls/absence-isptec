@@ -39,7 +39,7 @@ public class MotivoFaltaPersistente {
 
         try {
 
-            RandomAccessFile file = new RandomAccessFile(Defs.ANO_ACADEMICO_FILE, "rw");
+            RandomAccessFile file = new RandomAccessFile(Defs.MOTIVO_FALTA_FILE, "rw");
 
             fillMyList();
 
@@ -75,7 +75,7 @@ public class MotivoFaltaPersistente {
 
         try {
 
-            RandomAccessFile file = new RandomAccessFile(Defs.ANO_ACADEMICO_FILE, "rw");
+            RandomAccessFile file = new RandomAccessFile(Defs.MOTIVO_FALTA_FILE, "rw");
 
             long id = numberOfRecords(file);
 
@@ -147,7 +147,7 @@ public class MotivoFaltaPersistente {
 
             myList.replace(MotivoFalta.getId(), MotivoFalta);
 
-            FileUtils.delete(Defs.ANO_ACADEMICO_FILE);
+            FileUtils.delete(Defs.MOTIVO_FALTA_FILE);
 
             myList.forEach((t, u) -> {
                 realocate(u);
@@ -165,7 +165,7 @@ public class MotivoFaltaPersistente {
 
             myList.remove(MotivoFalta.getId());
 
-            FileUtils.delete(Defs.ANO_ACADEMICO_FILE);
+            FileUtils.delete(Defs.MOTIVO_FALTA_FILE);
 
             myList.forEach((t, u) -> {
                 realocate(u);
@@ -189,7 +189,7 @@ public class MotivoFaltaPersistente {
 
         try {
 
-            RandomAccessFile file = new RandomAccessFile(Defs.ANO_ACADEMICO_FILE, "r");
+            RandomAccessFile file = new RandomAccessFile(Defs.MOTIVO_FALTA_FILE, "r");
 
             for (long id = 0; id <= numberOfRecords(file); id++) {
 

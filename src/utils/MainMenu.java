@@ -6,6 +6,7 @@ import ano_academico.AnoAcademicoUI;
 import ano_letivo.AnoLetivoUI;
 import clearBuffer.ClearBuffer;
 import coordenacao.CoordenacaoUI;
+import coordenador.CoordenadorUI;
 import curso.CursoUI;
 import disciplina.DisciplinaUI;
 import estudante.EstudanteUI;
@@ -81,7 +82,7 @@ public class MainMenu {
                     break;
 
                 case 5:
-                    // Coordenador
+                    CoordenadorUI.menu();
                     break;
 
                 case 6:

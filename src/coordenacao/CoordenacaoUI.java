@@ -60,9 +60,7 @@ public class CoordenacaoUI {
 
         do {
 
-            System.out.print("Regra_validação: no mínimo 3 caracters!");
-            MainMenu.pauseToSee();
-
+            System.out.println("Regra_validação: no mínimo 3 caracters!");
             System.out.print("Nome: ");
             nome = sc.nextLine();
 

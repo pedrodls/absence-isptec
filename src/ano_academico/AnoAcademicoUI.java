@@ -62,7 +62,7 @@ public class AnoAcademicoUI {
 
         do {
 
-            System.out.print("Designação(x/ANO): ");
+            System.out.print("Designação(x-ANO): ");
             nome = sc.nextLine();
 
         } while (!Pattern.compile(regex).matcher(nome).matches());

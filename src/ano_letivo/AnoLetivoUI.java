@@ -5,6 +5,8 @@ import java.util.Scanner;
 import java.util.regex.Pattern;
 
 import clearBuffer.ClearBuffer;
+import coordenacao.CoordenacaoPersistente;
+import coordenador.CoordenadorPersistente;
 import estudante.EstudantePersistente;
 import isptec.listas.Listas;
 import isptec.utils.Utils;
@@ -136,6 +138,15 @@ public class AnoLetivoUI {
         }
 
         if (EstudantePersistente.findAllByAnoIngressoId(old.getId()).size() > 0) {
+
+            System.out.println("\nAnoLetivo não pode ser apagado pois existem dados ligados ao mesmo!\n");
+
+            MainMenu.pauseToSee();
+
+            return;
+        }
+
+        if (CoordenadorPersistente.findAllByAnoLetivoId(old.getId()).size() > 0) {
 
             System.out.println("\nAnoLetivo não pode ser apagado pois existem dados ligados ao mesmo!\n");
 
