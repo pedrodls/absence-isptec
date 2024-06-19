@@ -3,8 +3,8 @@ package coordenador;
 import java.util.List;
 import java.util.Scanner;
 
-import ano_letivo.AnoLetivo;
-import ano_letivo.AnoLetivoUI;
+import Year.AnoLetivo;
+import Year.SchoolYear;
 import clearBuffer.ClearBuffer;
 import curso.Curso;
 import curso.CursoUI;
@@ -68,7 +68,7 @@ public class CoordenadorUI {
 
         do {
             System.out.print("Regra_validação: Insira ano letivo existente ");
-            anoLetivo = AnoLetivoUI.searchToEdit();
+            anoLetivo = SchoolYearUI.searchToEdit();
 
         } while (anoLetivo == null);
 
@@ -116,7 +116,7 @@ public class CoordenadorUI {
 
             do {
                 System.out.print("Regra_validação: Insira ano letivo existente ");
-                anoLetivo = AnoLetivoUI.searchToEdit();
+                anoLetivo = SchoolYearUI.searchToEdit();
 
             } while (anoLetivo == null);
 

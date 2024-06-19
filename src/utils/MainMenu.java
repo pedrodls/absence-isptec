@@ -2,8 +2,7 @@ package utils;
 
 import java.util.Scanner;
 
-import ano_academico.AnoAcademicoUI;
-import ano_letivo.AnoLetivoUI;
+import AcademicYear.AcademicYearUI;
 import clearBuffer.ClearBuffer;
 import coordenacao.CoordenacaoUI;
 import coordenador.CoordenadorUI;
@@ -13,6 +12,7 @@ import estudante.EstudanteUI;
 import isptec.listas.Listas;
 import motivo_falta.MotivoFaltaUI;
 import professor.ProfessorUI;
+import schoolYear.SchoolYearUI;
 import turma.TurmaUI;
 
 /**
@@ -70,11 +70,11 @@ public class MainMenu {
             switch (opcao) {
 
                 case 1:
-                    AnoLetivoUI.menu();
+                    SchoolYearUI.menu();
                     break;
 
                 case 2:
-                    AnoAcademicoUI.menu();
+                    AcademicYearUI.menu();
                     break;
 
                 case 3:

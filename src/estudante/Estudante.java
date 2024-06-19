@@ -1,6 +1,6 @@
 package estudante;
 
-import ano_letivo.AnoLetivoPersistente;
+import Year.AnoLetivoPersistente;
 import curso.CursoPersistente;
 
 public class Estudante {

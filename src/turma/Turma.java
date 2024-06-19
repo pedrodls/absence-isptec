@@ -1,6 +1,6 @@
 package turma;
 
-import ano_academico.AnoAcademicoPersistente;
+import AcademicYear.AnoAcademicoPersistente;
 import curso.CursoPersistente;
 
 public class Turma {

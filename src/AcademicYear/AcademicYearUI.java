@@ -1,20 +1,19 @@
-package ano_letivo;
+package AcademicYear;
 
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
 import clearBuffer.ClearBuffer;
-import coordenacao.CoordenacaoPersistente;
-import coordenador.CoordenadorPersistente;
-import estudante.EstudantePersistente;
+import genericEntity.GenericEntity;
+import genericEntity.GenericPersistenceEntity;
 import isptec.listas.Listas;
 import isptec.utils.Utils;
 import utils.*;
 
-public class AnoLetivoUI {
+public class AcademicYearUI {
 
-    public AnoLetivoUI() {
+    public AcademicYearUI() {
 
     }
 
@@ -23,7 +22,7 @@ public class AnoLetivoUI {
 
             ClearBuffer.clear();
 
-            System.out.println("\n*****************Menu Ano Lectivo****************\n");
+            System.out.println("\n*****************Menu Ano Académico****************\n");
 
             int opcao = Listas.enviarLerOpcaoEscolhida(Defs.CRUD_LINKS);
 
@@ -59,20 +58,20 @@ public class AnoLetivoUI {
 
         Scanner sc = new Scanner(System.in);
         String nome;
-        String regex = "^\\d{4}/\\d{4}$";
+        String regex = "^\\d+-ANO$";
 
-        System.out.println("\n*****************Criando Ano Lectivo****************\n");
+        System.out.println("\n*****************Criando Ano Académico****************\n");
 
         do {
 
-            System.out.print("Designção(xxxx/yyyy): ");
+            System.out.print("Designação(x-ANO): ");
             nome = sc.nextLine();
 
-        } while (!(Pattern.compile(regex).matcher(nome).matches() && Utils.validarAnoLetivo(nome)));
+        } while (!Pattern.compile(regex).matcher(nome).matches());
 
-        AnoLetivo newAnoLetivo = new AnoLetivo(-1, nome);
+        GenericEntity newAcademicYear = new GenericEntity(-1, nome);
 
-        AnoLetivoPersistente.create(newAnoLetivo);
+        GenericPersistenceEntity.create(newAcademicYear, Defs.ANO_ACADEMICO_FILE);
 
         MainMenu.pauseToSee();
 
@@ -82,22 +81,22 @@ public class AnoLetivoUI {
 
         Scanner sc = new Scanner(System.in);
 
-        AnoLetivo old = searchToEdit();
+        GenericEntity old = searchToEdit();
 
         if (old == null) {
 
-            System.out.println("\nAnoLetivo não encontrado!\n");
+            System.out.println("\nAno Académico não encontrado!\n");
 
             MainMenu.pauseToSee();
 
             return;
         }
 
-        String nome = old.getNome();
+        System.out.println("\n*****************Editando Ano Académico****************\n");
 
-        System.out.println("\n*****************Editando Ano Lectivo****************\n");
+        if (Utils.editarCampo("Nome", old.getName())) {
 
-        if (Utils.editarCampo("Nome", old.getNome())) {
+            String name;
 
             do {
 
@@ -105,15 +104,15 @@ public class AnoLetivoUI {
                 MainMenu.pauseToSee();
 
                 System.out.print("\nNome: ");
-                nome = sc.nextLine();
+                name = sc.nextLine();
 
-            } while (nome.length() < 3);
+            } while (name.length() < 3);
 
-            old.setNome(nome);
+            old.setName(name);
 
         }
 
-        AnoLetivoPersistente.update(old);
+        GenericPersistenceEntity.update(old, Defs.ANO_ACADEMICO_FILE);
 
         System.out.println("\nEdição finalizada!\n");
 
@@ -123,32 +122,30 @@ public class AnoLetivoUI {
 
     public static void drop() {
 
-        System.out.println("\n*****************Eliminando Ano Lectivo****************\n");
+        System.out.println("\n*****************Eliminando Ano Académico****************\n");
 
-        
-        AnoLetivo old = searchToEdit();
+        GenericEntity old = searchToEdit();
 
         if (old == null) {
 
-            System.out.println("\nAnoLetivo não encontrado!\n");
+            System.out.println("\nAno Académico não encontrado!\n");
 
             MainMenu.pauseToSee();
 
             return;
         }
 
-        /* if (EstudantePersistente.findAllByAnoIngressoId(old.getId()).size() > 0
-        || CoordenadorPersistente.findAllByAnoLetivoId(old.getId()).size() > 0
+        /* if (GenericPersistenceEntity.findAll(old.getId()).size() > 0
         ) {
 
-            System.out.println("\nAnoLetivo não pode ser apagado pois existem dados ligados ao mesmo!\n");
+            System.out.println("\nAno académico não pode ser apagado pois existem dados ligados ao mesmo!\n");
 
             MainMenu.pauseToSee();
 
             return;
         } */
 
-        AnoLetivoPersistente.dropOne(old.getId());
+        GenericPersistenceEntity.dropOne(old.getId(), Defs.ANO_ACADEMICO_FILE);
 
         System.out.println("\nEliminação finalizada!\n");
 
@@ -160,36 +157,36 @@ public class AnoLetivoUI {
 
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("\n*****************Procurando Ano Lectivo****************\n");
+        System.out.println("\n*****************Procurando Ano Académico****************\n");
 
         System.out.print("ID: ");
         long id = sc.nextLong();
 
-        AnoLetivoPersistente.read(id);
+        GenericPersistenceEntity.read(id, Defs.ANO_ACADEMICO_FILE);
 
         MainMenu.pauseToSee();
 
     }
 
-    public static AnoLetivo searchToEdit() {
+    public static GenericEntity searchToEdit() {
 
         Scanner sc = new Scanner(System.in);
 
         System.out.print("ID: ");
         long id = sc.nextLong();
 
-        return AnoLetivoPersistente.findOne(id);
+        return GenericPersistenceEntity.findOne(id, Defs.ANO_ACADEMICO_FILE);
 
     }
 
     public static void list() {
 
-        List<AnoLetivo> AnoLetivos = AnoLetivoPersistente.findAll();
+        List<GenericEntity> data = GenericPersistenceEntity.findAll(Defs.ANO_ACADEMICO_FILE);
 
-        System.out.println("\n*****************Todas AnoLetivos*****************\n");
+        System.out.println("\n*****************Todos anos academicos*****************\n");
 
-        for (AnoLetivo pr : AnoLetivos)
-            System.out.println("\n" + pr.toString() + "\n");
+        for (GenericEntity datum : data)
+            System.out.println("\n" + datum + "\n");
 
         MainMenu.pauseToSee();
 

@@ -1,6 +1,6 @@
 package coordenador;
 
-import ano_letivo.AnoLetivoPersistente;
+import Year.AnoLetivoPersistente;
 import curso.CursoPersistente;
 import professor.ProfessorPersistente;
 

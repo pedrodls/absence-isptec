@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
-import ano_letivo.AnoLetivo;
-import ano_letivo.AnoLetivoPersistente;
-import ano_letivo.AnoLetivoUI;
+import Year.AnoLetivo;
+import Year.AnoLetivoPersistente;
+import Year.SchoolYear;
 import clearBuffer.ClearBuffer;
 import curso.Curso;
 import curso.CursoUI;
@@ -75,7 +75,7 @@ public class EstudanteUI {
 
         do {
             System.out.print("Regra_validação: Insira ano letivo existente ");
-            anoIngresso = AnoLetivoUI.searchToEdit();
+            anoIngresso = SchoolYearUI.searchToEdit();
 
         } while (anoIngresso == null);
 

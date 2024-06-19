@@ -3,8 +3,8 @@ package turma;
 import java.util.List;
 import java.util.Scanner;
 
-import ano_academico.AnoAcademico;
-import ano_academico.AnoAcademicoUI;
+import AcademicYear.AnoAcademico;
+import AcademicYear.AcademicYearUI;
 import clearBuffer.ClearBuffer;
 import curso.Curso;
 import curso.CursoPersistente;
@@ -85,7 +85,7 @@ public class TurmaUI {
         do {
 
             System.out.print("Regra_validação: Insira ano academico existente ");
-            ano = AnoAcademicoUI.searchToEdit();
+            ano = AcademicYearUI.searchToEdit();
 
         } while (ano == null);
 
@@ -153,7 +153,7 @@ public class TurmaUI {
             do {
 
                 System.out.print("Regra_validação: Insira Ano Academico existente ");
-                ano = AnoAcademicoUI.searchToEdit();
+                ano = AcademicYearUI.searchToEdit();
 
             } while (ano == null);
 

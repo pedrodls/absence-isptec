@@ -22,6 +22,10 @@ public class GenericPersistenceEntity {
     public static void fillMyList(String fileName) {
         List<GenericEntity> data = findAll(fileName);
 
+        if (data == null) {
+            return;
+        }
+
         myList.clear();
 
         for (GenericEntity datum : data)
@@ -31,11 +35,11 @@ public class GenericPersistenceEntity {
 
     public static void create(GenericEntity entity, String fileName) {
 
-        fillMyList(fileName);
-
         try {
 
             RandomAccessFile file = new RandomAccessFile(fileName, "rw");
+
+            fillMyList(fileName);
 
             long position = file.length();
 
@@ -117,33 +121,37 @@ public class GenericPersistenceEntity {
 
         try {
 
-            RandomAccessFile file = new RandomAccessFile(fileName, "rw");
+            RandomAccessFile file = new RandomAccessFile(fileName, "r");
 
-            myListPosition.clear();
+            if (file != null) {
 
-            file.seek(0);
+                myListPosition.clear();
 
-            long position = file.getFilePointer();
+                file.seek(0);
 
-            while (position < file.length()) {
+                long position = file.getFilePointer();
 
-                long id = file.readLong();
+                while (position < file.length()) {
 
-                String name = FileUtils.readString(file, Defs.NAME_SIZE);
+                    long id = file.readLong();
 
-                myListPosition.put(id, position);
+                    String name = FileUtils.readString(file, Defs.NAME_SIZE).trim();
 
-                if (id > 0)
-                    data.add(new GenericEntity(id, name));
+                    myListPosition.put(id, position);
 
-                position = file.getFilePointer();
+                    if (id > 0)
+                        data.add(new GenericEntity(id, name));
+
+                    position = file.getFilePointer();
+
+                }
+
+                file.close();
 
             }
 
-            file.close();
-
         } catch (Exception ex) {
-            System.out.println("Erro ao buscar dados!");
+            System.out.println("\nÉ ncessário criar dados!");
         }
 
         return data;
