@@ -1,4 +1,4 @@
-package course;
+package teacher;
 
 import java.util.List;
 import java.util.Scanner;
@@ -10,9 +10,9 @@ import isptec.listas.Listas;
 import isptec.utils.Utils;
 import utils.*;
 
-public class CourseUI {
+public class TeacherUI {
 
-    public CourseUI() {
+    public TeacherUI() {
 
     }
 
@@ -21,7 +21,7 @@ public class CourseUI {
 
             ClearBuffer.clear();
 
-            System.out.println("\n*****************Menu Curso****************\n");
+            System.out.println("\n*****************Menu Professor****************\n");
 
             int opcao = Listas.enviarLerOpcaoEscolhida(Defs.CRUD_LINKS);
 
@@ -31,7 +31,7 @@ public class CourseUI {
                     break;
 
                 case 2:
-                    list();
+                    showlistData();
                     break;
 
                 case 3:
@@ -58,7 +58,7 @@ public class CourseUI {
         Scanner sc = new Scanner(System.in);
         String name;
 
-        System.out.println("\n*****************Criando Curso****************\n");
+        System.out.println("\n*****************Criando Professor****************\n");
 
         do {
 
@@ -70,9 +70,9 @@ public class CourseUI {
 
         } while (name.length() < 3);
 
-        GenericEntity newCourse = new GenericEntity(-1, name);
+        GenericEntity entity = new GenericEntity(-1, name);
 
-        GenericPersistenceEntity.create(newCourse, Defs.CURSO_FILE);
+        GenericPersistenceEntity.create(entity, Defs.PROFESSOR_FILE);
 
         MainMenu.pauseToSee();
 
@@ -82,22 +82,22 @@ public class CourseUI {
 
         Scanner sc = new Scanner(System.in);
 
-        GenericEntity oldCourse = searchToEdit();
+        GenericEntity entity = searchToEdit();
 
         Boolean edited = false;
 
-        if (oldCourse == null) {
+        if (entity == null) {
 
-            System.out.println("\nCurso não encontrado!\n");
+            System.out.println("\nProfessor não encontrado!\n");
 
             MainMenu.pauseToSee();
 
             return;
         }
 
-        System.out.println("\n*****************Editando Curso****************\n");
+        System.out.println("\n*****************Editando Professor****************\n");
 
-        if (Utils.editarCampo("Nome", oldCourse.getName())) {
+        if (Utils.editarCampo("Nome", entity.getName())) {
 
             String name;
 
@@ -111,13 +111,13 @@ public class CourseUI {
 
             } while (name.length() < 3);
 
-            oldCourse.setName(name);
+            entity.setName(name);
 
             edited = true;
         }
 
         if (edited)
-            GenericPersistenceEntity.update(oldCourse, Defs.CURSO_FILE);
+            GenericPersistenceEntity.update(entity, Defs.PROFESSOR_FILE);
 
         System.out.println("\nEdição finalizada!\n");
 
@@ -127,20 +127,20 @@ public class CourseUI {
 
     public static void drop() {
 
-        System.out.println("\n*****************Eliminando Curso****************\n");
+        System.out.println("\n*****************Eliminando Professor****************\n");
 
-        GenericEntity oldCourse = searchToEdit();
+        GenericEntity entity = searchToEdit();
 
-        if (oldCourse == null) {
+        if (entity == null) {
 
-            System.out.println("\nCurso não encontrado!\n");
+            System.out.println("\nProfessor não encontrado!\n");
 
             MainMenu.pauseToSee();
 
             return;
         }
 
-        GenericPersistenceEntity.dropOne(oldCourse.getId(), Defs.CURSO_FILE);
+        GenericPersistenceEntity.dropOne(entity.getId(), Defs.PROFESSOR_FILE);
 
         System.out.println("\nEliminação finalizada!\n");
 
@@ -152,12 +152,12 @@ public class CourseUI {
 
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("\n*****************Procurando Curso****************\n");
+        System.out.println("\n*****************Procurando Professor****************\n");
 
         System.out.print("ID: ");
         int id = sc.nextInt();
 
-        GenericPersistenceEntity.read(id, Defs.CURSO_FILE);
+        GenericPersistenceEntity.read(id, Defs.PROFESSOR_FILE);
 
         MainMenu.pauseToSee();
 
@@ -170,15 +170,15 @@ public class CourseUI {
         System.out.print("ID: ");
         int id = sc.nextInt();
 
-        return GenericPersistenceEntity.findOne(id, Defs.CURSO_FILE);
+        return GenericPersistenceEntity.findOne(id, Defs.PROFESSOR_FILE);
 
     }
 
-    public static void list() {
+    public static void showlistData() {
 
-        List<GenericEntity> data = GenericPersistenceEntity.findAll(Defs.CURSO_FILE);
+        List<GenericEntity> data = GenericPersistenceEntity.findAll(Defs.PROFESSOR_FILE);
 
-        System.out.println("\n*****************Todos Cursos****************\n");
+        System.out.println("\n*****************Todos os Professores*****************\n");
 
         for (GenericEntity datum : data)
             System.out.println("\n" + datum + "\n");

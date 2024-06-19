@@ -4,7 +4,10 @@ import java.util.Scanner;
 
 import clearBuffer.ClearBuffer;
 import course.CourseUI;
+import faultDescription.FaultDescriptionUI;
 import isptec.listas.Listas;
+import subject.SubjectUI;
+import teacher.TeacherUI;
 
 /**
  *
@@ -64,29 +67,21 @@ public class MainMenu {
                     CourseUI.menu();
                     break;
 
-                /* case 4:
-                    CoordenacaoUI.menu();
+                case 2:
+                    SubjectUI.menu();
                     break;
-
+                case 3:
+                    TeacherUI.menu();
+                    break;
+                case 4:
+                    // CoordenatorUI
+                    break;
                 case 5:
-                    CoordenadorUI.menu();
+                    // StudentUI
                     break;
-
                 case 6:
-                    ProfessorUI.menu();
+                    FaultDescriptionUI.menu();
                     break;
-
-                case 7:
-                    EstudanteUI.menu();
-                    break;
-
-                case 8:
-                    DisciplinaUI.menu();
-                    break;
-
-                case 9:
-                    MotivoFaltaUI.menu();
-                    break; */
 
                 case 10:
                     System.out.println("Programa terminado");
@@ -108,10 +103,10 @@ public class MainMenu {
             switch (opcao) {
 
                 case 1:
-                    //TurmaUI.menu();
+                    // TurmaUI.menu();
                     break;
 
-                    case 6:
+                case 6:
                     adminMenu();
                     break;
                 case 10:

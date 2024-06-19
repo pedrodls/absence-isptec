@@ -29,22 +29,11 @@ public class Defs {
 
         public static final String[] ADMIN_LINKS = {
                         "Curso",
-                        "Coordenação",
-                        "Coordenador",
+                        "Disciplina",
                         "Professor",
+                        "Coordenador",
                         "Estudante",
-                        "Disciplinas",
                         "Motivo de falta",
-                        /*
-                         * "Anos academicos",
-                         * "Anos letivos",
-                         * "Cursos",
-                         * "Curso <-> Ano <-> Disciplinas",
-                         * "Coordenadores",
-                         * "Disciplinas",
-                         * "Estudantes",
-                         * "Motivos de faltas",
-                         */
                         "Sair",
 
         };
