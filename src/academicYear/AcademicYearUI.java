@@ -57,6 +57,7 @@ public class AcademicYearUI {
 
         Scanner sc = new Scanner(System.in);
         String name;
+        String regex = "^\\{d4}\\//";
 
         System.out.println("\n*****************Criando Ano Académico****************\n");
 
