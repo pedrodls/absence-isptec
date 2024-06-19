@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+import course.Course;
 import isptec.utils.FileUtils;
 import utils.Defs;
 
@@ -41,86 +42,22 @@ public class AnoLetivoPersistente {
 
             RandomAccessFile file = new RandomAccessFile(Defs.ANO_LETIVO_FILE, "rw");
 
-            fillMyList();
+            long position = file.length();
 
-            Iterator<AnoLetivo> iterator = myList.values().iterator();
-
-            while (iterator.hasNext()) {
-
-                if (iterator.next().getNome().toLowerCase().equals(anoLetivo.getNome().toLowerCase())) {
-                    file.close();
-                    System.out.println("\nEste dado já existe!\n");
-                    return;
-                }
-            }
+            file.seek(position);
 
             long newId = numberOfRecords(file);
 
-            file.seek(file.length());
-
             file.writeLong(newId);
 
-            writeString(file, anoLetivo.getNome(), Defs.NAME_SIZE);
+            FileUtils.writeString(file, anoLetivo.getNome(), Defs.NAME_SIZE);
 
             file.close();
 
             System.out.println("\nCriado com sucesso!\n");
 
         } catch (Exception e) {
-            System.out.println("\nErro ao criar AnoLetivo!\n");
-        }
-    }
-
-    public static void realocate(AnoLetivo AnoLetivo) {
-
-        try {
-
-            RandomAccessFile file = new RandomAccessFile(Defs.ANO_LETIVO_FILE, "rw");
-
-            long id = numberOfRecords(file);
-
-            file.seek(file.length());
-
-            file.writeLong(id);
-
-            writeString(file, AnoLetivo.getNome(), Defs.NAME_SIZE);
-
-            file.close();
-
-        } catch (Exception e) {
-
-        }
-    }
-
-    private static void writeString(RandomAccessFile file, String str, int length) {
-
-        try {
-
-            StringBuilder sb = new StringBuilder(str);
-
-            while (sb.length() < length)
-                sb.append(' ');
-
-            file.writeChars(sb.toString());
-
-        } catch (Exception e) {
-
-        }
-
-    }
-
-    private static String readString(RandomAccessFile file, int length) {
-        try {
-
-            StringBuilder sb = new StringBuilder();
-
-            for (int i = 0; i < length; i++)
-                sb.append(file.readChar());
-
-            return sb.toString().trim();
-
-        } catch (Exception e) {
-            return "";
+            System.out.println("\nErro ao criar!\n");
         }
     }
 
@@ -143,15 +80,7 @@ public class AnoLetivoPersistente {
     public static void update(AnoLetivo AnoLetivo) {
         try {
 
-            fillMyList();
-
-            myList.replace(AnoLetivo.getId(), AnoLetivo);
-
-            FileUtils.delete(Defs.ANO_LETIVO_FILE);
-
-            myList.forEach((t, u) -> {
-                realocate(u);
-            });
+            
 
         } catch (Exception ex) {
             System.out.println("Erro ao atualizar  dados");
@@ -161,15 +90,7 @@ public class AnoLetivoPersistente {
     public static void dropOne(AnoLetivo AnoLetivo) {
         try {
 
-            fillMyList();
-
-            myList.remove(AnoLetivo.getId());
-
-            FileUtils.delete(Defs.ANO_LETIVO_FILE);
-
-            myList.forEach((t, u) -> {
-                realocate(u);
-            });
+            
 
         } catch (Exception ex) {
             System.out.println("Erro ao eliminar dado");
@@ -191,18 +112,14 @@ public class AnoLetivoPersistente {
 
             RandomAccessFile file = new RandomAccessFile(Defs.ANO_LETIVO_FILE, "r");
 
-            for (long id = 0; id <= numberOfRecords(file); id++) {
+            file.seek(0);
 
-                long position = id * Defs.RECORD_SIZE;
+            while (file.getFilePointer() < file.length()) {
 
-                file.seek(position);
+                int id = file.readInt();
 
-                long recordId = file.readLong();
-
-                String nome = readString(file, Defs.NAME_SIZE);
-
-                AnoLetivos.add(new AnoLetivo(id, nome));
-
+                AnoLetivos.add(new AnoLetivo(id, FileUtils.readString(file, Defs.NAME_SIZE)));
+                
             }
 
             file.close();

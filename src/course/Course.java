@@ -1,35 +1,33 @@
 package course;
 
-import utils.Defs;
-
 public class Course {
 
-    private long id;
-    private StringBuilder name = new StringBuilder(Defs.NAME_SIZE);
+    private int id;
+    private String name;
 
     public Course() {
 
     }
 
-    public Course(long id, String name) {
+    public Course(int id, String name) {
         setId(id);
         setName(name);
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
     public String getName() {
-        return name.toString();
+        return name;
     }
 
     public void setName(String name) {
-        this.name = new StringBuilder(name);
+        this.name = name;
     }
 
     @Override

@@ -63,6 +63,36 @@ public class FileUtils
         return stream;
     }
     
+    public static void writeString(RandomAccessFile file, String str, int length) {
+
+        try {
+
+            StringBuilder sb = new StringBuilder(str);
+
+            while (sb.length() < length)
+                sb.append(' ');
+
+            file.writeBytes(sb.toString());
+
+        } catch (Exception e) {
+
+        }
+
+    }
+
+    public static String readString(RandomAccessFile file, int length) {
+        try {
+
+            byte[] nameBytes = new byte[length];
+            
+            file.readFully(nameBytes);
+            
+            return new String(nameBytes);
+
+        } catch (Exception e) {
+            return "";
+        }
+    }
 
     public static void close(RandomAccessFile stream, String filename)
     {

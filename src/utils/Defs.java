@@ -9,7 +9,7 @@ public class Defs {
 
         public static final String EMAIL_ADDRESS = "@isptec.co.ao";
 
-        public static final int NAME_SIZE = 100;
+        public static final int NAME_SIZE = 50;
         public static final int ID_SIZE = 8;
         public static final long RECORD_SIZE = NAME_SIZE + ID_SIZE;
 

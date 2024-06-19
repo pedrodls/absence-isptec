@@ -7,7 +7,7 @@ import ano_letivo.AnoLetivoUI;
 import clearBuffer.ClearBuffer;
 import coordenacao.CoordenacaoUI;
 import coordenador.CoordenadorUI;
-import curso.CursoUI;
+import course.CourseUI;
 import disciplina.DisciplinaUI;
 import estudante.EstudanteUI;
 import isptec.listas.Listas;
@@ -78,7 +78,7 @@ public class MainMenu {
                     break;
 
                 case 3:
-                    CursoUI.menu();
+                    CourseUI.menu();
                     break;
 
                 case 4:

@@ -1,5 +1,6 @@
 package course;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -12,9 +13,9 @@ import isptec.utils.Utils;
 import turma.TurmaPersistente;
 import utils.*;
 
-public class CursoUI {
+public class CourseUI {
 
-    public CursoUI() {
+    public CourseUI() {
 
     }
 
@@ -23,7 +24,7 @@ public class CursoUI {
 
             ClearBuffer.clear();
 
-            System.out.println("\n*****************Menu Curso*****************\n");
+            System.out.println("\n*****************Menu Curso****************\n");
 
             int opcao = Listas.enviarLerOpcaoEscolhida(Defs.CRUD_LINKS);
 
@@ -60,7 +61,7 @@ public class CursoUI {
         Scanner sc = new Scanner(System.in);
         String nome;
 
-        System.out.println("\n*****************Criando Curso*****************\n");
+        System.out.println("\n*****************Criando Curso****************\n");
 
         do {
 
@@ -72,11 +73,22 @@ public class CursoUI {
 
         } while (nome.length() < 3);
 
-        Curso newCurso = new Curso(-1, nome);
+        
+        try {
+            
+            CoursePersistence entity = new CoursePersistence();
+            
+            Course newCurso = new Course(entity.getNextId(), nome);
 
-        CursoPersistente2.create(newCurso);
+            entity.create(newCurso);
 
-        MainMenu.pauseToSee();
+            System.out.println("\nCriado com sucesso!\n");
+
+            MainMenu.pauseToSee();
+
+        } catch (Exception e) {
+            System.out.println("\nErro ao criar\n");
+        }
 
     }
 
@@ -84,7 +96,7 @@ public class CursoUI {
 
         Scanner sc = new Scanner(System.in);
 
-        Curso old = searchToEdit();
+        Course old = searchToEdit();
 
         if (old == null) {
 
@@ -95,11 +107,11 @@ public class CursoUI {
             return;
         }
 
-        String nome = old.getNome();
+        String nome = old.getName();
 
-        System.out.println("\n*****************Editando Curso*****************\n");
+        System.out.println("\n*****************Editando Curso****************\n");
 
-        if (Utils.editarCampo("Nome", old.getNome())) {
+        if (Utils.editarCampo("Nome", old.getName())) {
 
             do {
 
@@ -111,11 +123,19 @@ public class CursoUI {
 
             } while (nome.length() < 3);
 
-            old.setNome(nome);
+            old.setName(nome);
 
         }
 
-        CursoPersistente.update(old);
+        try {
+
+            CoursePersistence entity = new CoursePersistence();
+
+            entity.update(old);
+
+        } catch (Exception e) {
+            System.out.println("\nErro ao atualizar\n");
+        }
 
         System.out.println("\nEdição finalizada!\n");
 
@@ -125,9 +145,9 @@ public class CursoUI {
 
     public static void drop() {
 
-        System.out.println("\n*****************Eliminando Curso*****************\n");
+        System.out.println("\n*****************Eliminando Curso****************\n");
 
-        Curso old = searchToEdit();
+        Course old = searchToEdit();
 
         if (old == null) {
 
@@ -150,7 +170,7 @@ public class CursoUI {
             return;
         }
 
-        CursoPersistente.dropOne(old);
+        // CursoPersistente.dropOne(old);
 
         System.out.println("\nEliminação finalizada!\n");
 
@@ -162,36 +182,62 @@ public class CursoUI {
 
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("\n*****************Procurando Curso*****************\n");
+        System.out.println("\n*****************Procurando Curso****************\n");
 
         System.out.print("ID: ");
         long id = sc.nextLong();
 
-        CursoPersistente.read(id);
+        try {
+            Course found = new CoursePersistence().read(id);
+
+            if (found == null) {
+                System.out.println("Não encontrado");
+                return;
+            }
+
+            System.out.println(found.toString());
+
+        } catch (Exception e) {
+            System.out.println("Não encontrado");
+            ;
+        }
 
         MainMenu.pauseToSee();
 
     }
 
-    public static Curso searchToEdit() {
+    public static Course searchToEdit() {
 
         Scanner sc = new Scanner(System.in);
 
         System.out.print("ID: ");
         long id = sc.nextLong();
 
-        return CursoPersistente.findOne(id);
+        try {
+            return new CoursePersistence().read(id);
+        } catch (Exception e) {
+            return null;
+        }
 
     }
 
     public static void list() {
 
-        List<Curso> Cursos = CursoPersistente.findAll();
+        System.out.println("\n*****************Todos Cursos*****************\n");
 
-        System.out.println("\n*****************Todas Cursos*****************\n");
+        try {
 
-        for (Curso pr : Cursos)
-            System.out.println("\n" + pr.toString() + "\n");
+            CoursePersistence entity = new CoursePersistence();
+
+            if (entity.getCoursesIndexes().size() == 0) 
+                return;
+
+            for (Course pr : entity.getCoursesIndexes().values())
+                System.out.println("\n" + pr.toString() + "\n");
+
+        } catch (Exception e) {
+            System.out.println("Erro ao carregar dados!" + e);
+        }
 
         MainMenu.pauseToSee();
 
