@@ -1,11 +1,9 @@
 package genericEntity;
 
-import utils.Defs;
-
 public class GenericEntity {
 
     private long id;
-    private StringBuilder name = new StringBuilder(Defs.NAME_SIZE);
+    private String name;
 
     public GenericEntity() {
 
@@ -25,11 +23,11 @@ public class GenericEntity {
     }
 
     public String getName() {
-        return name.toString();
+        return name;
     }
 
     public void setName(String name) {
-        this.name = new StringBuilder(name);
+        this.name = name;
     }
 
     @Override

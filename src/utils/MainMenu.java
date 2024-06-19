@@ -4,16 +4,9 @@ import java.util.Scanner;
 
 import AcademicYear.AcademicYearUI;
 import clearBuffer.ClearBuffer;
-import coordenacao.CoordenacaoUI;
-import coordenador.CoordenadorUI;
 import course.CourseUI;
-import disciplina.DisciplinaUI;
-import estudante.EstudanteUI;
 import isptec.listas.Listas;
-import motivo_falta.MotivoFaltaUI;
-import professor.ProfessorUI;
 import schoolYear.SchoolYearUI;
-import turma.TurmaUI;
 
 /**
  *
@@ -81,7 +74,7 @@ public class MainMenu {
                     CourseUI.menu();
                     break;
 
-                case 4:
+                /* case 4:
                     CoordenacaoUI.menu();
                     break;
 
@@ -103,7 +96,7 @@ public class MainMenu {
 
                 case 9:
                     MotivoFaltaUI.menu();
-                    break;
+                    break; */
 
                 case 10:
                     System.out.println("Programa terminado");
@@ -125,7 +118,7 @@ public class MainMenu {
             switch (opcao) {
 
                 case 1:
-                    TurmaUI.menu();
+                    //TurmaUI.menu();
                     break;
 
                     case 6:

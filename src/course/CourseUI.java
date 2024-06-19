@@ -1,16 +1,13 @@
 package course;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
 import clearBuffer.ClearBuffer;
-import coordenacao.CoordenacaoPersistente;
-import coordenador.CoordenadorPersistente;
-import estudante.EstudantePersistente;
+import genericEntity.GenericEntity;
+import genericEntity.GenericPersistenceEntity;
 import isptec.listas.Listas;
 import isptec.utils.Utils;
-import turma.TurmaPersistente;
 import utils.*;
 
 public class CourseUI {
@@ -59,7 +56,7 @@ public class CourseUI {
     public static void create() {
 
         Scanner sc = new Scanner(System.in);
-        String nome;
+        String name;
 
         System.out.println("\n*****************Criando Curso****************\n");
 
@@ -69,26 +66,15 @@ public class CourseUI {
             MainMenu.pauseToSee();
 
             System.out.print("Nome: ");
-            nome = sc.nextLine();
+            name = sc.nextLine();
 
-        } while (nome.length() < 3);
+        } while (name.length() < 3);
 
-        
-        try {
-            
-            CoursePersistence entity = new CoursePersistence();
-            
-            Course newCurso = new Course(entity.getNextId(), nome);
+        GenericEntity newAcademicYear = new GenericEntity(-1, name);
 
-            entity.create(newCurso);
+        GenericPersistenceEntity.create(newAcademicYear, Defs.CURSO_FILE);
 
-            System.out.println("\nCriado com sucesso!\n");
-
-            MainMenu.pauseToSee();
-
-        } catch (Exception e) {
-            System.out.println("\nErro ao criar\n");
-        }
+        MainMenu.pauseToSee();
 
     }
 
@@ -96,7 +82,7 @@ public class CourseUI {
 
         Scanner sc = new Scanner(System.in);
 
-        Course old = searchToEdit();
+        GenericEntity old = searchToEdit();
 
         if (old == null) {
 
@@ -107,35 +93,27 @@ public class CourseUI {
             return;
         }
 
-        String nome = old.getName();
-
         System.out.println("\n*****************Editando Curso****************\n");
 
         if (Utils.editarCampo("Nome", old.getName())) {
 
+            String name;
+            
             do {
 
                 System.out.print("\nRegra_validação: no mínimo 3 caracters! ");
                 MainMenu.pauseToSee();
 
                 System.out.print("\nNome: ");
-                nome = sc.nextLine();
+                name = sc.nextLine();
 
-            } while (nome.length() < 3);
+            } while (name.length() < 3);
 
-            old.setName(nome);
+            old.setName(name);
 
         }
 
-        try {
-
-            CoursePersistence entity = new CoursePersistence();
-
-            entity.update(old);
-
-        } catch (Exception e) {
-            System.out.println("\nErro ao atualizar\n");
-        }
+        GenericPersistenceEntity.update(old, Defs.CURSO_FILE);
 
         System.out.println("\nEdição finalizada!\n");
 
@@ -147,7 +125,7 @@ public class CourseUI {
 
         System.out.println("\n*****************Eliminando Curso****************\n");
 
-        Course old = searchToEdit();
+        GenericEntity old = searchToEdit();
 
         if (old == null) {
 
@@ -158,19 +136,7 @@ public class CourseUI {
             return;
         }
 
-        if (EstudantePersistente.findAllByCursoId(old.getId()).size() > 0
-                || CoordenadorPersistente.findAllByCursoId(old.getId()).size() > 0
-                || CoordenacaoPersistente.findAllByCursoId(old.getId()).size() > 0
-                || TurmaPersistente.findAllByCursoId(old.getId()).size() > 0) {
-
-            System.out.println("\nCurso não pode ser apagado pois existem dados ligados ao mesmo!\n");
-
-            MainMenu.pauseToSee();
-
-            return;
-        }
-
-        // CursoPersistente.dropOne(old);
+        GenericPersistenceEntity.dropOne(old.getId(), Defs.CURSO_FILE);
 
         System.out.println("\nEliminação finalizada!\n");
 
@@ -187,57 +153,31 @@ public class CourseUI {
         System.out.print("ID: ");
         long id = sc.nextLong();
 
-        try {
-            Course found = new CoursePersistence().read(id);
-
-            if (found == null) {
-                System.out.println("Não encontrado");
-                return;
-            }
-
-            System.out.println(found.toString());
-
-        } catch (Exception e) {
-            System.out.println("Não encontrado");
-            ;
-        }
+        GenericPersistenceEntity.read(id, Defs.CURSO_FILE);
 
         MainMenu.pauseToSee();
 
     }
 
-    public static Course searchToEdit() {
+    public static GenericEntity searchToEdit() {
 
         Scanner sc = new Scanner(System.in);
 
         System.out.print("ID: ");
         long id = sc.nextLong();
 
-        try {
-            return new CoursePersistence().read(id);
-        } catch (Exception e) {
-            return null;
-        }
+        return GenericPersistenceEntity.findOne(id, Defs.CURSO_FILE);
 
     }
 
     public static void list() {
 
-        System.out.println("\n*****************Todos Cursos*****************\n");
+        List<GenericEntity> data = GenericPersistenceEntity.findAll(Defs.CURSO_FILE);
 
-        try {
+        System.out.println("\n*****************Todos anos academicos*****************\n");
 
-            CoursePersistence entity = new CoursePersistence();
-
-            if (entity.getCoursesIndexes().size() == 0) 
-                return;
-
-            for (Course pr : entity.getCoursesIndexes().values())
-                System.out.println("\n" + pr.toString() + "\n");
-
-        } catch (Exception e) {
-            System.out.println("Erro ao carregar dados!" + e);
-        }
+        for (GenericEntity datum : data)
+            System.out.println("\n" + datum + "\n");
 
         MainMenu.pauseToSee();
 

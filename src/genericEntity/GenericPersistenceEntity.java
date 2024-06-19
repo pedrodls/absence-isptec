@@ -135,7 +135,7 @@ public class GenericPersistenceEntity {
 
                     long id = file.readLong();
 
-                    String name = FileUtils.readString(file, Defs.NAME_SIZE).trim();
+                    String name = FileUtils.readString(file, Defs.NAME_SIZE);
 
                     myListPosition.put(id, position);
 
