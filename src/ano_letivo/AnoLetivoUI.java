@@ -137,7 +137,7 @@ public class AnoLetivoUI {
             return;
         }
 
-        if (EstudantePersistente.findAllByAnoIngressoId(old.getId()).size() > 0
+        /* if (EstudantePersistente.findAllByAnoIngressoId(old.getId()).size() > 0
         || CoordenadorPersistente.findAllByAnoLetivoId(old.getId()).size() > 0
         ) {
 
@@ -146,9 +146,9 @@ public class AnoLetivoUI {
             MainMenu.pauseToSee();
 
             return;
-        }
+        } */
 
-        AnoLetivoPersistente.dropOne(old);
+        AnoLetivoPersistente.dropOne(old.getId());
 
         System.out.println("\nEliminação finalizada!\n");
 

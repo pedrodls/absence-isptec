@@ -1,6 +1,5 @@
-package ano_letivo;
+package genericEntity;
 
-import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,33 +9,33 @@ import java.util.List;
 import isptec.utils.FileUtils;
 import utils.Defs;
 
-public class AnoLetivoPersistente {
+public class GenericPersistenceEntity {
 
-    private static HashMap<Long, AnoLetivo> myList = new HashMap<>();
+    private static HashMap<Long, GenericEntity> myList = new HashMap<>();
 
     private static HashMap<Long, Long> myListPosition = new HashMap<>();
 
-    public AnoLetivoPersistente() {
+    public GenericPersistenceEntity() {
 
     }
 
-    public static void fillMyList() {
-        List<AnoLetivo> AnoLetivos = findAll();
+    public static void fillMyList(String fileName) {
+        List<GenericEntity> data = findAll(fileName);
 
         myList.clear();
 
-        for (AnoLetivo pr : AnoLetivos)
-            myList.put(pr.getId(), pr);
+        for (GenericEntity datum : data)
+            myList.put(datum.getId(), datum);
 
     }
 
-    public static void create(AnoLetivo anoLetivo) {
+    public static void create(GenericEntity entity, String fileName) {
 
-        fillMyList();
+        fillMyList(fileName);
 
         try {
 
-            RandomAccessFile file = new RandomAccessFile(Defs.ANO_LETIVO_FILE, "rw");
+            RandomAccessFile file = new RandomAccessFile(fileName, "rw");
 
             long position = file.length();
 
@@ -44,13 +43,13 @@ public class AnoLetivoPersistente {
 
             long newId = myListPosition.size() + 1;
 
-            if (findOne(newId) != null) {
-                newId++;    
+            if (findOne(newId, fileName) != null) {
+                newId++;
             }
 
             file.writeLong(newId);
 
-            FileUtils.writeString(file, anoLetivo.getNome(), Defs.NAME_SIZE);
+            FileUtils.writeString(file, entity.getName(), Defs.NAME_SIZE);
 
             file.close();
 
@@ -61,10 +60,10 @@ public class AnoLetivoPersistente {
         }
     }
 
-    public static void read(long id) {
+    public static void read(long id, String fileName) {
         try {
 
-            fillMyList();
+            fillMyList(fileName);
 
             if (myList.get(id) != null) {
                 System.out.println("Encontrado -> " + myList.get(id));
@@ -77,7 +76,7 @@ public class AnoLetivoPersistente {
         }
     }
 
-    public static void update(AnoLetivo AnoLetivo) {
+    public static void update(GenericEntity GenericEntity, String fileName) {
         try {
 
         } catch (Exception ex) {
@@ -85,16 +84,15 @@ public class AnoLetivoPersistente {
         }
     }
 
-    public static void dropOne(long id) {
+    public static void dropOne(long id, String fileName) {
         try {
 
-            RandomAccessFile file = new RandomAccessFile(Defs.ANO_LETIVO_FILE, "rw");
+            RandomAccessFile file = new RandomAccessFile(fileName, "rw");
 
-            fillMyList();
+            fillMyList(fileName);
 
             Long position = myListPosition.get(id);
 
-            // Marcar o curso como deletado no arquivo
             file.seek(position);
 
             file.writeLong(-1); // ID -1 indica registro deletado
@@ -106,20 +104,20 @@ public class AnoLetivoPersistente {
         }
     }
 
-    public static AnoLetivo findOne(long id) {
+    public static GenericEntity findOne(long id, String fileName) {
 
-        fillMyList();
+        fillMyList(fileName);
 
         return myList.get(id);
     }
 
-    public static List<AnoLetivo> findAll() {
+    public static List<GenericEntity> findAll(String fileName) {
 
-        List<AnoLetivo> AnoLetivos = new ArrayList<AnoLetivo>();
+        List<GenericEntity> data = new ArrayList<GenericEntity>();
 
         try {
 
-            RandomAccessFile file = new RandomAccessFile(Defs.ANO_LETIVO_FILE, "rw");
+            RandomAccessFile file = new RandomAccessFile(fileName, "rw");
 
             myListPosition.clear();
 
@@ -136,7 +134,7 @@ public class AnoLetivoPersistente {
                 myListPosition.put(id, position);
 
                 if (id > 0)
-                    AnoLetivos.add(new AnoLetivo(id, name));
+                    data.add(new GenericEntity(id, name));
 
                 position = file.getFilePointer();
 
@@ -148,7 +146,7 @@ public class AnoLetivoPersistente {
             System.out.println("Erro ao buscar dados!");
         }
 
-        return AnoLetivos;
+        return data;
 
     }
 
