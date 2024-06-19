@@ -82,9 +82,11 @@ public class CourseUI {
 
         Scanner sc = new Scanner(System.in);
 
-        GenericEntity old = searchToEdit();
+        GenericEntity oldCourse = searchToEdit();
 
-        if (old == null) {
+        Boolean edited = false;
+
+        if (oldCourse == null) {
 
             System.out.println("\nCurso não encontrado!\n");
 
@@ -95,10 +97,10 @@ public class CourseUI {
 
         System.out.println("\n*****************Editando Curso****************\n");
 
-        if (Utils.editarCampo("Nome", old.getName())) {
+        if (Utils.editarCampo("Nome", oldCourse.getName())) {
 
             String name;
-            
+
             do {
 
                 System.out.print("\nRegra_validação: no mínimo 3 caracters! ");
@@ -109,11 +111,13 @@ public class CourseUI {
 
             } while (name.length() < 3);
 
-            old.setName(name);
+            oldCourse.setName(name);
 
+            edited = true;
         }
 
-        GenericPersistenceEntity.update(old, Defs.CURSO_FILE);
+        if (edited)
+            GenericPersistenceEntity.update(oldCourse, Defs.CURSO_FILE);
 
         System.out.println("\nEdição finalizada!\n");
 
@@ -125,9 +129,9 @@ public class CourseUI {
 
         System.out.println("\n*****************Eliminando Curso****************\n");
 
-        GenericEntity old = searchToEdit();
+        GenericEntity oldCourse = searchToEdit();
 
-        if (old == null) {
+        if (oldCourse == null) {
 
             System.out.println("\nCurso não encontrado!\n");
 
@@ -136,7 +140,7 @@ public class CourseUI {
             return;
         }
 
-        GenericPersistenceEntity.dropOne(old.getId(), Defs.CURSO_FILE);
+        GenericPersistenceEntity.dropOne(oldCourse.getId(), Defs.CURSO_FILE);
 
         System.out.println("\nEliminação finalizada!\n");
 
@@ -151,7 +155,7 @@ public class CourseUI {
         System.out.println("\n*****************Procurando Curso****************\n");
 
         System.out.print("ID: ");
-        long id = sc.nextLong();
+        int id = sc.nextInt();
 
         GenericPersistenceEntity.read(id, Defs.CURSO_FILE);
 
@@ -164,7 +168,7 @@ public class CourseUI {
         Scanner sc = new Scanner(System.in);
 
         System.out.print("ID: ");
-        long id = sc.nextLong();
+        int id = sc.nextInt();
 
         return GenericPersistenceEntity.findOne(id, Defs.CURSO_FILE);
 

@@ -28,8 +28,6 @@ public class Defs {
         };
 
         public static final String[] ADMIN_LINKS = {
-                        "Ano Letivo",
-                        "Ano Académico",
                         "Curso",
                         "Coordenação",
                         "Coordenador",

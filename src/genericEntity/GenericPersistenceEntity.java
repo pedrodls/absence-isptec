@@ -11,25 +11,26 @@ import utils.Defs;
 
 public class GenericPersistenceEntity {
 
-    private static HashMap<Long, GenericEntity> myList = new HashMap<>();
+    private static HashMap<Integer, GenericEntity> hashData = new HashMap<>();
 
-    private static HashMap<Long, Long> myListPosition = new HashMap<>();
+    private static HashMap<Integer, Long> hashPositions = new HashMap<>();
 
     public GenericPersistenceEntity() {
 
     }
 
-    public static void fillMyList(String fileName) {
+    public static void fillHashTable(String fileName) {
+
         List<GenericEntity> data = findAll(fileName);
 
         if (data == null) {
             return;
         }
 
-        myList.clear();
+        hashData.clear();
 
         for (GenericEntity datum : data)
-            myList.put(datum.getId(), datum);
+            hashData.put(datum.getId(), datum);
 
     }
 
@@ -39,19 +40,18 @@ public class GenericPersistenceEntity {
 
             RandomAccessFile file = new RandomAccessFile(fileName, "rw");
 
-            fillMyList(fileName);
+            fillHashTable(fileName);
 
             long position = file.length();
 
             file.seek(position);
 
-            long newId = myListPosition.size() + 1;
+            int newId = hashPositions.size() + 1;
 
-            if (findOne(newId, fileName) != null) {
+            if (findOne(newId, fileName) != null)
                 newId++;
-            }
 
-            file.writeLong(newId);
+            file.writeInt(newId);
 
             FileUtils.writeString(file, entity.getName(), Defs.NAME_SIZE);
 
@@ -64,13 +64,37 @@ public class GenericPersistenceEntity {
         }
     }
 
-    public static void read(long id, String fileName) {
+    public static void update(GenericEntity entity, String fileName) {
         try {
 
-            fillMyList(fileName);
+            RandomAccessFile file = new RandomAccessFile(fileName, "rw");
 
-            if (myList.get(id) != null) {
-                System.out.println("Encontrado -> " + myList.get(id));
+            fillHashTable(fileName);
+
+            long position = hashPositions.get(entity.getId());
+
+            file.seek(position);
+
+            file.writeInt(entity.getId());
+
+            FileUtils.writeString(file, entity.getName(), Defs.NAME_SIZE);
+
+            file.close();
+
+            System.out.println("\nEditado com sucesso!\n");
+
+        } catch (Exception ex) {
+            System.out.println("Erro ao atualizar  dados");
+        }
+    }
+
+    public static void read(int id, String fileName) {
+        try {
+
+            fillHashTable(fileName);
+
+            if (hashData.get(id) != null) {
+                System.out.println("Encontrado -> " + hashData.get(id));
             } else {
                 System.out.println("Não encontrado!");
             }
@@ -80,22 +104,14 @@ public class GenericPersistenceEntity {
         }
     }
 
-    public static void update(GenericEntity GenericEntity, String fileName) {
-        try {
-
-        } catch (Exception ex) {
-            System.out.println("Erro ao atualizar  dados");
-        }
-    }
-
-    public static void dropOne(long id, String fileName) {
+    public static void dropOne(int id, String fileName) {
         try {
 
             RandomAccessFile file = new RandomAccessFile(fileName, "rw");
 
-            fillMyList(fileName);
+            fillHashTable(fileName);
 
-            Long position = myListPosition.get(id);
+            Long position = hashPositions.get(id);
 
             file.seek(position);
 
@@ -108,11 +124,11 @@ public class GenericPersistenceEntity {
         }
     }
 
-    public static GenericEntity findOne(long id, String fileName) {
+    public static GenericEntity findOne(int id, String fileName) {
 
-        fillMyList(fileName);
+        fillHashTable(fileName);
 
-        return myList.get(id);
+        return hashData.get(id);
     }
 
     public static List<GenericEntity> findAll(String fileName) {
@@ -125,7 +141,7 @@ public class GenericPersistenceEntity {
 
             if (file != null) {
 
-                myListPosition.clear();
+                hashPositions.clear();
 
                 file.seek(0);
 
@@ -133,11 +149,11 @@ public class GenericPersistenceEntity {
 
                 while (position < file.length()) {
 
-                    long id = file.readLong();
+                    Integer id = file.readInt();
 
                     String name = FileUtils.readString(file, Defs.NAME_SIZE);
 
-                    myListPosition.put(id, position);
+                    hashPositions.put(id, position);
 
                     if (id > 0)
                         data.add(new GenericEntity(id, name));

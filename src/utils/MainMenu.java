@@ -2,11 +2,9 @@ package utils;
 
 import java.util.Scanner;
 
-import AcademicYear.AcademicYearUI;
 import clearBuffer.ClearBuffer;
 import course.CourseUI;
 import isptec.listas.Listas;
-import schoolYear.SchoolYearUI;
 
 /**
  *
@@ -63,14 +61,6 @@ public class MainMenu {
             switch (opcao) {
 
                 case 1:
-                    SchoolYearUI.menu();
-                    break;
-
-                case 2:
-                    AcademicYearUI.menu();
-                    break;
-
-                case 3:
                     CourseUI.menu();
                     break;
 

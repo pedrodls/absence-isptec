@@ -2,23 +2,23 @@ package genericEntity;
 
 public class GenericEntity {
 
-    private long id;
+    private Integer id;
     private String name;
 
     public GenericEntity() {
 
     }
 
-    public GenericEntity(long id, String nome) {
+    public GenericEntity(Integer id, String nome) {
         setId(id);
         setName(nome);
     }
 
-    public long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

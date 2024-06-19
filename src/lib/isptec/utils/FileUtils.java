@@ -85,7 +85,7 @@ public class FileUtils
             
             file.readFully(nameBytes);
             
-            return new String(nameBytes);
+            return new String(nameBytes).trim();
 
         } catch (Exception e) {
             return "";
