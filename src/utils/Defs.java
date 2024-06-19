@@ -28,6 +28,7 @@ public class Defs {
         };
 
         public static final String[] ADMIN_LINKS = {
+                        "Ano Académico",
                         "Curso",
                         "Disciplina",
                         "Professor",
@@ -66,12 +67,10 @@ public class Defs {
                         "Sair",
         };
 
-        public static final String ANO_LETIVO_FILE = "./src/data/anos_letivos.dat";
         public static final String JUSTIFICATIVO_FILE = "./src/data/justificativos.dat";
         public static final String MOTIVO_FALTA_FILE = "./src/data/motivos_faltas.dat";
         public static final String FALTA_FILE = "./src/data/faltas.dat";
         public static final String PROVA_PERDIDA_FILE = "./src/data/provas_perdidas.dat";
-        public static final String COORDENACAO_FILE = "./src/data/coordenacoes.dat";
         public static final String COORDENADOR_FILE = "./src/data/coordenadores.dat";
         public static final String ESTUDANTE_FILE = "./src/data/estudantes.dat";
         public static final String PROFESSOR_FILE = "./src/data/professores.dat";
@@ -84,12 +83,11 @@ public class Defs {
         public static final String TURMA_ESTUDANTE_FILE = "./src/data/turmasEstudantes.dat";
 
         public static final String ALL_FILES[] = {
-                        ANO_LETIVO_FILE,
                         JUSTIFICATIVO_FILE,
+                        ANO_ACADEMICO_FILE,
                         MOTIVO_FALTA_FILE,
                         FALTA_FILE,
                         PROVA_PERDIDA_FILE,
-                        COORDENACAO_FILE,
                         COORDENADOR_FILE,
                         ESTUDANTE_FILE,
                         PROFESSOR_FILE,

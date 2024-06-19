@@ -2,7 +2,9 @@ package utils;
 
 import java.util.Scanner;
 
+import academicYear.AcademicYearUI;
 import clearBuffer.ClearBuffer;
+import coordinator.CoordinatorUI;
 import course.CourseUI;
 import faultDescription.FaultDescriptionUI;
 import isptec.listas.Listas;
@@ -35,7 +37,7 @@ public class MainMenu {
                     coordenacaoMenu();
                     break;
 
-                case 3:
+                case 5:
                     System.out.println("Programa terminado");
                     System.exit(0);
                     break;
@@ -64,28 +66,31 @@ public class MainMenu {
             switch (opcao) {
 
                 case 1:
-                    CourseUI.menu();
+                    AcademicYearUI.menu();
                     break;
 
                 case 2:
+                    CourseUI.menu();
+                    break;
+
+                case 3:
                     SubjectUI.menu();
                     break;
-                case 3:
+                case 4:
                     TeacherUI.menu();
                     break;
-                case 4:
-                    // CoordenatorUI
-                    break;
                 case 5:
-                    // StudentUI
+                    CoordinatorUI.menu();
                     break;
                 case 6:
+                    // StudentUI
+                    break;
+                case 7:
                     FaultDescriptionUI.menu();
                     break;
 
-                case 10:
-                    System.out.println("Programa terminado");
-                    System.exit(0);
+                case 8:
+                    mainMenu();
                     break;
             }
         }

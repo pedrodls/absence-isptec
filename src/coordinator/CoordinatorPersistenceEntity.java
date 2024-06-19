@@ -1,28 +1,27 @@
-package genericEntity;
+package coordinator;
 
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import java.util.List;
-import java.util.Scanner;
 
 import isptec.utils.FileUtils;
 import utils.Defs;
 
-public class GenericPersistenceEntity {
+public class CoordinatorPersistenceEntity {
 
-    private static HashMap<Integer, GenericEntity> hashData = new HashMap<>();
+    private static HashMap<Integer, CoordinatorEntity> hashData = new HashMap<>();
 
     private static HashMap<Integer, Long> hashPositions = new HashMap<>();
 
-    public GenericPersistenceEntity() {
+    public CoordinatorPersistenceEntity() {
 
     }
 
-    public static void fillHashTable(String fileName) {
+    public static void fillHashTable() {
 
-        List<GenericEntity> data = findAll(fileName);
+        List<CoordinatorEntity> data = findAll();
 
         if (data == null) {
             return;
@@ -30,18 +29,18 @@ public class GenericPersistenceEntity {
 
         hashData.clear();
 
-        for (GenericEntity datum : data)
+        for (CoordinatorEntity datum : data)
             hashData.put(datum.getId(), datum);
 
     }
 
-    public static void create(GenericEntity entity, String fileName) {
+    public static void create(CoordinatorEntity entity) {
 
         try {
 
-            RandomAccessFile file = new RandomAccessFile(fileName, "rw");
+            RandomAccessFile file = new RandomAccessFile(Defs.COORDENADOR_FILE, "rw");
 
-            fillHashTable(fileName);
+            fillHashTable();
 
             long position = file.length();
 
@@ -49,12 +48,14 @@ public class GenericPersistenceEntity {
 
             int newId = hashPositions.size() + 1;
 
-            if (findOne(newId, fileName) != null)
+            if (findOne(newId) != null)
                 newId++;
 
             file.writeInt(newId);
+            file.writeInt(entity.getCourseId());
+            file.writeInt(entity.getTeacherId());
+            file.writeInt(entity.getAcademicYearId());
 
-            FileUtils.writeString(file, entity.getName(), Defs.NAME_SIZE);
 
             file.close();
 
@@ -65,20 +66,21 @@ public class GenericPersistenceEntity {
         }
     }
 
-    public static void update(GenericEntity entity, String fileName) {
+    public static void update(CoordinatorEntity entity ) {
         try {
 
-            RandomAccessFile file = new RandomAccessFile(fileName, "rw");
+            RandomAccessFile file = new RandomAccessFile(Defs.COORDENADOR_FILE, "rw");
 
-            fillHashTable(fileName);
+            fillHashTable();
 
             long position = hashPositions.get(entity.getId());
 
             file.seek(position);
 
             file.writeInt(entity.getId());
-
-            FileUtils.writeString(file, entity.getName(), Defs.NAME_SIZE);
+            file.writeInt(entity.getCourseId());
+            file.writeInt(entity.getTeacherId());
+            file.writeInt(entity.getAcademicYearId());
 
             file.close();
 
@@ -89,10 +91,10 @@ public class GenericPersistenceEntity {
         }
     }
 
-    public static void read(int id, String fileName) {
+    public static void read(int id) {
         try {
 
-            fillHashTable(fileName);
+            fillHashTable();
 
             if (hashData.get(id) != null) {
                 System.out.println("Encontrado -> " + hashData.get(id));
@@ -105,18 +107,18 @@ public class GenericPersistenceEntity {
         }
     }
 
-    public static void dropOne(int id, String fileName) {
+    public static void dropOne(int id) {
         try {
 
-            RandomAccessFile file = new RandomAccessFile(fileName, "rw");
+            RandomAccessFile file = new RandomAccessFile(Defs.COORDENADOR_FILE, "rw");
 
-            fillHashTable(fileName);
+            fillHashTable();
 
             Long position = hashPositions.get(id);
 
             file.seek(position);
 
-            file.writeInt(-1); // ID -1 indica registro deletado
+            file.writeLong(-1); // ID -1 indica registro deletado
 
             file.close();
 
@@ -125,20 +127,20 @@ public class GenericPersistenceEntity {
         }
     }
 
-    public static GenericEntity findOne(int id, String fileName) {
+    public static CoordinatorEntity findOne(int id) {
 
-        fillHashTable(fileName);
+        fillHashTable();
 
         return hashData.get(id);
     }
 
-    public static List<GenericEntity> findAll(String fileName) {
+    public static List<CoordinatorEntity> findAll() {
 
-        List<GenericEntity> data = new ArrayList<GenericEntity>();
+        List<CoordinatorEntity> data = new ArrayList<CoordinatorEntity>();
 
         try {
 
-            RandomAccessFile file = new RandomAccessFile(fileName, "r");
+            RandomAccessFile file = new RandomAccessFile(Defs.COORDENADOR_FILE, "r");
 
             if (file != null) {
 
@@ -152,12 +154,16 @@ public class GenericPersistenceEntity {
 
                     Integer id = file.readInt();
 
-                    String name = FileUtils.readString(file, Defs.NAME_SIZE);
+                    Integer courseId = file.readInt();
+
+                    Integer teacherId = file.readInt();
+
+                    Integer academicYearId = file.readInt();
 
                     hashPositions.put(id, position);
 
                     if (id > 0)
-                        data.add(new GenericEntity(id, name));
+                        data.add(new CoordinatorEntity(id, courseId, teacherId, academicYearId));
 
                     position = file.getFilePointer();
 
@@ -172,17 +178,6 @@ public class GenericPersistenceEntity {
         }
 
         return data;
-
-    }
-
-    public static GenericEntity searchToEdit(String fileName) {
-
-        Scanner sc = new Scanner(System.in);
-
-        System.out.print("ID: ");
-        int id = sc.nextInt();
-
-        return GenericPersistenceEntity.findOne(id, fileName);
 
     }
 
