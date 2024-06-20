@@ -10,6 +10,7 @@ import genericEntity.GenericEntity;
 import genericEntity.GenericPersistenceEntity;
 import isptec.listas.Listas;
 import isptec.utils.Utils;
+import student.StudentPersistenceEntity;
 import utils.*;
 
 public class AcademicYearUI {
@@ -140,8 +141,10 @@ public class AcademicYearUI {
             return;
         }
 
-        if (CoordinatorPersistenceEntity.findAllByAcademicYearId(entity.getId()).size() > 0) {
-            
+        if (CoordinatorPersistenceEntity.findAllByAcademicYearId(entity.getId()).size() > 0
+                ||
+                StudentPersistenceEntity.findAllByAccessedYearId(entity.getId()).size() > 0) {
+
             System.out.println("\nImpossível eliminar pois este ID está ligada à outro(s) dado(s)!\n");
 
             MainMenu.pauseToSee();

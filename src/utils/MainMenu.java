@@ -8,6 +8,7 @@ import coordinator.CoordinatorUI;
 import course.CourseUI;
 import faultDescription.FaultDescriptionUI;
 import isptec.listas.Listas;
+import student.StudentUI;
 import subject.SubjectUI;
 import teacher.TeacherUI;
 
@@ -83,7 +84,7 @@ public class MainMenu {
                     CoordinatorUI.menu();
                     break;
                 case 6:
-                    // StudentUI
+                    StudentUI.menu();
                     break;
                 case 7:
                     FaultDescriptionUI.menu();
