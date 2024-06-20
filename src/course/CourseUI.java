@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import clearBuffer.ClearBuffer;
+import coordinator.CoordinatorPersistenceEntity;
 import genericEntity.GenericEntity;
 import genericEntity.GenericPersistenceEntity;
 import isptec.listas.Listas;
@@ -134,6 +135,15 @@ public class CourseUI {
         if (oldCourse == null) {
 
             System.out.println("\nCurso não encontrado!\n");
+
+            MainMenu.pauseToSee();
+
+            return;
+        }
+
+        if (CoordinatorPersistenceEntity.findAllByCourseId(oldCourse.getId()).size() > 0) {
+            
+            System.out.println("\nImpossível eliminar pois este ID está ligada à outro(s) dado(s)!\n");
 
             MainMenu.pauseToSee();
 

@@ -56,7 +56,6 @@ public class CoordinatorPersistenceEntity {
             file.writeInt(entity.getTeacherId());
             file.writeInt(entity.getAcademicYearId());
 
-
             file.close();
 
             System.out.println("\nCriado com sucesso!\n");
@@ -66,7 +65,7 @@ public class CoordinatorPersistenceEntity {
         }
     }
 
-    public static void update(CoordinatorEntity entity ) {
+    public static void update(CoordinatorEntity entity) {
         try {
 
             RandomAccessFile file = new RandomAccessFile(Defs.COORDENADOR_FILE, "rw");
@@ -176,6 +175,54 @@ public class CoordinatorPersistenceEntity {
         } catch (Exception ex) {
             System.out.println("\nÉ ncessário criar dados!");
         }
+
+        return data;
+
+    }
+
+    public static List<CoordinatorEntity> findAllByAcademicYearId(int id) {
+
+        List<CoordinatorEntity> data = new ArrayList<CoordinatorEntity>();
+
+        fillHashTable();
+
+        hashData.forEach((k, c) -> {
+            if (c.getAcademicYearId() == id) {
+                data.add(c);
+            }
+        });
+
+        return data;
+
+    }
+
+    public static List<CoordinatorEntity> findAllByCourseId(int id) {
+
+        List<CoordinatorEntity> data = new ArrayList<CoordinatorEntity>();
+
+        fillHashTable();
+
+        hashData.forEach((k, c) -> {
+            if (c.getCourseId() == id) {
+                data.add(c);
+            }
+        });
+
+        return data;
+
+    }
+
+    public static List<CoordinatorEntity> findAllByTeacherId(int id) {
+
+        List<CoordinatorEntity> data = new ArrayList<CoordinatorEntity>();
+
+        fillHashTable();
+
+        hashData.forEach((k, c) -> {
+            if (c.getTeacherId() == id) {
+                data.add(c);
+            }
+        });
 
         return data;
 

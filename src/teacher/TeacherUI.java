@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import clearBuffer.ClearBuffer;
+import coordinator.CoordinatorPersistenceEntity;
 import genericEntity.GenericEntity;
 import genericEntity.GenericPersistenceEntity;
 import isptec.listas.Listas;
@@ -134,6 +135,15 @@ public class TeacherUI {
         if (entity == null) {
 
             System.out.println("\nProfessor não encontrado!\n");
+
+            MainMenu.pauseToSee();
+
+            return;
+        }
+
+         if (CoordinatorPersistenceEntity.findAllByCourseId(entity.getId()).size() > 0) {
+            
+            System.out.println("\nImpossível eliminar pois este ID está ligada à outro(s) dado(s)!\n");
 
             MainMenu.pauseToSee();
 

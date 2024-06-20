@@ -2,8 +2,10 @@ package academicYear;
 
 import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 import clearBuffer.ClearBuffer;
+import coordinator.CoordinatorPersistenceEntity;
 import genericEntity.GenericEntity;
 import genericEntity.GenericPersistenceEntity;
 import isptec.listas.Listas;
@@ -57,24 +59,20 @@ public class AcademicYearUI {
 
         Scanner sc = new Scanner(System.in);
         String name;
-        String regex = "^\\{d4}\\//";
+        String regex = "^\\d{4}/\\d{4}$";
 
         System.out.println("\n*****************Criando Ano Académico****************\n");
 
         do {
 
-            System.out.print("Regra_validação: no mínimo 3 caracters!");
-            MainMenu.pauseToSee();
-
-            System.out.print("Nome: ");
+            System.out.print("Designção(xxxx/yyyy): ");
             name = sc.nextLine();
 
-        } while (name.length() < 3);
+        } while (!(Pattern.compile(regex).matcher(name).matches() && Utils.validarAnoLetivo(name)));
 
         GenericEntity entity = new GenericEntity(-1, name);
 
         GenericPersistenceEntity.create(entity, Defs.ANO_ACADEMICO_FILE);
-
 
         MainMenu.pauseToSee();
 
@@ -136,6 +134,15 @@ public class AcademicYearUI {
         if (entity == null) {
 
             System.out.println("\nNão encontrado!\n");
+
+            MainMenu.pauseToSee();
+
+            return;
+        }
+
+        if (CoordinatorPersistenceEntity.findAllByAcademicYearId(entity.getId()).size() > 0) {
+            
+            System.out.println("\nImpossível eliminar pois este ID está ligada à outro(s) dado(s)!\n");
 
             MainMenu.pauseToSee();
 
