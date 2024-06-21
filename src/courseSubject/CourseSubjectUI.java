@@ -47,7 +47,7 @@ public class CourseSubjectUI {
                     break;
 
                 case 6:
-                    MainMenu.mainMenu();
+                    MainMenu.coordenationMenu();
                     break;
             }
         }

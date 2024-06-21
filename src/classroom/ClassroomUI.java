@@ -3,11 +3,15 @@ package classroom;
 import java.util.List;
 import java.util.Scanner;
 
+import classroomStudent.ClassroomStudentPersistenceEntity;
 import clearBuffer.ClearBuffer;
+import coordinator.CoordinatorPersistenceEntity;
 import genericEntity.GenericEntity;
 import genericEntity.GenericPersistenceEntity;
 import isptec.listas.Listas;
 import isptec.utils.Utils;
+import student.StudentPersistenceEntity;
+import teacherSubject.TeacherSubjectPersistenceEntity;
 import utils.*;
 
 public class ClassroomUI {
@@ -47,7 +51,7 @@ public class ClassroomUI {
                     break;
 
                 case 6:
-                    MainMenu.adminMenu();
+                    MainMenu.coordenationMenu();
                     break;
             }
         }
@@ -69,14 +73,25 @@ public class ClassroomUI {
 
         Scanner sc = new Scanner(System.in);
 
-        String name;
         int level;
+        String name;
+
         GenericEntity course = null;
 
         System.out.println("\n*****************Criando Turma****************\n");
 
         if (!validate())
             return;
+
+        do {
+
+            System.out.print("Regra_validação: no mínimo 3 caracters!");
+            MainMenu.pauseToSee();
+
+            System.out.print("Nome: ");
+            name = sc.nextLine();
+
+        } while (name.length() < 3);
 
         do {
             System.out.print("\nInsira um nível superior académico válido[1 - 5]: ");
@@ -89,14 +104,6 @@ public class ClassroomUI {
             course = GenericPersistenceEntity.searchToEdit(Defs.CURSO_FILE);
 
         } while (course == null);
-
-        do {
-
-            System.out.println("Regra_validação: no mínimo 3 caracters! ");
-            System.out.print("Nome: ");
-            name = sc.nextLine();
-
-        } while (name.length() < 3);
 
         ClassroomEntity entity = new ClassroomEntity(-1, name, course.getId(), level);
 
@@ -191,6 +198,17 @@ public class ClassroomUI {
         if (entity == null) {
 
             System.out.println("\nNão encontrado!\n");
+
+            MainMenu.pauseToSee();
+
+            return;
+        }
+
+        if (TeacherSubjectPersistenceEntity.findAllByClassroomId(entity.getId()).size() > 0
+                ||
+                ClassroomStudentPersistenceEntity.findAllByClassroomId(entity.getId()).size() > 0) {
+
+            System.out.println("\nImpossível eliminar pois este ID está ligada à outro(s) dado(s)!\n");
 
             MainMenu.pauseToSee();
 

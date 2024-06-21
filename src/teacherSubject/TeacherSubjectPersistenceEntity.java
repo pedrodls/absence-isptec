@@ -1,29 +1,27 @@
-package courseSubject;
+package teacherSubject;
 
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import java.util.List;
-import java.util.Scanner;
 
-import classroom.ClassroomEntity;
-import classroom.ClassroomPersistenceEntity;
+import isptec.utils.FileUtils;
 import utils.Defs;
 
-public class CourseSubjectPersistenceEntity {
+public class TeacherSubjectPersistenceEntity {
 
-    private static HashMap<Integer, CourseSubjectEntity> hashData = new HashMap<>();
+    private static HashMap<Integer, TeacherSubjectEntity> hashData = new HashMap<>();
 
     private static HashMap<Integer, Long> hashPositions = new HashMap<>();
 
-    public CourseSubjectPersistenceEntity() {
+    public TeacherSubjectPersistenceEntity() {
 
     }
 
     public static void fillHashTable() {
 
-        List<CourseSubjectEntity> data = findAll();
+        List<TeacherSubjectEntity> data = findAll();
 
         if (data == null) {
             return;
@@ -31,16 +29,16 @@ public class CourseSubjectPersistenceEntity {
 
         hashData.clear();
 
-        for (CourseSubjectEntity datum : data)
+        for (TeacherSubjectEntity datum : data)
             hashData.put(datum.getId(), datum);
 
     }
 
-    public static void create(CourseSubjectEntity entity) {
+    public static void create(TeacherSubjectEntity entity) {
 
         try {
 
-            RandomAccessFile file = new RandomAccessFile(Defs.CURSO_ANO_DISCIPLINA_FILE, "rw");
+            RandomAccessFile file = new RandomAccessFile(Defs.PROFESSOR_DISCIPLINA_FILE, "rw");
 
             fillHashTable();
 
@@ -54,9 +52,9 @@ public class CourseSubjectPersistenceEntity {
                 newId++;
 
             file.writeInt(newId);
-            file.writeInt(entity.getCourseId());
-            file.writeInt(entity.getLevel());
-            file.writeInt(entity.getSubjectId());
+            file.writeInt(entity.getTeacherId());
+            file.writeInt(entity.getClassroomId());
+            file.writeInt(entity.getCourseSubjectId());
 
             file.close();
 
@@ -67,10 +65,10 @@ public class CourseSubjectPersistenceEntity {
         }
     }
 
-    public static void update(CourseSubjectEntity entity) {
+    public static void update(TeacherSubjectEntity entity) {
         try {
 
-            RandomAccessFile file = new RandomAccessFile(Defs.CURSO_ANO_DISCIPLINA_FILE, "rw");
+            RandomAccessFile file = new RandomAccessFile(Defs.PROFESSOR_DISCIPLINA_FILE, "rw");
 
             fillHashTable();
 
@@ -79,9 +77,10 @@ public class CourseSubjectPersistenceEntity {
             file.seek(position);
 
             file.writeInt(entity.getId());
-            file.writeInt(entity.getCourseId());
-            file.writeInt(entity.getLevel());
-            file.writeInt(entity.getSubjectId());
+            file.writeInt(entity.getTeacherId());
+            file.writeInt(entity.getClassroomId());
+            file.writeInt(entity.getCourseSubjectId());
+
 
             file.close();
 
@@ -111,7 +110,7 @@ public class CourseSubjectPersistenceEntity {
     public static void dropOne(int id) {
         try {
 
-            RandomAccessFile file = new RandomAccessFile(Defs.CURSO_ANO_DISCIPLINA_FILE, "rw");
+            RandomAccessFile file = new RandomAccessFile(Defs.PROFESSOR_DISCIPLINA_FILE, "rw");
 
             fillHashTable();
 
@@ -128,20 +127,20 @@ public class CourseSubjectPersistenceEntity {
         }
     }
 
-    public static CourseSubjectEntity findOne(int id) {
+    public static TeacherSubjectEntity findOne(int id) {
 
         fillHashTable();
 
         return hashData.get(id);
     }
 
-    public static List<CourseSubjectEntity> findAll() {
+    public static List<TeacherSubjectEntity> findAll() {
 
-        List<CourseSubjectEntity> data = new ArrayList<CourseSubjectEntity>();
+        List<TeacherSubjectEntity> data = new ArrayList<TeacherSubjectEntity>();
 
         try {
 
-            RandomAccessFile file = new RandomAccessFile(Defs.CURSO_ANO_DISCIPLINA_FILE, "r");
+            RandomAccessFile file = new RandomAccessFile(Defs.PROFESSOR_DISCIPLINA_FILE, "r");
 
             if (file != null) {
 
@@ -155,16 +154,16 @@ public class CourseSubjectPersistenceEntity {
 
                     Integer id = file.readInt();
 
-                    Integer courseId = file.readInt();
-
                     Integer teacherId = file.readInt();
 
-                    Integer level = file.readInt();
+                    Integer classroomId = file.readInt();
+
+                    Integer courseSubjectId = file.readInt();
 
                     hashPositions.put(id, position);
 
                     if (id > 0)
-                        data.add(new CourseSubjectEntity(id, courseId, teacherId, level));
+                        data.add(new TeacherSubjectEntity(id, teacherId, classroomId, courseSubjectId));
 
                     position = file.getFilePointer();
 
@@ -182,14 +181,14 @@ public class CourseSubjectPersistenceEntity {
 
     }
 
-    public static List<CourseSubjectEntity> findAllBylevel(int id) {
+    public static List<TeacherSubjectEntity> findAllByTeacherId(int id) {
 
-        List<CourseSubjectEntity> data = new ArrayList<CourseSubjectEntity>();
+        List<TeacherSubjectEntity> data = new ArrayList<TeacherSubjectEntity>();
 
         fillHashTable();
 
         hashData.forEach((k, c) -> {
-            if (c.getLevel() == id) {
+            if (c.getTeacherId() == id) {
                 data.add(c);
             }
         });
@@ -198,31 +197,20 @@ public class CourseSubjectPersistenceEntity {
 
     }
 
-    public static List<CourseSubjectEntity> findAllByCourseId(int id) {
+    public static List<TeacherSubjectEntity> findAllByClassroomId(int id) {
 
-        List<CourseSubjectEntity> data = new ArrayList<CourseSubjectEntity>();
+        List<TeacherSubjectEntity> data = new ArrayList<TeacherSubjectEntity>();
 
         fillHashTable();
 
         hashData.forEach((k, c) -> {
-            if (c.getCourseId() == id) {
+            if (c.getClassroomId() == id) {
                 data.add(c);
             }
         });
 
         return data;
-
     }
 
-    public static CourseSubjectEntity searchToEdit() {
-
-        Scanner sc = new Scanner(System.in);
-
-        System.out.print("ID: ");
-        int id = sc.nextInt();
-
-        return CourseSubjectPersistenceEntity.findOne(id);
-
-    }
-
+    
 }

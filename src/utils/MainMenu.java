@@ -14,6 +14,7 @@ import isptec.listas.Listas;
 import student.StudentUI;
 import subject.SubjectUI;
 import teacher.TeacherUI;
+import teacherSubject.TeacherSubjectUI;
 
 /**
  *
@@ -70,27 +71,62 @@ public class MainMenu {
             switch (opcao) {
 
                 case 1:
-                    AcademicYearUI.menu();
+                    try {
+                        AcademicYearUI.menu();
+                    } catch (Exception e) {
+                        System.out.println("Ocorreu um erro inesperado, verifique bem as validações de campos");
+                        MainMenu.pauseToSee();
+                    }
                     break;
 
                 case 2:
-                    CourseUI.menu();
+                    try {
+                        CourseUI.menu();
+                    } catch (Exception e) {
+                        System.out.println("Ocorreu um erro inesperado, verifique bem as validações de campos");
+                        MainMenu.pauseToSee();
+                    }
                     break;
 
                 case 3:
-                    SubjectUI.menu();
+                    try {
+                        SubjectUI.menu();
+                    } catch (Exception e) {
+                        System.out.println("Ocorreu um erro inesperado, verifique bem as validações de campos");
+                        MainMenu.pauseToSee();
+                    }
                     break;
                 case 4:
-                    TeacherUI.menu();
+                    try {
+                        TeacherUI.menu();
+                    } catch (Exception e) {
+                        System.out.println("Ocorreu um erro inesperado, verifique bem as validações de campos");
+                        MainMenu.pauseToSee();
+                    }
                     break;
                 case 5:
-                    CoordinatorUI.menu();
+                    try {
+                        CoordinatorUI.menu();
+                    } catch (Exception e) {
+                        System.out.println("Ocorreu um erro inesperado, verifique bem as validações de campos");
+                        MainMenu.pauseToSee();
+                    }
                     break;
                 case 6:
-                    StudentUI.menu();
+                    try {
+                        StudentUI.menu();
+                    } catch (Exception e) {
+                        System.out.println("Ocorreu um erro inesperado, verifique bem as validações de campos");
+                        MainMenu.pauseToSee();
+                    }
                     break;
                 case 7:
-                    FaultDescriptionUI.menu();
+                    try {
+                        FaultDescriptionUI.menu();
+                    } catch (Exception e) {
+                        System.out.println("Ocorreu um erro inesperado, verifique bem as validações de campos");
+                        MainMenu.pauseToSee();
+                    }
                     break;
 
                 case 8:
@@ -112,17 +148,39 @@ public class MainMenu {
             switch (opcao) {
 
                 case 1:
-                    ClassroomUI.menu();
+                    try {
+                        ClassroomUI.menu();
+                    } catch (Exception e) {
+                        System.out.println("Ocorreu um erro inesperado, verifique bem as validações de campos");
+                        MainMenu.pauseToSee();
+                    }
                     break;
 
                 case 2:
-                    ClassroomStudentUI.menu();
+                    try {
+                        ClassroomStudentUI.menu();
+                    } catch (Exception e) {
+                        System.out.println("Ocorreu um erro inesperado, verifique bem as validações de campos");
+                        MainMenu.pauseToSee();
+                    }
                     break;
 
                 case 3:
-                    CourseSubjectUI.menu();
+                    try {
+                        CourseSubjectUI.menu();
+                    } catch (Exception e) {
+                        System.out.println("Ocorreu um erro inesperado, verifique bem as validações de campos");
+                        MainMenu.pauseToSee();
+                    }
                     break;
-
+                case 4:
+                    try {
+                        TeacherSubjectUI.menu();
+                    } catch (Exception e) {
+                        System.out.println("Ocorreu um erro inesperado, verifique bem as validações de campos");
+                        MainMenu.pauseToSee();
+                    }
+                    break;
                 case 6:
                     adminMenu();
                     break;
