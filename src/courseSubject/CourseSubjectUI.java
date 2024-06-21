@@ -1,4 +1,4 @@
-package coordinator;
+package courseSubject;
 
 import java.util.List;
 import java.util.Scanner;
@@ -10,9 +10,9 @@ import isptec.listas.Listas;
 import isptec.utils.Utils;
 import utils.*;
 
-public class CoordinatorUI {
+public class CourseSubjectUI {
 
-    public CoordinatorUI() {
+    public CourseSubjectUI() {
 
     }
 
@@ -21,7 +21,7 @@ public class CoordinatorUI {
 
             ClearBuffer.clear();
 
-            System.out.println("\n*****************Menu Coordenador****************\n");
+            System.out.println("\n*****************Menu Curso <-> Disciplina****************\n");
 
             int opcao = Listas.enviarLerOpcaoEscolhida(Defs.CRUD_LINKS);
 
@@ -55,9 +55,8 @@ public class CoordinatorUI {
 
     public static boolean validate() {
         if (!(GenericPersistenceEntity.findAll(Defs.CURSO_FILE).size() > 0
-                && GenericPersistenceEntity.findAll(Defs.ANO_ACADEMICO_FILE).size() > 0
-                && GenericPersistenceEntity.findAll(Defs.PROFESSOR_FILE).size() > 0)) {
-            System.out.print("Não existem dados suficientes[Curso, Ano Académico, Professor] para criar um Coordenador\n\n");
+                && GenericPersistenceEntity.findAll(Defs.DISCIPLINA_FILE).size() > 0)) {
+            System.out.print("Não existem dados suficientes[Curso, Disciplina] para criar um Coordenador\n\n");
 
             MainMenu.pauseToSee();
             return false;
@@ -68,22 +67,16 @@ public class CoordinatorUI {
 
     public static void create() {
 
-        GenericEntity academicYear = null;
-        GenericEntity course = null;
-        GenericEntity teacher = null;
+        Scanner sc = new Scanner(System.in);
 
-        System.out.println("\n*****************Criando Coordenador****************\n");
+        GenericEntity course = null;
+        GenericEntity subject = null;
+        int level;
+
+        System.out.println("\n*****************Criando Curso <-> Disciplina****************\n");
 
         if (!validate()) 
             return;
-        
-
-        do {
-
-            System.out.print("Regra_validação: Ano academico existente! ");
-            academicYear = GenericPersistenceEntity.searchToEdit(Defs.ANO_ACADEMICO_FILE);
-
-        } while (academicYear == null);
 
         do {
 
@@ -94,14 +87,19 @@ public class CoordinatorUI {
 
         do {
 
-            System.out.print("Regra_validação: Professor existente! ");
-            teacher = GenericPersistenceEntity.searchToEdit(Defs.PROFESSOR_FILE);
+            System.out.print("Regra_validação: Disciplina existente! ");
+            subject = GenericPersistenceEntity.searchToEdit(Defs.DISCIPLINA_FILE);
 
-        } while (teacher == null);
+        } while (subject == null);
 
-        CoordinatorEntity entity = new CoordinatorEntity(-1, course.getId(), teacher.getId(), academicYear.getId());
+        do {
+            System.out.print("\nInsira um nível superior académico válido[1 - 5]: ");
+            level = sc.nextInt();
+        } while (!(level >= 1 && level <= 5));
 
-        CoordinatorPersistenceEntity.create(entity);
+        CourseSubjectEntity entity = new CourseSubjectEntity(-1, course.getId(), level, subject.getId());
+
+        CourseSubjectPersistenceEntity.create(entity);
 
         MainMenu.pauseToSee();
 
@@ -111,7 +109,7 @@ public class CoordinatorUI {
 
         Scanner sc = new Scanner(System.in);
 
-        CoordinatorEntity old = searchToEdit();
+        CourseSubjectEntity old = searchToEdit();
 
         Boolean edited = false;
 
@@ -124,9 +122,9 @@ public class CoordinatorUI {
             return;
         }
 
-        System.out.println("\n*****************Editando Coordenador****************\n");
+        System.out.println("\n*****************Editando Curso <-> Disciplina****************\n");
 
-        if (Utils.editarCampo("ID Curso", GenericPersistenceEntity.findOne(old.getCourseId(), Defs.CURSO_FILE).getName())) {
+        if (Utils.editarCampo("Curso", GenericPersistenceEntity.findOne(old.getCourseId(), Defs.CURSO_FILE).getName())) {
 
             GenericEntity course = null;
 
@@ -142,24 +140,38 @@ public class CoordinatorUI {
             edited = true;
         }
 
-        if (Utils.editarCampo("ID Ano Académico", GenericPersistenceEntity.findOne(old.getAcademicYearId(), Defs.ANO_ACADEMICO_FILE).getName())) {
+        if (Utils.editarCampo("Disciplina", GenericPersistenceEntity.findOne(old.getSubjectId(), Defs.DISCIPLINA_FILE).getName())) {
 
-            GenericEntity academicYear = null;
+            GenericEntity course = null;
 
             do {
 
-                System.out.print("Regra_validação: Ano academico existente! ");
-                academicYear = GenericPersistenceEntity.searchToEdit(Defs.ANO_ACADEMICO_FILE);
+                System.out.print("Regra_validação: Disciplina existente! ");
+                course = GenericPersistenceEntity.searchToEdit(Defs.CURSO_FILE);
 
-            } while (academicYear == null);
+            } while (course == null);
 
-            old.setAcademicYearId(academicYear.getId());
+            old.setCourseId(course.getId());
+
+            edited = true;
+        }
+
+        if (Utils.editarCampo("Nível Académico", old.getLevel() + "º ano")) {
+
+            int level;
+
+            do {
+                System.out.print("\nInsira um nível superior académico válido[1 - 5]: ");
+                level = sc.nextInt();
+            } while (!(level >= 1 && level <= 5));
+
+            old.setLevel(level);
 
             edited = true;
         }
 
         if (edited)
-            CoordinatorPersistenceEntity.update(old);
+            CourseSubjectPersistenceEntity.update(old);
 
         System.out.println("\nEdição finalizada!\n");
 
@@ -169,9 +181,9 @@ public class CoordinatorUI {
 
     public static void drop() {
 
-        System.out.println("\n*****************Eliminando Coordenador****************\n");
+        System.out.println("\n*****************Eliminando Curso <-> Disciplina****************\n");
 
-        CoordinatorEntity entity = searchToEdit();
+        CourseSubjectEntity entity = searchToEdit();
 
         if (entity == null) {
 
@@ -182,7 +194,7 @@ public class CoordinatorUI {
             return;
         }
 
-        CoordinatorPersistenceEntity.dropOne(entity.getId());
+        CourseSubjectPersistenceEntity.dropOne(entity.getId());
 
         System.out.println("\nEliminação finalizada!\n");
 
@@ -194,35 +206,35 @@ public class CoordinatorUI {
 
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("\n*****************Procurando Coordenador****************\n");
+        System.out.println("\n*****************Procurando Curso <-> Disciplina****************\n");
 
         System.out.print("ID: ");
         int id = sc.nextInt();
 
-        CoordinatorPersistenceEntity.read(id);
+        CourseSubjectPersistenceEntity.read(id);
 
         MainMenu.pauseToSee();
 
     }
 
-    public static CoordinatorEntity searchToEdit() {
+    public static CourseSubjectEntity searchToEdit() {
 
         Scanner sc = new Scanner(System.in);
 
         System.out.print("ID: ");
         int id = sc.nextInt();
 
-        return CoordinatorPersistenceEntity.findOne(id);
+        return CourseSubjectPersistenceEntity.findOne(id);
 
     }
 
     public static void showlistData() {
 
-        List<CoordinatorEntity> data = CoordinatorPersistenceEntity.findAll();
+        List<CourseSubjectEntity> data = CourseSubjectPersistenceEntity.findAll();
 
-        System.out.println("\n*****************Todos Coordenadores*****************\n");
+        System.out.println("\n*****************Todos Curso <-> Disciplina*****************\n");
 
-        for (CoordinatorEntity datum : data)
+        for (CourseSubjectEntity datum : data)
             System.out.println("\n" + datum + "\n");
 
         MainMenu.pauseToSee();

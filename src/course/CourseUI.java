@@ -3,6 +3,7 @@ package course;
 import java.util.List;
 import java.util.Scanner;
 
+import classroom.ClassroomPersistenceEntity;
 import clearBuffer.ClearBuffer;
 import coordinator.CoordinatorPersistenceEntity;
 import genericEntity.GenericEntity;
@@ -143,7 +144,9 @@ public class CourseUI {
         }
 
         if (CoordinatorPersistenceEntity.findAllByCourseId(oldCourse.getId()).size() > 0
-                || StudentPersistenceEntity.findAllByCourseId(oldCourse.getId()).size() > 0) {
+                || StudentPersistenceEntity.findAllByCourseId(oldCourse.getId()).size() > 0
+                ||
+                ClassroomPersistenceEntity.findAllByCourseId(oldCourse.getId()).size() > 0) {
 
             System.out.println("\nImpossível eliminar pois este ID está ligada à outro(s) dado(s)!\n");
 

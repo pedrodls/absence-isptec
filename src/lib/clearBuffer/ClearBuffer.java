@@ -1,8 +1,5 @@
 package clearBuffer;
 
-
-
-
 import java.io.IOException;
 
 public class ClearBuffer {

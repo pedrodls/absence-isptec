@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
+import classroom.ClassroomPersistenceEntity;
 import clearBuffer.ClearBuffer;
 import coordinator.CoordinatorPersistenceEntity;
 import genericEntity.GenericEntity;
@@ -14,6 +15,8 @@ import student.StudentPersistenceEntity;
 import utils.*;
 
 public class AcademicYearUI {
+
+    static final String regex = "^\\d{4}/\\d{4}$";
 
     public AcademicYearUI() {
 
@@ -60,7 +63,6 @@ public class AcademicYearUI {
 
         Scanner sc = new Scanner(System.in);
         String name;
-        String regex = "^\\d{4}/\\d{4}$";
 
         System.out.println("\n*****************Criando Ano Académico****************\n");
 
@@ -98,19 +100,16 @@ public class AcademicYearUI {
 
         System.out.println("\n*****************Editando Ano Académico****************\n");
 
-        if (Utils.editarCampo("Nome", entity.getName())) {
+        if (Utils.editarCampo("Designação", entity.getName())) {
 
             String name;
 
             do {
 
-                System.out.print("\nRegra_validação: no mínimo 3 caracters! ");
-                MainMenu.pauseToSee();
-
-                System.out.print("\nNome: ");
+                System.out.print("Designção(xxxx/yyyy): ");
                 name = sc.nextLine();
 
-            } while (name.length() < 3);
+            } while (!(Pattern.compile(regex).matcher(name).matches() && Utils.validarAnoLetivo(name)));
 
             entity.setName(name);
 

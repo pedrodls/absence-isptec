@@ -17,7 +17,7 @@ public class Defs {
 
         public static final String[] MAIN_MENU_LINKS = {
                         "Admin(Demo)",
-                        "Coordenação(Em teste)",
+                        "Coordenação(Teste)",
                         "Professor(Não funcional)",
                         "Estudante(Não funcional)",
                         "Sair",
@@ -42,10 +42,10 @@ public class Defs {
         };
 
         public static final String[] COORDENATION_LINKS = {
-                        "Turmas",
-                        "Turma - Estudante",
-                        "Curso <-> Ano <-> Disciplina",
-                        "Professor <-> e <-> Disciplina",
+                        "Turma",
+                        "Turma     <-> Estudante",
+                        "Curso     <-> Disciplina",
+                        "Professor <-> Disciplina",
                         "Justificacao de faltas",
                         "Sair",
 

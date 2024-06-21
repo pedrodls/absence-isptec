@@ -3,9 +3,11 @@ package utils;
 import java.util.Scanner;
 
 import academicYear.AcademicYearUI;
+import classroom.ClassroomUI;
 import clearBuffer.ClearBuffer;
 import coordinator.CoordinatorUI;
 import course.CourseUI;
+import courseSubject.CourseSubjectUI;
 import faultDescription.FaultDescriptionUI;
 import isptec.listas.Listas;
 import student.StudentUI;
@@ -35,7 +37,7 @@ public class MainMenu {
                     break;
 
                 case 2:
-                    coordenacaoMenu();
+                    coordenationMenu();
                     break;
 
                 case 5:
@@ -97,7 +99,7 @@ public class MainMenu {
         }
     }
 
-    public static void coordenacaoMenu() {
+    public static void coordenationMenu() {
         for (;;) {
 
             ClearBuffer.clear();
@@ -109,7 +111,15 @@ public class MainMenu {
             switch (opcao) {
 
                 case 1:
-                    // TurmaUI.menu();
+                    ClassroomUI.menu();
+                    break;
+
+                case 2:
+                    // Turma estudante;
+                    break;
+                    
+                case 3:
+                    CourseSubjectUI.menu();
                     break;
 
                 case 6:

@@ -1,4 +1,4 @@
-package student;
+package classroom;
 
 import java.util.List;
 import java.util.Scanner;
@@ -11,11 +11,9 @@ import isptec.listas.Listas;
 import isptec.utils.Utils;
 import utils.*;
 
-public class StudentUI {
+public class ClassroomUI {
 
-    public static String telephoneRegex = "^9\\d{8}$";
-
-    public StudentUI() {
+    public ClassroomUI() {
 
     }
 
@@ -24,7 +22,7 @@ public class StudentUI {
 
             ClearBuffer.clear();
 
-            System.out.println("\n*****************Menu Estudante****************\n");
+            System.out.println("\n*****************Menu Turma****************\n");
 
             int opcao = Listas.enviarLerOpcaoEscolhida(Defs.CRUD_LINKS);
 
@@ -50,16 +48,16 @@ public class StudentUI {
                     break;
 
                 case 6:
-                    MainMenu.adminMenu();
+                    MainMenu.coordenationMenu();
                     break;
             }
         }
     }
 
     public static boolean validate() {
-        if (!(GenericPersistenceEntity.findAll(Defs.CURSO_FILE).size() > 0
-                && GenericPersistenceEntity.findAll(Defs.ANO_ACADEMICO_FILE).size() > 0)) {
-            System.out.print("Não existem dados suficientes[Curso, Ano Académico] para criar um Estudante\n\n");
+        if (!(GenericPersistenceEntity.findAll(Defs.CURSO_FILE).size() > 0)) {
+
+            System.out.print("Não existem dados suficientes[Curso] para criar um Estudante\n\n");
 
             MainMenu.pauseToSee();
             return false;
@@ -72,21 +70,19 @@ public class StudentUI {
 
         Scanner sc = new Scanner(System.in);
 
-        GenericEntity academicYear = null;
+        String name;
+        int level;
         GenericEntity course = null;
-        String name, email = Defs.EMAIL_ADDRESS, telephone;
 
-        System.out.println("\n*****************Criando Estudante****************\n");
+        System.out.println("\n*****************Criando Turma****************\n");
 
         if (!validate())
             return;
 
         do {
-
-            System.out.print("Regra_validação: Ano Academico de ingresso existente! ");
-            academicYear = GenericPersistenceEntity.searchToEdit(Defs.ANO_ACADEMICO_FILE);
-
-        } while (academicYear == null);
+            System.out.print("\nInsira um nível superior académico válido[1 - 5]: ");
+            level = sc.nextInt();
+        } while (!(level >= 1 && level <= 5));
 
         do {
 
@@ -97,22 +93,15 @@ public class StudentUI {
 
         do {
 
-            System.out.println("\nRegra_validação: no mínimo 3 caracters! ");
+            System.out.println("Regra_validação: no mínimo 3 caracters! ");
             System.out.print("Nome: ");
             name = sc.nextLine();
 
         } while (name.length() < 3);
 
-        do {
+        ClassroomEntity entity = new ClassroomEntity(-1, name, course.getId(), level);
 
-            System.out.print("\nTelefone(9________): ");
-            telephone = sc.nextLine();
-
-        } while (!Pattern.matches(telephoneRegex, telephone));
-
-        StudentEntity entity = new StudentEntity(-1, name, email, telephone, course.getId(), academicYear.getId());
-
-        StudentPersistenceEntity.create(entity);
+        ClassroomPersistenceEntity.create(entity);
 
         MainMenu.pauseToSee();
 
@@ -122,7 +111,7 @@ public class StudentUI {
 
         Scanner sc = new Scanner(System.in);
 
-        StudentEntity old = searchToEdit();
+        ClassroomEntity old = searchToEdit();
 
         Boolean edited = false;
 
@@ -135,9 +124,10 @@ public class StudentUI {
             return;
         }
 
-        System.out.println("\n*****************Editando Estudante****************\n");
+        System.out.println("\n*****************Editando Turma****************\n");
 
-        if (Utils.editarCampo("ID Curso", GenericPersistenceEntity.findOne(old.getCourseId(), Defs.CURSO_FILE).getName())) {
+        if (Utils.editarCampo("Curso",
+                GenericPersistenceEntity.findOne(old.getCourseId(), Defs.CURSO_FILE).getName())) {
 
             GenericEntity course = null;
 
@@ -153,18 +143,16 @@ public class StudentUI {
             edited = true;
         }
 
-        if (Utils.editarCampo("ID Ano Académico", GenericPersistenceEntity.findOne(old.getAccessedYearId(), Defs.ANO_ACADEMICO_FILE).getName())) {
+        if (Utils.editarCampo("Nível Académico", old.getLevel() + "º ano")) {
 
-            GenericEntity academicYear = null;
+            int level;
 
             do {
+                System.out.print("\nInsira um nível superior académico válido[1 - 5]: ");
+                level = sc.nextInt();
+            } while (!(level >= 1 && level <= 5));
 
-                System.out.print("\nRegra_validação: Ano academico existente! ");
-                academicYear = GenericPersistenceEntity.searchToEdit(Defs.ANO_ACADEMICO_FILE);
-
-            } while (academicYear == null);
-
-            old.setAccessedYearId(academicYear.getId());
+            old.setLevel(level);
 
             edited = true;
         }
@@ -186,24 +174,8 @@ public class StudentUI {
             edited = true;
         }
 
-        if (Utils.editarCampo("Telefone", old.getTelephone())) {
-
-            String telephone;
-
-            do {
-
-                System.out.print("\nTelefone(9________): ");
-                telephone = sc.nextLine();
-
-            } while (!Pattern.matches(telephoneRegex, telephone));
-
-            old.setTelephone(telephone);
-
-            edited = true;
-        }
-
         if (edited)
-            StudentPersistenceEntity.update(old);
+            ClassroomPersistenceEntity.update(old);
 
         System.out.println("\nEdição finalizada!\n");
 
@@ -213,9 +185,9 @@ public class StudentUI {
 
     public static void drop() {
 
-        System.out.println("\n*****************Eliminando Estudante****************\n");
+        System.out.println("\n*****************Eliminando Turma****************\n");
 
-        StudentEntity entity = searchToEdit();
+        ClassroomEntity entity = searchToEdit();
 
         if (entity == null) {
 
@@ -226,7 +198,7 @@ public class StudentUI {
             return;
         }
 
-        StudentPersistenceEntity.dropOne(entity.getId());
+        ClassroomPersistenceEntity.dropOne(entity.getId());
 
         System.out.println("\nEliminação finalizada!\n");
 
@@ -238,35 +210,35 @@ public class StudentUI {
 
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("\n*****************Procurando Estudante****************\n");
+        System.out.println("\n*****************Procurando Turma****************\n");
 
         System.out.print("ID: ");
         int id = sc.nextInt();
 
-        StudentPersistenceEntity.read(id);
+        ClassroomPersistenceEntity.read(id);
 
         MainMenu.pauseToSee();
 
     }
 
-    public static StudentEntity searchToEdit() {
+    public static ClassroomEntity searchToEdit() {
 
         Scanner sc = new Scanner(System.in);
 
         System.out.print("ID: ");
         int id = sc.nextInt();
 
-        return StudentPersistenceEntity.findOne(id);
+        return ClassroomPersistenceEntity.findOne(id);
 
     }
 
     public static void showlistData() {
 
-        List<StudentEntity> data = StudentPersistenceEntity.findAll();
+        List<ClassroomEntity> data = ClassroomPersistenceEntity.findAll();
 
-        System.out.println("\n*****************Todos Estudantes*****************\n");
+        System.out.println("\n*****************Todas Turmas*****************\n");
 
-        for (StudentEntity datum : data)
+        for (ClassroomEntity datum : data)
             System.out.println("\n" + datum + "\n");
 
         MainMenu.pauseToSee();

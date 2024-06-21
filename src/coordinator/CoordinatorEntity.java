@@ -59,7 +59,7 @@ public class CoordinatorEntity {
         return "ID: " + this.getId() + ", Nome: "
                 + GenericPersistenceEntity.findOne(getTeacherId(), Defs.PROFESSOR_FILE).getName()
                 + ", Curso: " + GenericPersistenceEntity.findOne(getCourseId(), Defs.CURSO_FILE).getName()
-                + ", Ano letivo: "
+                + ", Ano Acadêmico: "
                 + GenericPersistenceEntity.findOne(getAcademicYearId(), Defs.ANO_ACADEMICO_FILE).getName();
     }
 
