@@ -1,29 +1,27 @@
-package classroom;
+package classroomStudent;
 
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import java.util.List;
-import java.util.Scanner;
 
 import isptec.utils.FileUtils;
-import student.StudentEntity;
 import utils.Defs;
 
-public class ClassroomPersistenceEntity {
+public class ClassroomStudentPersistenceEntity {
 
-    private static HashMap<Integer, ClassroomEntity> hashData = new HashMap<>();
+    private static HashMap<Integer, ClassroomStudentEntity> hashData = new HashMap<>();
 
     private static HashMap<Integer, Long> hashPositions = new HashMap<>();
 
-    public ClassroomPersistenceEntity() {
+    public ClassroomStudentPersistenceEntity() {
 
     }
 
     public static void fillHashTable() {
 
-        List<ClassroomEntity> data = findAll();
+        List<ClassroomStudentEntity> data = findAll();
 
         if (data == null) {
             return;
@@ -31,16 +29,16 @@ public class ClassroomPersistenceEntity {
 
         hashData.clear();
 
-        for (ClassroomEntity datum : data)
+        for (ClassroomStudentEntity datum : data)
             hashData.put(datum.getId(), datum);
 
     }
 
-    public static void create(ClassroomEntity entity) {
+    public static void create(ClassroomStudentEntity entity) {
 
         try {
 
-            RandomAccessFile file = new RandomAccessFile(Defs.TURMA_FILE, "rw");
+            RandomAccessFile file = new RandomAccessFile(Defs.TURMA_ESTUDANTE_FILE, "rw");
 
             fillHashTable();
 
@@ -54,10 +52,8 @@ public class ClassroomPersistenceEntity {
                 newId++;
 
             file.writeInt(newId);
-            file.writeInt(entity.getCourseId());
-            file.writeInt(entity.getLevel());
-
-            FileUtils.writeString(file, entity.getName(), Defs.NAME_SIZE);
+            file.writeInt(entity.getClassroomId());
+            file.writeInt(entity.getStudentId());
 
             file.close();
 
@@ -68,10 +64,10 @@ public class ClassroomPersistenceEntity {
         }
     }
 
-    public static void update(ClassroomEntity entity) {
+    public static void update(ClassroomStudentEntity entity) {
         try {
 
-            RandomAccessFile file = new RandomAccessFile(Defs.TURMA_FILE, "rw");
+            RandomAccessFile file = new RandomAccessFile(Defs.TURMA_ESTUDANTE_FILE, "rw");
 
             fillHashTable();
 
@@ -80,10 +76,8 @@ public class ClassroomPersistenceEntity {
             file.seek(position);
 
             file.writeInt(entity.getId());
-            file.writeInt(entity.getCourseId());
-            file.writeInt(entity.getLevel());
-
-            FileUtils.writeString(file, entity.getName(), Defs.NAME_SIZE);
+            file.writeInt(entity.getClassroomId());
+            file.writeInt(entity.getStudentId());
 
             file.close();
 
@@ -113,7 +107,7 @@ public class ClassroomPersistenceEntity {
     public static void dropOne(int id) {
         try {
 
-            RandomAccessFile file = new RandomAccessFile(Defs.TURMA_FILE, "rw");
+            RandomAccessFile file = new RandomAccessFile(Defs.TURMA_ESTUDANTE_FILE, "rw");
 
             fillHashTable();
 
@@ -130,20 +124,20 @@ public class ClassroomPersistenceEntity {
         }
     }
 
-    public static ClassroomEntity findOne(int id) {
+    public static ClassroomStudentEntity findOne(int id) {
 
         fillHashTable();
 
         return hashData.get(id);
     }
 
-    public static List<ClassroomEntity> findAll() {
+    public static List<ClassroomStudentEntity> findAll() {
 
-        List<ClassroomEntity> data = new ArrayList<ClassroomEntity>();
+        List<ClassroomStudentEntity> data = new ArrayList<ClassroomStudentEntity>();
 
         try {
 
-            RandomAccessFile file = new RandomAccessFile(Defs.TURMA_FILE, "r");
+            RandomAccessFile file = new RandomAccessFile(Defs.TURMA_ESTUDANTE_FILE, "r");
 
             if (file != null) {
 
@@ -157,16 +151,14 @@ public class ClassroomPersistenceEntity {
 
                     Integer id = file.readInt();
 
-                    Integer courseId = file.readInt();
+                    Integer classroomId = file.readInt();
 
-                    Integer accessedYearId = file.readInt();
-
-                    String name = FileUtils.readString(file, Defs.NAME_SIZE);
+                    Integer studentId = file.readInt();
 
                     hashPositions.put(id, position);
 
                     if (id > 0)
-                        data.add(new ClassroomEntity(id, name, courseId, accessedYearId));
+                        data.add(new ClassroomStudentEntity(id, classroomId, studentId));
 
                     position = file.getFilePointer();
 
@@ -184,30 +176,19 @@ public class ClassroomPersistenceEntity {
 
     }
 
-    public static List<ClassroomEntity> findAllByCourseId(int id) {
+    public static List<ClassroomStudentEntity> findAllByClassroomId(int id) {
 
-        List<ClassroomEntity> data = new ArrayList<ClassroomEntity>();
+        List<ClassroomStudentEntity> data = new ArrayList<ClassroomStudentEntity>();
 
         fillHashTable();
 
         hashData.forEach((k, c) -> {
-            if (c.getCourseId() == id) {
+            if (c.getClassroomId() == id) {
                 data.add(c);
             }
         });
 
         return data;
-
-    }
-
-    public static ClassroomEntity searchToEdit() {
-
-        Scanner sc = new Scanner(System.in);
-
-        System.out.print("ID: ");
-        int id = sc.nextInt();
-
-        return ClassroomPersistenceEntity.findOne(id);
 
     }
 

@@ -2,7 +2,6 @@ package classroom;
 
 import java.util.List;
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
 import clearBuffer.ClearBuffer;
 import genericEntity.GenericEntity;
@@ -48,7 +47,7 @@ public class ClassroomUI {
                     break;
 
                 case 6:
-                    MainMenu.coordenationMenu();
+                    MainMenu.adminMenu();
                     break;
             }
         }

@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import java.util.List;
+import java.util.Scanner;
 
+import genericEntity.GenericEntity;
 import genericEntity.GenericPersistenceEntity;
 import isptec.utils.FileUtils;
 import utils.Defs;
@@ -208,6 +210,17 @@ public class StudentPersistenceEntity {
         });
 
         return data;
+
+    }
+
+    public static StudentEntity searchToEdit() {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("ID: ");
+        int id = sc.nextInt();
+
+        return StudentPersistenceEntity.findOne(id);
 
     }
 

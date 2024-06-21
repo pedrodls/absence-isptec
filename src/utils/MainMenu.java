@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import academicYear.AcademicYearUI;
 import classroom.ClassroomUI;
+import classroomStudent.ClassroomStudentUI;
 import clearBuffer.ClearBuffer;
 import coordinator.CoordinatorUI;
 import course.CourseUI;
@@ -115,9 +116,9 @@ public class MainMenu {
                     break;
 
                 case 2:
-                    // Turma estudante;
+                    ClassroomStudentUI.menu();
                     break;
-                    
+
                 case 3:
                     CourseSubjectUI.menu();
                     break;
