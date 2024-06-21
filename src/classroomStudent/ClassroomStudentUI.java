@@ -6,8 +6,6 @@ import java.util.Scanner;
 import classroom.ClassroomEntity;
 import classroom.ClassroomPersistenceEntity;
 import clearBuffer.ClearBuffer;
-import genericEntity.GenericEntity;
-import genericEntity.GenericPersistenceEntity;
 import isptec.listas.Listas;
 import isptec.utils.Utils;
 import student.StudentEntity;
@@ -103,8 +101,6 @@ public class ClassroomStudentUI {
     }
 
     public static void edit() {
-
-        Scanner sc = new Scanner(System.in);
 
         ClassroomStudentEntity old = searchToEdit();
 

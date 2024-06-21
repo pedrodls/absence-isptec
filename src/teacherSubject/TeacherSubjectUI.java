@@ -138,11 +138,7 @@ public class TeacherSubjectUI {
 
     public static void edit() {
 
-        Scanner sc = new Scanner(System.in);
-
         TeacherSubjectEntity old = searchToEdit();
-
-        Boolean edited = false;
 
         if (old == null) {
 
@@ -152,6 +148,11 @@ public class TeacherSubjectUI {
 
             return;
         }
+
+        CourseSubjectEntity courseSubject = CourseSubjectPersistenceEntity.findOne(old.getCourseSubjectId());
+
+        Boolean edited = false;
+        boolean inValidate = false;
 
         System.out.println("\n*****************Editando Professor -> Disciplina****************\n");
 
@@ -175,8 +176,6 @@ public class TeacherSubjectUI {
         if (Utils.editarCampo("Curso <-> Disciplina",
                 CourseSubjectPersistenceEntity.findOne(old.getCourseSubjectId()).toString())) {
 
-            CourseSubjectEntity courseSubject = null;
-
             do {
 
                 System.out.print("Regra_validação: Curso <-> Disciplina existente! ");
@@ -197,8 +196,30 @@ public class TeacherSubjectUI {
 
                 System.out.print("Regra_validação: Turma existente! ");
                 classroom = ClassroomPersistenceEntity.searchToEdit();
-
+    
+                if (classroom != null) {
+                    if (classroom.getCourseId() != courseSubject.getCourseId()
+                            || classroom.getLevel() != courseSubject.getLevel()) {
+    
+                        System.out.println("\nTurma -> "+ classroom);
+                        System.out.println("Dados de entrada -> " + courseSubject );
+    
+                        System.out.println("\nEsta turma não pertence à este curso nem à este nivel, deseja continuar?\n");
+    
+                        if (!Utils.concorda()) {
+                            inValidate = true;
+                            break;
+                        }
+    
+                        classroom = null;
+                    }
+                }
+    
             } while (classroom == null);
+
+            if(inValidate){
+                return;
+            }
 
             old.setClassroomId(classroom.getId());
 

@@ -1,9 +1,8 @@
 package classroomStudent;
 
 import classroom.ClassroomPersistenceEntity;
-import genericEntity.GenericPersistenceEntity;
 import student.StudentPersistenceEntity;
-import utils.Defs;
+
 
 public class ClassroomStudentEntity {
 

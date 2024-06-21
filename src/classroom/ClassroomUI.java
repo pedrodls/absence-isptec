@@ -204,9 +204,7 @@ public class ClassroomUI {
             return;
         }
 
-        if (TeacherSubjectPersistenceEntity.findAllByClassroomId(entity.getId()).size() > 0
-                ||
-                ClassroomStudentPersistenceEntity.findAllByClassroomId(entity.getId()).size() > 0) {
+        if (TeacherSubjectPersistenceEntity.findAllByClassroomId(entity.getId()).size() > 0) {
 
             System.out.println("\nImpossível eliminar pois este ID está ligada à outro(s) dado(s)!\n");
 
