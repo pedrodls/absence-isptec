@@ -41,12 +41,14 @@ public class Utils {
     }
 
     public static boolean continua() {
-        System.out.print("Continua ? [s]/[S]: ");
-        String resposta = next();
-        if (resposta.equalsIgnoreCase(""))
-            resposta = "s";
-        return resposta.equalsIgnoreCase("s")
-                || resposta.equalsIgnoreCase("S");
+        
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Continua ? [S]/[N]: ");
+        String resposta = sc.next();
+
+        return resposta.toLowerCase() == "s";
+       
     }
 
     public static boolean continua(String msg) {
