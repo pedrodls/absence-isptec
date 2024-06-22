@@ -137,7 +137,8 @@ public class StudentUI {
 
         System.out.println("\n*****************Editando Estudante****************\n");
 
-        if (Utils.editarCampo("ID Curso", GenericPersistenceEntity.findOne(old.getCourseId(), Defs.CURSO_FILE).getName())) {
+        if (Utils.editarCampo("ID Curso",
+                GenericPersistenceEntity.findOne(old.getCourseId(), Defs.CURSO_FILE).getName())) {
 
             GenericEntity course = null;
 
@@ -153,7 +154,8 @@ public class StudentUI {
             edited = true;
         }
 
-        if (Utils.editarCampo("ID Ano Académico", GenericPersistenceEntity.findOne(old.getAccessedYearId(), Defs.ANO_ACADEMICO_FILE).getName())) {
+        if (Utils.editarCampo("ID Ano Académico",
+                GenericPersistenceEntity.findOne(old.getAccessedYearId(), Defs.ANO_ACADEMICO_FILE).getName())) {
 
             GenericEntity academicYear = null;
 
@@ -281,6 +283,11 @@ public class StudentUI {
 
         List<StudentEntity> data = StudentPersistenceEntity.findAll();
 
+        if (data == null) {
+            MainMenu.pauseToSee();
+            return;
+        }
+      
         System.out.println("\n*****************Todos Estudantes*****************\n");
 
         for (StudentEntity datum : data)

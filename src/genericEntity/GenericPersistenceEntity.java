@@ -16,6 +16,8 @@ public class GenericPersistenceEntity {
 
     private static HashMap<Integer, Long> hashPositions = new HashMap<>();
 
+    private static int cont = 0;
+
     public GenericPersistenceEntity() {
 
     }
@@ -138,8 +140,11 @@ public class GenericPersistenceEntity {
 
         String[] names = new String[hashData.size()];
 
+        cont = 0;
+        
         hashData.forEach((k, d) -> {
-            names[d.getId() - 1] = d.getName();
+            names[cont] = d.getName();
+            cont++;
         });
 
         return names;
@@ -181,6 +186,8 @@ public class GenericPersistenceEntity {
             }
 
         } catch (Exception ex) {
+            data = null;
+
             System.out.println("\nÉ ncessário criar dados!");
         }
 

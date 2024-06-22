@@ -78,8 +78,6 @@ public class FaultUI {
 
     public static void create() {
 
-        Scanner sc = new Scanner(System.in);
-
         boolean inValidate = false;
 
         TeacherSubjectEntity teacherSubjectEntity = null;
@@ -253,6 +251,24 @@ public class FaultUI {
 
     }
 
+    public static void searchStudentFaults() {
+
+        System.out.println("\n*****************Minhas Faltas****************\n");
+
+        System.out.println("Introduza o seu ID de Estudante!");
+        StudentEntity studentEntity = StudentPersistenceEntity.searchToEdit();
+
+        if (studentEntity == null) {
+            System.out.println("Estudante não encontrado!");
+            MainMenu.pauseToSee();
+            return;
+        }
+
+        FaultPersistenceEntity.getFaultsFromStudent(studentEntity.getId());
+        MainMenu.pauseToSee();
+
+    }
+
     public static FaultEntity searchToEdit() {
 
         Scanner sc = new Scanner(System.in);
@@ -268,8 +284,16 @@ public class FaultUI {
 
         List<FaultEntity> data = FaultPersistenceEntity.findAll();
 
+        
         System.out.println("\n*****************Todas Falta*****************\n");
 
+        if (data == null) {
+        
+            MainMenu.pauseToSee();
+
+            return;
+        }
+        
         for (FaultEntity datum : data)
             System.out.println("\n" + datum + "\n");
 

@@ -9,6 +9,7 @@ import java.util.List;
 import classroomStudent.ClassroomStudentEntity;
 import classroomStudent.ClassroomStudentPersistenceEntity;
 import utils.Defs;
+import utils.MainMenu;
 
 public class FaultPersistenceEntity {
 
@@ -176,6 +177,8 @@ public class FaultPersistenceEntity {
             }
 
         } catch (Exception ex) {
+            data = null;
+
             System.out.println("\nÉ ncessário criar dados!");
         }
 
@@ -188,11 +191,30 @@ public class FaultPersistenceEntity {
         fillHashTable();
 
         hashData.forEach((k, c) -> {
-            if (c.getCreatedAt() >= startedDate && c.getCreatedAt() <= endDate)
+            if (c.getCreatedAt() >= startedDate && c.getCreatedAt() <= endDate
+                    && ClassroomStudentPersistenceEntity.findOne(c.getClassroomStudentId()).getStudentId() == studentId)
                 verify = true;
+            return;
         });
 
         return verify;
+
+    }
+
+    public static void getFaultsFromStudent(int studentId) {
+
+        fillHashTable();
+
+        hashData.forEach((k, c) -> {
+            ClassroomStudentEntity entity = ClassroomStudentPersistenceEntity.findOne(c.getClassroomStudentId());
+
+            if (entity != null) {
+                if (entity.getStudentId() == studentId)
+                    System.out.println(c.toString());
+                System.out.println("\n------------------------------------------------------\n");
+            }
+        });
+
 
     }
 }

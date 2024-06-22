@@ -288,6 +288,11 @@ public class TeacherSubjectUI {
 
         List<TeacherSubjectEntity> data = TeacherSubjectPersistenceEntity.findAll();
 
+        if (data == null) {
+            MainMenu.pauseToSee();
+            return;
+        }
+
         System.out.println("\n*****************Todos Professor -> Disciplina*****************\n");
 
         for (TeacherSubjectEntity datum : data)

@@ -52,7 +52,7 @@ public class MainMenu {
                 case 4:
                     studentMenu();
                     break;
-                    
+
                 case 5:
                     System.out.println("Programa terminado");
                     System.exit(0);
@@ -202,7 +202,7 @@ public class MainMenu {
 
                 case 5:
                     try {
-                        JustificationUI.menu();
+                        JustificationUI.menuCoordination();
                     } catch (Exception e) {
                         System.out.println("Ocorreu um erro inesperado, verifique bem as validações de campos");
                         MainMenu.pauseToSee();
@@ -295,16 +295,26 @@ public class MainMenu {
                     break;
 
                 case 3:
-                    /* try {
-                        FaultUI.menu();
+                    try {
+                        FaultUI.searchStudentFaults();
                     } catch (Exception e) {
                         System.out.println("Ocorreu um erro inesperado, verifique bem as validações de campos");
                         MainMenu.pauseToSee();
-                    } */
+                    }
 
                     break;
 
                 case 4:
+                    try {
+                        JustificationUI.menuStudent();
+                    } catch (Exception e) {
+                        System.out.println("Ocorreu um erro inesperado, verifique bem as validações de campos");
+                        MainMenu.pauseToSee();
+                    }
+
+                    break;
+
+                case 5:
                     mainMenu();
                     break;
 

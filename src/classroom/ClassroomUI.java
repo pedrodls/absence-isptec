@@ -277,6 +277,12 @@ public class ClassroomUI {
 
         List<ClassroomEntity> data = ClassroomPersistenceEntity.findAll();
 
+        
+        if (data == null) {
+            MainMenu.pauseToSee();
+            return;
+        }
+        
         System.out.println("\n*****************Todas Turmas*****************\n");
 
         for (ClassroomEntity datum : data)

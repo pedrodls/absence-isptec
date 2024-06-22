@@ -173,6 +173,8 @@ public class CoordinatorPersistenceEntity {
             }
 
         } catch (Exception ex) {
+            data = null;
+
             System.out.println("\nÉ ncessário criar dados!");
         }
 

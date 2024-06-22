@@ -213,6 +213,11 @@ public class ClassroomStudentUI {
 
         List<ClassroomStudentEntity> data = ClassroomStudentPersistenceEntity.findAll();
 
+        if (data == null) {
+            MainMenu.pauseToSee();
+            return;
+        }
+        
         System.out.println("\n*****************Todos Dados*****************\n");
 
         for (ClassroomStudentEntity datum : data) {
@@ -228,6 +233,11 @@ public class ClassroomStudentUI {
 
         List<ClassroomStudentEntity> data = ClassroomStudentPersistenceEntity.findAll();
 
+        if (data == null) {
+            MainMenu.pauseToSee();
+            return;
+        }
+        
         System.out.println("\n*****************Suas Turmas****************\n");
 
         System.out.println("\nInsira o seu ID para continuar!\n");

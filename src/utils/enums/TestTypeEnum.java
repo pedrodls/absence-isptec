@@ -4,7 +4,7 @@ import isptec.listas.Listas;
 
 public enum TestTypeEnum {
 
-    EXAME("Exame"), PP_1("PP_1"), PP_2("PP_2"), NENHUMA("Nenhuma");
+    EXAME("Exame"), PP_1("PP_1"), PP_2("PP_2"), NENHUN("Nenhum");
 
     private final String designacao; 
 

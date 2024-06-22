@@ -220,6 +220,11 @@ public class CoordinatorUI {
 
         List<CoordinatorEntity> data = CoordinatorPersistenceEntity.findAll();
 
+        if (data == null) {
+            MainMenu.pauseToSee();
+            return;
+        }
+        
         System.out.println("\n*****************Todos Coordenadores*****************\n");
 
         for (CoordinatorEntity datum : data)

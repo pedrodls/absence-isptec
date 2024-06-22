@@ -176,6 +176,8 @@ public class TeacherSubjectPersistenceEntity {
             }
 
         } catch (Exception ex) {
+            data = null;
+
             System.out.println("\nÉ ncessário criar dados!");
         }
 

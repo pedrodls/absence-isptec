@@ -164,34 +164,33 @@ public class JustificationEntity {
     @Override
     public String toString() {
 
-        return "ID: " +
+        return "\n{\n\tID: " +
                 getId() +
-                "Teste perdido: " +
+                "\n\tTeste perdido: " +
                 TestTypeEnum.fromInteger(getTestType())
                 +
-                "Estado do Dispacho: " +
+                "\n\tEstado do Dispacho: " +
                 DispatchTypeEnum.fromInteger(getDispatchType()) +
-                "Assunto: " +
+                "\n\tAssunto: " +
                 getTopic() +
-                "Curso: " +
-                GenericPersistenceEntity.findOne(getCourseId(), Defs.CURSO_FILE).getName() +
-                "Turma: " +
-                ClassroomPersistenceEntity.findOne(classroomId).getName() +
-                "Estudante -> " +
-                StudentPersistenceEntity.findOne(getStudentId())
+                "\n\tCurso -> " +
+                GenericPersistenceEntity.findOne(getCourseId(), Defs.CURSO_FILE) +
+                "\n\tTurma: " +
+                ClassroomPersistenceEntity.findOne(getClassroomId()).getName() +
+                "\n\tEstudante -> " +
+                StudentPersistenceEntity.findOne(getStudentId()).toString()
                 +
-                "Funcionário: " +
-                GenericPersistenceEntity.findOne(getCourseId(), Defs.EMPLOYEE_FILE).getName() +
-                "Motivo da falta: " +
-                GenericPersistenceEntity.findOne(getFaultDescriptionId(), Defs.MOTIVO_FALTA_FILE).getName() +
-                "Periodo Inicial: " +
+                "\n\tFuncionário: " +
+                GenericPersistenceEntity.findOne(getEmployeeId(), Defs.EMPLOYEE_FILE) +
+                "\n\tMotivo da falta: " +
+                GenericPersistenceEntity.findOne(getFaultDescriptionId(), Defs.MOTIVO_FALTA_FILE) +
+                "\n\tPeriodo Inicial: " +
                 DataUtils.fromLongToDate(getStartedAt()) +
-                "Periodo Final: " +
+                "\n\tPeriodo Final: " +
                 DataUtils.fromLongToDate(getEndAt()) +
-                "Data de criação: " +
-                DataUtils.fromLongToDate(getCreatedAt()) +
-                "Estado: " +
-                DispatchTypeEnum.fromInteger(getDispatchType());
+                "\n\tData de criação: " +
+                DataUtils.fromLongToDate(getCreatedAt()) 
+                +"\n}\n";
 
     }
 }

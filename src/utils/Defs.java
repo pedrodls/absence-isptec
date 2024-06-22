@@ -25,12 +25,6 @@ public class Defs {
                         "Sair",
         };
 
-        public static final String[] PP2_MENU_LINKS = {
-                        "Ficheiros de dados",
-                        "Consulta",
-                        "Sair",
-        };
-
         public static final String[] ADMIN_LINKS = {
                         "Ano Académico",
                         "Curso",
@@ -42,6 +36,32 @@ public class Defs {
                         "Funcionário",
                         "Sair",
 
+        };
+
+        public static final String[] COORDINATION_JUSTIFICATION_LINKS = {
+                        "Listar",
+                        "Procurar",
+                        "Justificar",
+                        "Não Justificar",
+                        "Sair",
+
+        };
+
+        public static final String[] STUDENT_JUSTIFICATION_LINKS = {
+                        "Solicitar",
+                        "Listar",
+                        "Editar",
+                        "Procurar",
+                        "Eliminar",
+                        "Sair",
+
+        };
+
+        public static final String[] JUSTIFICATION_LINKS = {
+                        "Por Justificar",
+                        "Justificados",
+                        "N/Justificados",
+                        "Sair",
         };
 
         public static final String[] COORDENATION_LINKS = {
@@ -63,13 +83,13 @@ public class Defs {
         };
 
         public static final String[] STUDENT_LINKS = {
-                "Meu Perfil",
-                "Minhas Turmas",
-                "Justificação de Faltas",
-                "Sair",
+                        "Meu Perfil",
+                        "Minhas Turmas",
+                        "Minhas Faltas",
+                        "Justificação de Faltas",
+                        "Sair",
 
-};
-
+        };
 
         public static final String[] CRUD_LINKS = {
                         "Criar",

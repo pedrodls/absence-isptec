@@ -62,7 +62,7 @@ public class JustificationPersistenceEntity {
             file.writeInt(entity.getCourseId());
             file.writeInt(entity.getStudentId());
             file.writeInt(entity.getEmployeeId());
-
+            file.writeInt(entity.getClassroomId());
             file.writeInt(entity.getFaultDescriptionId());
 
             file.writeLong(entity.getEndAt());
@@ -167,7 +167,7 @@ public class JustificationPersistenceEntity {
 
         try {
 
-            RandomAccessFile file = new RandomAccessFile(Defs.JUSTIFICATIVO_FILE, "r");
+            RandomAccessFile file = new RandomAccessFile(Defs.JUSTIFICATIVO_FILE, "rw");
 
             if (file != null) {
 
@@ -189,7 +189,6 @@ public class JustificationPersistenceEntity {
                     int studentId = file.readInt();
                     int employeeId = file.readInt();
                     int classroomId = file.readInt();
-                    int academicYearId = file.readInt();
                     int faultDescriptionId = file.readInt();
 
                     long endAt = file.readLong();
@@ -224,7 +223,10 @@ public class JustificationPersistenceEntity {
             }
 
         } catch (Exception ex) {
-            System.out.println("\nÉ ncessário criar dados!");
+
+            data = null;
+            System.out.println("\nÉ ncessário criar dados!" + ex);
+
         }
 
         return data;

@@ -232,6 +232,11 @@ public class CourseSubjectUI {
 
         List<CourseSubjectEntity> data = CourseSubjectPersistenceEntity.findAll();
 
+        if (data == null) {
+            MainMenu.pauseToSee();
+            return;
+        }
+        
         System.out.println("\n*****************Todos Curso <-> Disciplina*****************\n");
 
         for (CourseSubjectEntity datum : data)
