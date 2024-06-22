@@ -16,6 +16,7 @@ import isptec.utils.DataUtils;
 import isptec.utils.Utils;
 import student.StudentEntity;
 import student.StudentPersistenceEntity;
+import teacherSubject.TeacherSubjectPersistenceEntity;
 import utils.*;
 import utils.enums.DispatchTypeEnum;
 import utils.enums.TestTypeEnum;
@@ -384,106 +385,98 @@ public class JustificationUI {
 
     public static void editJusticationStudent() {
 
+        System.out.println("\n*****************Editando Pedido de Justificação de Falta*****************\n");
+
+        System.out.println("Introduza o seu ID de Estudante!");
+        StudentEntity studentEntity = StudentPersistenceEntity.searchToEdit();
+
+        if (studentEntity == null) {
+            System.out.println("Estudante não encontrado!");
+            MainMenu.pauseToSee();
+            return;
+        }
+
+        System.out.print("\nPedido de Justificação de Falta -> ");
+        JustificationEntity old = searchToEdit();
+
+        if (old == null) {
+
+            System.out.println("\nJustificativo não encontrado!\n");
+
+            MainMenu.pauseToSee();
+
+            return;
+        }
+
+        if (old.getStudentId() != studentEntity.getId()) {
+
+            System.out.println("\nNão encontrado!\n");
+
+            MainMenu.pauseToSee();
+
+            return;
+        }
+
+        if (!(old.getDispatchType() == DispatchTypeEnum.AGUARDANDO.toInteger())) {
+
+            System.out.println("\nNão pode ser alterado, solicite um outro!\n");
+
+            MainMenu.pauseToSee();
+
+            return;
+        }
+
         Scanner sc = new Scanner(System.in);
         String stringDate;
-        boolean inValidate = false;
+        boolean edited = false;
 
-        int testType = 4;
+        int testType = old.getTestType();
 
-        int dispatchType = 3;
-        String topic = Defs.ASSUNTO;
+        GenericEntity employeeEntity = GenericPersistenceEntity.findOne(old.getEmployeeId(), Defs.EMPLOYEE_FILE);
 
-        ClassroomEntity classroomEntity;
-        GenericEntity courseEntity;
-        StudentEntity studentEntity;
-        GenericEntity employeeEntity;
+        GenericEntity faultDescription = GenericPersistenceEntity.findOne(old.getFaultDescriptionId(), Defs.FALTA_FILE);
 
-        int faultDescriptionId;
+        long endAt = old.getEndAt();
+        long startedAt = old.getStartedAt();
 
-        long createdAt = -1;
+        System.out.println("\n*****************Editando Pedido de Justificação de Faltas****************\n");
 
-        long endAt;
-        long startedAt;
+        if (Utils.editarCampo("Periodo Inicial", DataUtils.fromLongToDate(old.getStartedAt()))) {
 
-        long dispatchDate = -1;
+            stringDate = "";
 
-        System.out.println("\n*****************Solicitando Justificação de Falta****************\n");
+            do {
 
-        if (!validate())
-            return;
+                System.out.print("Periodo inicial (DD/MM/AAAA): ");
+                stringDate = sc.next();
 
-        do {
+            } while (!(Pattern.compile(dateRegex).matcher(stringDate).matches()));
 
-            System.out.print("Regra_validação: Estudante existente! ");
-            studentEntity = StudentPersistenceEntity.searchToEdit();
+            startedAt = DataUtils.converterStringToDate(stringDate).getTime();
 
-        } while (studentEntity == null);
+            old.setStartedAt(startedAt);
 
-        do {
+            edited = true;
+        }
 
-            System.out.print("Regra_validação: Curso existente! ");
-            courseEntity = GenericPersistenceEntity.searchToEdit(Defs.CURSO_FILE);
+        if (Utils.editarCampo("Periodo Final", DataUtils.fromLongToDate(old.getEndAt()))) {
 
-        } while (courseEntity == null);
+            stringDate = "";
 
-        do {
+            do {
 
-            System.out.print("Regra_validação: Turma existente! ");
-            classroomEntity = ClassroomPersistenceEntity.searchToEdit();
+                System.out.print("Periodo final (DD/MM/AAAA)! ");
+                stringDate = sc.next();
 
-            if (classroomEntity != null) {
+            } while (!(Pattern.compile(dateRegex).matcher(stringDate).matches()
+                    && DataUtils.converterStringToDate(stringDate).getTime() >= startedAt));
 
-                if (classroomEntity.getCourseId() != courseEntity.getId()) {
+            endAt = DataUtils.converterStringToDate(stringDate).getTime();
 
-                    System.out.println("\nEsta turma não pertence à este curso, deseja continuar?\n");
+            old.setStartedAt(endAt);
 
-                    if (!Utils.concorda()) {
-                        inValidate = true;
-                        break;
-                    }
-
-                    classroomEntity = null;
-                } else {
-                    if (!(ClassroomStudentPersistenceEntity.verifyClassroomIdStudentId(studentEntity.getId(),
-                            classroomEntity.getId()))) {
-
-                        System.out.println("\nEsta turma não pertence à este estudante, deseja continuar?\n");
-
-                        if (!Utils.concorda()) {
-                            inValidate = true;
-                            break;
-                        }
-
-                        classroomEntity = null;
-                    }
-                }
-
-            }
-
-        } while (classroomEntity == null);
-
-        if (inValidate)
-            return;
-
-        do {
-
-            System.out.print("Periodo inicial (DD/MM/AAAA): ");
-            stringDate = sc.next();
-
-        } while (!(Pattern.compile(dateRegex).matcher(stringDate).matches()));
-
-        startedAt = DataUtils.converterStringToDate(stringDate).getTime();
-        stringDate = "";
-
-        do {
-
-            System.out.print("Periodo final (DD/MM/AAAA)! ");
-            stringDate = sc.next();
-
-        } while (!(Pattern.compile(dateRegex).matcher(stringDate).matches()
-                && DataUtils.converterStringToDate(stringDate).getTime() >= startedAt));
-
-        endAt = DataUtils.converterStringToDate(stringDate).getTime();
+            edited = true;
+        }
 
         if (FaultPersistenceEntity.verifyFault(startedAt, endAt, studentEntity.getId())) {
             System.out.println("Este estudante não possui faltas neste periodo!");
@@ -491,40 +484,50 @@ public class JustificationUI {
             return;
         }
 
-        System.out.println("Motivo da falta: ");
+        if (Utils.editarCampo("Motivo da Falta",
+                GenericPersistenceEntity.findOne(old.getFaultDescriptionId(), Defs.MOTIVO_FALTA_FILE).getName())) {
 
-        faultDescriptionId = Listas
-                .enviarLerOpcaoEscolhida(GenericPersistenceEntity.findAllNames(Defs.MOTIVO_FALTA_FILE)) - 1;
+            faultDescription = GenericPersistenceEntity.findOne(Listas
+                    .enviarLerOpcaoEscolhida(GenericPersistenceEntity.findAllNames(Defs.MOTIVO_FALTA_FILE)),
+                    Defs.MOTIVO_FALTA_FILE);
 
-        if (Utils.continua("Perdeu prova?")) {
+            old.setFaultDescriptionId(faultDescription.getId());
 
-            testType = Listas.enviarLerOpcaoEscolhida(TestTypeEnum.getDesignacoes());
-            // Criar provas perdidas
+            edited = true;
         }
 
-        do {
+        if (Utils.editarCampo("Prova Perdida",
+                TestTypeEnum.fromInteger(testType).getDesignacao())) {
 
-            System.out.print("Funcionário existente! ");
-            employeeEntity = GenericPersistenceEntity.searchToEdit(Defs.EMPLOYEE_FILE);
+            testType = Listas.enviarLerOpcaoEscolhida(TestTypeEnum.getDesignacoes());
 
-        } while (employeeEntity == null);
+            old.setTestType(testType);
 
-        JustificationEntity justificationEntity = new JustificationEntity(
-                -1,
-                testType,
-                dispatchType,
-                topic,
-                courseEntity.getId(),
-                classroomEntity.getId(),
-                studentEntity.getId(),
-                employeeEntity.getId(),
-                faultDescriptionId,
-                endAt,
-                createdAt,
-                startedAt,
-                dispatchDate);
+            // Se estiver a editar, e colocar nenhum, então apaga todas as provas com
+            // o id deste Justification, caso contrário, crie provas perdidas
 
-        JustificationPersistenceEntity.create(justificationEntity);
+            edited = true;
+        }
+
+        if (Utils.editarCampo("ID Funcionário", old.getEmployeeId() + "")) {
+
+            employeeEntity = null;
+
+            do {
+
+                System.out.print("Funcionário existente! ");
+                employeeEntity = GenericPersistenceEntity.searchToEdit(Defs.EMPLOYEE_FILE);
+
+            } while (employeeEntity == null);
+
+            old.setEmployeeId(employeeEntity.getId());
+
+            edited = true;
+        }
+
+        if (edited) {
+            JustificationPersistenceEntity.update(old);
+        }
 
         MainMenu.pauseToSee();
     }
@@ -610,7 +613,7 @@ public class JustificationUI {
 
         System.out.println("\n*****************Todos Pedidos Por Justificar*****************\n");
 
-        System.out.println("Introduza o seu ID de Estudante!");
+        System.out.print("Introduza o seu ID de Estudante -> ");
         StudentEntity studentEntity = StudentPersistenceEntity.searchToEdit();
 
         if (studentEntity == null) {
