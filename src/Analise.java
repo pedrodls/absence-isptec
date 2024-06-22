@@ -274,14 +274,12 @@
  *      Entidade   JustificativoPersistente
  *          atributo id                 :   Integer
  *          atributo tipoDespacho       :   String(20)
- *          atributo idCoordenacao      :   Integer
  *          atributo dataDespacho       :   Long
  *          atributo dataCriacao        :   Long
  *          atributo periodoInicialFalta:   Long
  *          atributo periodoFinalFalta  :   Long
  *          atributo assunto            :   String(20)
- *          atributo idEstudante        :   Integer
- *          atributo idAnoAcademico     :   Integer
+ *          atributo idEstudanteTurma   :   Integer
  *          atributo idMotivoFalta      :   Integer
  *          atributo provaPerdida       :   Integer
  *          atributo tipoProva          :   String(20)  
@@ -295,10 +293,8 @@
  * 
  *      Entidade   FaltaPersistente
  *          atributo id                 :   Integer
- *          atributo tipoFalta          :   String(20)
- *          atributo idEstudante        :   Integer
- *          atributo idDisciplina       :   Integer
- *          atributo idProfessor        :   Integer
+ *          atributo idEstudanteTurma        :   Integer
+ *          atributo idProfessorDisciplina       :   Integer
  *          atributo dataCriacao        :   Long
  *      FimEntidade
  * 

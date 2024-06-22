@@ -297,4 +297,23 @@ public class TeacherSubjectUI {
 
     }
 
+    public static void subjectsFromTeacherId(){
+
+        System.out.println("\n*****************Suas Turmas e Disciplinas****************\n");
+
+        System.out.println("Insira o seu ID para continuar!");
+        GenericEntity teacher = GenericPersistenceEntity.searchToEdit(Defs.PROFESSOR_FILE);
+
+        if (teacher == null) {
+            System.out.println("Professor não encontrado!");
+            MainMenu.pauseToSee();
+            return;
+        }
+
+        TeacherSubjectPersistenceEntity.printAllByTeacherId(teacher.getId());
+
+        MainMenu.pauseToSee();
+    }
+
+    
 }

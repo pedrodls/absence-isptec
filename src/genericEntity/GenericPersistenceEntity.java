@@ -132,6 +132,19 @@ public class GenericPersistenceEntity {
         return hashData.get(id);
     }
 
+    public static String[] findAllNames(String fileName) {
+
+        fillHashTable(fileName);
+
+        String[] names = new String[hashData.size()];
+
+        hashData.forEach((k, d) -> {
+            names[d.getId() - 1] = d.getName();
+        });
+
+        return names;
+    }
+
     public static List<GenericEntity> findAll(String fileName) {
 
         List<GenericEntity> data = new ArrayList<GenericEntity>();

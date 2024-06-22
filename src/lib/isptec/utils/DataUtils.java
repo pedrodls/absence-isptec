@@ -421,6 +421,18 @@ public class DataUtils
         return sdf.format(new Date());
     }
 
+    public static Long dateNow()
+    {
+        return new Date().getTime();
+    }
+
+    public static String fromLongToDate(long date)
+    {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yyyy", new Locale("pt", "PT"));
+
+        return sdf.format(new Date(date));
+    }
+
     public static String timeAgora()
     {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss", new Locale("pt", "PT"));

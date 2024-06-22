@@ -1,7 +1,10 @@
 package classroomStudent;
 
 import classroom.ClassroomPersistenceEntity;
+import genericEntity.GenericEntity;
+import genericEntity.GenericPersistenceEntity;
 import student.StudentPersistenceEntity;
+import utils.Defs;
 
 
 public class ClassroomStudentEntity {
@@ -48,9 +51,16 @@ public class ClassroomStudentEntity {
     public String toString() {
         return "ID: " + this.getId() + ", Turma: "
                 + ClassroomPersistenceEntity.findOne(getClassroomId()).getName().toUpperCase()
-                + ", Estudante -> Nome: "
-                + StudentPersistenceEntity.findOne(getStudentId()).getName()
-                + ", ID: " + StudentPersistenceEntity.findOne(getStudentId()).getId();
+                + ", Curso: "
+                + GenericPersistenceEntity.findOne(ClassroomPersistenceEntity.findOne(getClassroomId()).getCourseId(), Defs.CURSO_FILE).getName()
+                + ", Ano letivo: "
+                + GenericPersistenceEntity.findOne(ClassroomPersistenceEntity.findOne(getClassroomId()).getAcademicYearId(), Defs.ANO_ACADEMICO_FILE).getName()
+                + ", Ano: "
+                + ClassroomPersistenceEntity.findOne(getClassroomId()).getLevel() + "º"
+                + ", Estudante -> "
+                + " ID: " + StudentPersistenceEntity.findOne(getStudentId()).getId()
+                + ", Nome: "
+                + StudentPersistenceEntity.findOne(getStudentId()).getName();
     }
 
 }

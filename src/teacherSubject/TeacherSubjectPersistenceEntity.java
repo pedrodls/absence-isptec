@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import java.util.List;
+import java.util.Scanner;
 
-import isptec.utils.FileUtils;
+import classroomStudent.ClassroomStudentEntity;
+import courseSubject.CourseSubjectPersistenceEntity;
 import utils.Defs;
 
 public class TeacherSubjectPersistenceEntity {
@@ -197,6 +199,23 @@ public class TeacherSubjectPersistenceEntity {
 
     }
 
+    public static List<TeacherSubjectEntity> printAllByTeacherId(int id) {
+
+        List<TeacherSubjectEntity> data = new ArrayList<TeacherSubjectEntity>();
+
+        fillHashTable();
+
+        hashData.forEach((k, c) -> {
+            if (c.getTeacherId() == id) {
+                System.out.println(c.toString());
+                System.out.println("-----------------------------------------------------------");
+            }
+        });
+
+        return data;
+
+    }
+
     public static List<TeacherSubjectEntity> findAllByClassroomId(int id) {
 
         List<TeacherSubjectEntity> data = new ArrayList<TeacherSubjectEntity>();
@@ -210,6 +229,18 @@ public class TeacherSubjectPersistenceEntity {
         });
 
         return data;
+    }
+
+
+    public static TeacherSubjectEntity searchToEdit() {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("ID: ");
+        int id = sc.nextInt();
+
+        return TeacherSubjectPersistenceEntity.findOne(id);
+
     }
 
     

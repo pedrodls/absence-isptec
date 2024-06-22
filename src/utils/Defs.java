@@ -9,6 +9,8 @@ public class Defs {
 
         public static final String EMAIL_ADDRESS = "@isptec.co.ao";
 
+        public static final String ASSUNTO = "Justificativo de Faltas";
+
         public static final int NAME_SIZE = 50;
         public static final int TELEPHONE_SIZE = 9;
         public static final int EMAIL_SIZE = 50;
@@ -16,10 +18,10 @@ public class Defs {
         public static final long RECORD_SIZE = NAME_SIZE + ID_SIZE;
 
         public static final String[] MAIN_MENU_LINKS = {
-                        "Admin(Demo)",
-                        "Coordenação(Teste)",
-                        "Professor(Não funcional)",
-                        "Estudante(Não funcional)",
+                        "Admin",
+                        "Coordenação",
+                        "Professor",
+                        "Estudante(Demo)",
                         "Sair",
         };
 
@@ -37,6 +39,7 @@ public class Defs {
                         "Coordenador",
                         "Estudante",
                         "Motivo de falta",
+                        "Funcionário",
                         "Sair",
 
         };
@@ -46,19 +49,27 @@ public class Defs {
                         "Turma     <-> Estudante",
                         "Curso     <-> Disciplina",
                         "Professor <-> Disciplina",
-                        "Justificacao de faltas",
+                        "Justificacao de faltas(Em teste)",
                         "Sair",
 
         };
 
         public static final String[] TEACHER_LINKS = {
-                        "Marcar Falta",
+                        "Meu Perfil",
                         "Minhas Turmas",
-                        "Meus Dados",
-                        "Pedido de Justificacoes de falta",
+                        "Faltas",
                         "Sair",
 
         };
+
+        public static final String[] STUDENT_LINKS = {
+                "Meu Perfil",
+                "Minhas Turmas",
+                "Justificação de Faltas",
+                "Sair",
+
+};
+
 
         public static final String[] CRUD_LINKS = {
                         "Criar",
@@ -83,8 +94,9 @@ public class Defs {
         public static final String TURMA_FILE = "./src/data/turmas.dat";
         public static final String PROFESSOR_DISCIPLINA_FILE = "./src/data/professores_disciplinas.dat";
         public static final String TURMA_ESTUDANTE_FILE = "./src/data/turmasEstudantes.dat";
-
+        public static final String EMPLOYEE_FILE = "./src/data/employee.dat";
         public static final String ALL_FILES[] = {
+                        EMPLOYEE_FILE,
                         JUSTIFICATIVO_FILE,
                         ANO_ACADEMICO_FILE,
                         MOTIVO_FALTA_FILE,

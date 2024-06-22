@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import java.util.List;
+import java.util.Scanner;
 
 import utils.Defs;
 
@@ -13,6 +14,9 @@ public class ClassroomStudentPersistenceEntity {
     private static HashMap<Integer, ClassroomStudentEntity> hashData = new HashMap<>();
 
     private static HashMap<Integer, Long> hashPositions = new HashMap<>();
+
+    private static boolean verify = false;
+    private static ClassroomStudentEntity auxClassroomStudentEntity = null;
 
     public ClassroomStudentPersistenceEntity() {
 
@@ -130,6 +134,36 @@ public class ClassroomStudentPersistenceEntity {
         return hashData.get(id);
     }
 
+    public static ClassroomStudentEntity findOneByClassroomId(int classroomId) {
+
+        fillHashTable();
+
+        hashData.forEach((k, c) -> {
+            if (c.getClassroomId() == classroomId) {
+                auxClassroomStudentEntity = c;
+                return;
+            }
+        });
+
+        return auxClassroomStudentEntity;
+
+    }
+
+    public static ClassroomStudentEntity findOneByClassroomIdStudentId(int classroomId, int studentId) {
+
+        fillHashTable();
+
+        hashData.forEach((k, c) -> {
+            if (c.getClassroomId() == classroomId && c.getStudentId() == studentId) {
+                auxClassroomStudentEntity = c;
+                return;
+            }
+        });
+
+        return auxClassroomStudentEntity;
+
+    }
+
     public static List<ClassroomStudentEntity> findAll() {
 
         List<ClassroomStudentEntity> data = new ArrayList<ClassroomStudentEntity>();
@@ -188,6 +222,32 @@ public class ClassroomStudentPersistenceEntity {
         });
 
         return data;
+
+    }
+
+    public static boolean verifyClassroomIdStudentId(int studentId, int classroomId) {
+
+        fillHashTable();
+
+        hashData.forEach((k, c) -> {
+            if (c.getStudentId() == studentId && c.getClassroomId() == classroomId) {
+                verify = true;
+                return;
+            }
+        });
+
+        return verify;
+
+    }
+
+    public static ClassroomStudentEntity searchToEdit() {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("ID: ");
+        int id = sc.nextInt();
+
+        return ClassroomStudentPersistenceEntity.findOne(id);
 
     }
 

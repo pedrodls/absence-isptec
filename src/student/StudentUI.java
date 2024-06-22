@@ -249,6 +249,23 @@ public class StudentUI {
 
     }
 
+    public static void myData() {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("\n*****************Seus Dados****************\n");
+
+        System.out.println("Insira o seu ID para continuar!");
+
+        System.out.print("ID: ");
+        int id = sc.nextInt();
+
+        StudentPersistenceEntity.read(id);
+
+        MainMenu.pauseToSee();
+
+    }
+
     public static StudentEntity searchToEdit() {
 
         Scanner sc = new Scanner(System.in);

@@ -6,6 +6,7 @@ import java.util.Scanner;
 import classroom.ClassroomEntity;
 import classroom.ClassroomPersistenceEntity;
 import clearBuffer.ClearBuffer;
+import genericEntity.GenericEntity;
 import isptec.listas.Listas;
 import isptec.utils.Utils;
 import student.StudentEntity;
@@ -214,11 +215,37 @@ public class ClassroomStudentUI {
 
         System.out.println("\n*****************Todos Dados*****************\n");
 
-        for (ClassroomStudentEntity datum : data)
-            {
+        for (ClassroomStudentEntity datum : data) {
+            System.out.println("\n" + datum + "\n");
+            System.out.println("---------------------------------------------");
+        }
+
+        MainMenu.pauseToSee();
+
+    }
+
+    public static void showlistDataFromStudentId() {
+
+        List<ClassroomStudentEntity> data = ClassroomStudentPersistenceEntity.findAll();
+
+        System.out.println("\n*****************Suas Turmas****************\n");
+
+        System.out.println("\nInsira o seu ID para continuar!\n");
+
+        StudentEntity studentEntity = StudentPersistenceEntity.searchToEdit();
+
+        if (studentEntity == null) {
+            System.out.println("Estudante não encontrado!");
+            MainMenu.pauseToSee();
+            return;
+        }
+
+        for (ClassroomStudentEntity datum : data) {
+            if (datum.getStudentId() == studentEntity.getId()) {
                 System.out.println("\n" + datum + "\n");
                 System.out.println("---------------------------------------------");
             }
+        }
 
         MainMenu.pauseToSee();
 

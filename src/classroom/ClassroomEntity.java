@@ -8,18 +8,20 @@ public class ClassroomEntity {
     private int id;
     private int courseId;
     private int level;
-
+    private int academicYearId;
+    
     private String name;
 
     public ClassroomEntity() {
 
     }
 
-    public ClassroomEntity(int id, String name, int courseId, int level) {
+    public ClassroomEntity(int id, String name, int courseId, int level, int academicYearId) {
         setId(id);
         setCourseId(courseId);
         setLevel(level);
         setName(name);
+        setAcademicYearId(academicYearId);
     }
 
     public int getId() {
@@ -54,12 +56,21 @@ public class ClassroomEntity {
         this.courseId = courseId;
     }
 
+    public int getAcademicYearId() {
+        return academicYearId;
+    }
+
+    public void setAcademicYearId(int academicYearId) {
+        this.academicYearId = academicYearId;
+    }
+
     @Override
     public String toString() {
         return "ID: " + this.getId() + ", Nome: "
                 + getName().toUpperCase()
                 + ", Curso: " + GenericPersistenceEntity.findOne(getCourseId(), Defs.CURSO_FILE).getName()
-                + ", Nivel académico: " + getLevel() + "º ano";
+                + ", Nivel académico: " + getLevel() + "º ano"
+                + ", Ano letivo: " + GenericPersistenceEntity.findOne(academicYearId, Defs.ANO_ACADEMICO_FILE).getName();
     }
 
 }

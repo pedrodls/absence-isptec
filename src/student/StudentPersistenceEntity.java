@@ -109,7 +109,7 @@ public class StudentPersistenceEntity {
             fillHashTable();
 
             if (hashData.get(id) != null) {
-                System.out.println("Encontrado -> " + hashData.get(id));
+                System.out.println("\nEncontrado -> " + hashData.get(id)+"\n");
             } else {
                 System.out.println("Não encontrado!");
             }

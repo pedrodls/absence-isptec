@@ -1,19 +1,18 @@
-package teacher;
+package employee;
 
 import java.util.List;
 import java.util.Scanner;
 
 import clearBuffer.ClearBuffer;
-import coordinator.CoordinatorPersistenceEntity;
 import genericEntity.GenericEntity;
 import genericEntity.GenericPersistenceEntity;
 import isptec.listas.Listas;
 import isptec.utils.Utils;
 import utils.*;
 
-public class TeacherUI {
+public class EmployeeUI {
 
-    public TeacherUI() {
+    public EmployeeUI() {
 
     }
 
@@ -22,7 +21,7 @@ public class TeacherUI {
 
             ClearBuffer.clear();
 
-            System.out.println("\n*****************Menu Professor****************\n");
+            System.out.println("\n*****************Menu Funcionário****************\n");
 
             int opcao = Listas.enviarLerOpcaoEscolhida(Defs.CRUD_LINKS);
 
@@ -59,13 +58,11 @@ public class TeacherUI {
         Scanner sc = new Scanner(System.in);
         String name;
 
-        System.out.println("\n*****************Criando Professor****************\n");
+        System.out.println("\n*****************Criando Funcionário****************\n");
 
         do {
 
-            System.out.print("Regra_validação: no mínimo 3 caracters!");
-            MainMenu.pauseToSee();
-
+            System.out.println("Regra_validação: pelo menos 3 caracteres!");
             System.out.print("Nome: ");
             name = sc.nextLine();
 
@@ -73,7 +70,7 @@ public class TeacherUI {
 
         GenericEntity entity = new GenericEntity(-1, name);
 
-        GenericPersistenceEntity.create(entity, Defs.PROFESSOR_FILE);
+        GenericPersistenceEntity.create(entity, Defs.EMPLOYEE_FILE);
 
         MainMenu.pauseToSee();
 
@@ -89,14 +86,14 @@ public class TeacherUI {
 
         if (entity == null) {
 
-            System.out.println("\nProfessor não encontrado!\n");
+            System.out.println("\nNão encontrado!\n");
 
             MainMenu.pauseToSee();
 
             return;
         }
 
-        System.out.println("\n*****************Editando Professor****************\n");
+        System.out.println("\n*****************Editando Funcionário****************\n");
 
         if (Utils.editarCampo("Nome", entity.getName())) {
 
@@ -104,10 +101,8 @@ public class TeacherUI {
 
             do {
 
-                System.out.print("\nRegra_validação: no mínimo 3 caracters! ");
-                MainMenu.pauseToSee();
-
-                System.out.print("\nNome: ");
+                System.out.println("Regra_validação: pelo menos 3 caracteres!");
+                System.out.print("Nome: ");
                 name = sc.nextLine();
 
             } while (name.length() < 3);
@@ -118,7 +113,7 @@ public class TeacherUI {
         }
 
         if (edited)
-            GenericPersistenceEntity.update(entity, Defs.PROFESSOR_FILE);
+            GenericPersistenceEntity.update(entity, Defs.EMPLOYEE_FILE);
 
         System.out.println("\nEdição finalizada!\n");
 
@@ -128,29 +123,20 @@ public class TeacherUI {
 
     public static void drop() {
 
-        System.out.println("\n*****************Eliminando Professor****************\n");
+        System.out.println("\n*****************Eliminando Funcionário****************\n");
 
         GenericEntity entity = searchToEdit();
 
         if (entity == null) {
 
-            System.out.println("\nProfessor não encontrado!\n");
+            System.out.println("\nNão encontrado!\n");
 
             MainMenu.pauseToSee();
 
             return;
         }
 
-        if (CoordinatorPersistenceEntity.findAllByCourseId(entity.getId()).size() > 0) {
-
-            System.out.println("\nImpossível eliminar pois este ID está ligada à outro(s) dado(s)!\n");
-
-            MainMenu.pauseToSee();
-
-            return;
-        }
-
-        GenericPersistenceEntity.dropOne(entity.getId(), Defs.PROFESSOR_FILE);
+        GenericPersistenceEntity.dropOne(entity.getId(), Defs.EMPLOYEE_FILE);
 
         System.out.println("\nEliminação finalizada!\n");
 
@@ -162,12 +148,12 @@ public class TeacherUI {
 
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("\n*****************Procurando Professor****************\n");
+        System.out.println("\n*****************Procurando Funcionário****************\n");
 
         System.out.print("ID: ");
         int id = sc.nextInt();
 
-        GenericPersistenceEntity.read(id, Defs.PROFESSOR_FILE);
+        GenericPersistenceEntity.read(id, Defs.EMPLOYEE_FILE);
 
         MainMenu.pauseToSee();
 
@@ -180,37 +166,20 @@ public class TeacherUI {
         System.out.print("ID: ");
         int id = sc.nextInt();
 
-        return GenericPersistenceEntity.findOne(id, Defs.PROFESSOR_FILE);
+        return GenericPersistenceEntity.findOne(id, Defs.EMPLOYEE_FILE);
 
     }
 
     public static void showlistData() {
 
-        List<GenericEntity> data = GenericPersistenceEntity.findAll(Defs.PROFESSOR_FILE);
+        List<GenericEntity> data = GenericPersistenceEntity.findAll(Defs.EMPLOYEE_FILE);
 
-        System.out.println("\n*****************Todos os Professores*****************\n");
+        System.out.println("\n*****************Todos Funcionários****************\n");
 
         for (GenericEntity datum : data)
             System.out.println("\n" + datum + "\n");
 
         MainMenu.pauseToSee();
 
-    }
-
-    public static void myData() {
-
-        System.out.println("\n*****************Seus Dados****************\n");
-
-        System.out.println("Insira o seu ID para continuar!");
-        GenericEntity teacher = GenericPersistenceEntity.searchToEdit(Defs.PROFESSOR_FILE);
-
-        if (teacher == null) {
-            System.out.println("Professor não encontrado!");
-            MainMenu.pauseToSee();
-            return;
-        }
-
-        System.out.println(teacher.toString());
-        MainMenu.pauseToSee();
     }
 }

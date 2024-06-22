@@ -2,13 +2,13 @@ package utils.enums;
 
 import isptec.listas.Listas;
 
-public enum TipoProvaEnum {
+public enum TestTypeEnum {
 
-    EXAME("Exame"), PP_1("PP_1"), PP_2("PP_2");
+    EXAME("Exame"), PP_1("PP_1"), PP_2("PP_2"), NENHUMA("Nenhuma");
 
     private final String designacao; 
 
-    private TipoProvaEnum(String designacao)
+    private TestTypeEnum(String designacao)
     {
         this.designacao = designacao;
     }
@@ -18,9 +18,9 @@ public enum TipoProvaEnum {
         return this.ordinal() + 1;
     }
 
-    public static TipoProvaEnum fromInteger(int cod)
+    public static TestTypeEnum fromInteger(int cod)
     {
-        for (TipoProvaEnum estado : TipoProvaEnum.values())
+        for (TestTypeEnum estado : TestTypeEnum.values())
         {
             if (estado.toInteger() == cod)
             {
@@ -30,9 +30,9 @@ public enum TipoProvaEnum {
         return null;
     }
 
-    public static TipoProvaEnum fromDesignacao(String nome)
+    public static TestTypeEnum fromDesignacao(String nome)
     {
-        for (TipoProvaEnum estado : TipoProvaEnum.values())
+        for (TestTypeEnum estado : TestTypeEnum.values())
         {
             if (estado.designacao.equals(nome))
             {
@@ -44,7 +44,7 @@ public enum TipoProvaEnum {
 
     public static String[] getDesignacoes()
     {
-        TipoProvaEnum tipos[] = TipoProvaEnum.values();
+        TestTypeEnum tipos[] = TestTypeEnum.values();
         int length = tipos.length;
         String designacoes[] = new String[length];
         
@@ -55,7 +55,7 @@ public enum TipoProvaEnum {
         return designacoes;
     }
     
-    public static TipoProvaEnum enviarLerOpcaoEscolhida()
+    public static TestTypeEnum enviarLerOpcaoEscolhida()
     {
         System.out.println("Selecione um dos tipos de provas perdidas: ");
         int opcao = Listas.enviarLerOpcaoEscolhida(getDesignacoes());

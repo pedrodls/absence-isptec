@@ -77,6 +77,8 @@ public class ClassroomUI {
         String name;
 
         GenericEntity course = null;
+        GenericEntity academicYear = null;
+
 
         System.out.println("\n*****************Criando Turma****************\n");
 
@@ -105,7 +107,14 @@ public class ClassroomUI {
 
         } while (course == null);
 
-        ClassroomEntity entity = new ClassroomEntity(-1, name, course.getId(), level);
+        do {
+
+            System.out.print("\nRegra_validação: Ano Acadêmico existente! ");
+            academicYear = GenericPersistenceEntity.searchToEdit(Defs.ANO_ACADEMICO_FILE);
+
+        } while (academicYear == null);
+
+        ClassroomEntity entity = new ClassroomEntity(-1, name, course.getId(), level, academicYear.getId());
 
         ClassroomPersistenceEntity.create(entity);
 
@@ -145,6 +154,23 @@ public class ClassroomUI {
             } while (course == null);
 
             old.setCourseId(course.getId());
+
+            edited = true;
+        }
+
+        if (Utils.editarCampo("Ano Acadêmico",
+                GenericPersistenceEntity.findOne(old.getCourseId(), Defs.ANO_ACADEMICO_FILE).getName())) {
+
+            GenericEntity anoAcademico = null;
+
+            do {
+
+                System.out.print("\nRegra_validação: Curso existente! ");
+                anoAcademico = GenericPersistenceEntity.searchToEdit(Defs.CURSO_FILE);
+
+            } while (anoAcademico == null);
+
+            old.setCourseId(anoAcademico.getId());
 
             edited = true;
         }

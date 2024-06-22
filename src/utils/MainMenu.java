@@ -9,8 +9,11 @@ import clearBuffer.ClearBuffer;
 import coordinator.CoordinatorUI;
 import course.CourseUI;
 import courseSubject.CourseSubjectUI;
+import employee.EmployeeUI;
+import fault.FaultUI;
 import faultDescription.FaultDescriptionUI;
 import isptec.listas.Listas;
+import justification.JustificationUI;
 import student.StudentUI;
 import subject.SubjectUI;
 import teacher.TeacherUI;
@@ -42,6 +45,14 @@ public class MainMenu {
                     coordenationMenu();
                     break;
 
+                case 3:
+                    teacherMenu();
+                    break;
+
+                case 4:
+                    studentMenu();
+                    break;
+                    
                 case 5:
                     System.out.println("Programa terminado");
                     System.exit(0);
@@ -128,8 +139,15 @@ public class MainMenu {
                         MainMenu.pauseToSee();
                     }
                     break;
-
                 case 8:
+                    try {
+                        EmployeeUI.menu();
+                    } catch (Exception e) {
+                        System.out.println("Ocorreu um erro inesperado, verifique bem as validações de campos");
+                        MainMenu.pauseToSee();
+                    }
+                    break;
+                case 9:
                     mainMenu();
                     break;
             }
@@ -181,13 +199,115 @@ public class MainMenu {
                         MainMenu.pauseToSee();
                     }
                     break;
+
+                case 5:
+                    try {
+                        JustificationUI.menu();
+                    } catch (Exception e) {
+                        System.out.println("Ocorreu um erro inesperado, verifique bem as validações de campos");
+                        MainMenu.pauseToSee();
+                    }
+                    break;
                 case 6:
-                    adminMenu();
+                    mainMenu();
                     break;
-                case 10:
-                    System.out.println("Programa terminado");
-                    System.exit(0);
+
+            }
+        }
+    }
+
+    public static void teacherMenu() {
+        for (;;) {
+
+            ClearBuffer.clear();
+
+            System.out.println("\n*****************Menu Professor*****************\n");
+
+            int opcao = Listas.enviarLerOpcaoEscolhida(Defs.TEACHER_LINKS);
+
+            switch (opcao) {
+
+                case 1:
+                    try {
+                        TeacherUI.myData();
+                    } catch (Exception e) {
+                        System.out.println("Ocorreu um erro inesperado, verifique bem as validações de campos");
+                        MainMenu.pauseToSee();
+                    }
                     break;
+
+                case 2:
+                    try {
+                        TeacherSubjectUI.subjectsFromTeacherId();
+                    } catch (Exception e) {
+                        System.out.println("Ocorreu um erro inesperado, verifique bem as validações de campos");
+                        MainMenu.pauseToSee();
+                    }
+
+                    break;
+
+                case 3:
+                    try {
+                        FaultUI.menu();
+                    } catch (Exception e) {
+                        System.out.println("Ocorreu um erro inesperado, verifique bem as validações de campos");
+                        MainMenu.pauseToSee();
+                    }
+
+                    break;
+
+                case 4:
+                    mainMenu();
+                    break;
+
+            }
+        }
+    }
+
+    public static void studentMenu() {
+        for (;;) {
+
+            ClearBuffer.clear();
+
+            System.out.println("\n*****************Menu Estudante*****************\n");
+
+            int opcao = Listas.enviarLerOpcaoEscolhida(Defs.STUDENT_LINKS);
+
+            switch (opcao) {
+
+                case 1:
+                    try {
+                        StudentUI.myData();
+                    } catch (Exception e) {
+                        System.out.println("Ocorreu um erro inesperado, verifique bem as validações de campos");
+                        MainMenu.pauseToSee();
+                    }
+                    break;
+
+                case 2:
+                    try {
+                        ClassroomStudentUI.showlistDataFromStudentId();
+                    } catch (Exception e) {
+                        System.out.println("Ocorreu um erro inesperado, verifique bem as validações de campos");
+                        MainMenu.pauseToSee();
+                    }
+
+                    break;
+
+                case 3:
+                    /* try {
+                        FaultUI.menu();
+                    } catch (Exception e) {
+                        System.out.println("Ocorreu um erro inesperado, verifique bem as validações de campos");
+                        MainMenu.pauseToSee();
+                    } */
+
+                    break;
+
+                case 4:
+                    mainMenu();
+                    break;
+
             }
         }
     }
